@@ -1,5 +1,7 @@
 package experiment;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -12,30 +14,31 @@ public class TestBoard {
 	public final static int BOARD_WIDTH = 4;
 	
 	//Rows to be added to the board
-	private List<TestBoardCell> row = Collections.emptyList();
-	
+	private ArrayList<TestBoardCell> row = new ArrayList<TestBoardCell>();
 	
 	//Field for the gameBoard
-	private List<List<TestBoardCell>> gameBoard;
+	private ArrayList<ArrayList<TestBoardCell>> gameBoard = new ArrayList<ArrayList<TestBoardCell>>();
 	
 	//Constructs the gameBoard based off the parameters passed.
 	//The dimension can be altered via the static fields within this class.
 	public TestBoard() {
 		int column = 0;
-		while (column++ < BOARD_WIDTH) {
-			this.populateRow(column);
-			this.gameBoard.add(row);
-			this.gameBoard.clear();
+		while (column < BOARD_WIDTH) {
+			this.gameBoard.add(populateRow(column));
+			column += 1;
 		}
 	}
 	
 	//This method populates the row set to be added to the game board
 	//This is called inside TestBoard() and written here for clarity.
-	private void populateRow(int column) {
+	private ArrayList<TestBoardCell> populateRow(int column) {
+		ArrayList<TestBoardCell> addingRow = new ArrayList<TestBoardCell>();
 		int currentRow = 0;
 		while (currentRow < BOARD_HIEGHT) {
-			this.row.add(new TestBoardCell(currentRow, column));
+			addingRow.add(new TestBoardCell(currentRow, column));
+			currentRow += 1;
 		}
+		return addingRow;
 	}
 	
 	public void calcTargets( TestBoardCell startCell, int pathlength) {
@@ -43,7 +46,7 @@ public class TestBoard {
 		this.row.clear();
 	}
 	
-	public List<TestBoardCell> getTargets() {
+	public ArrayList<TestBoardCell> getTargets() {
 		//Just returning an empty set for testing
 		this.row.clear();
 		return this.row;
