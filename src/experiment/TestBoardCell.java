@@ -41,5 +41,10 @@ public class TestBoardCell {
 		this.adjacencies.clear();
 		return this.adjacencies;
 	}
+	
+	public String getCoordinates () {
+		String coords = new String(String.valueOf(cellRow) + " " + String.valueOf(cellColumn));
+		return coords;
+	}
 
 }

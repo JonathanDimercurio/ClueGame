@@ -1,6 +1,7 @@
 package experiment;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 
@@ -11,11 +12,11 @@ public class TestBoard {
 	public final static int BOARD_WIDTH = 4;
 	
 	//Rows to be added to the board
-	private Set<TestBoardCell> row = Collections.emptySet();
+	private List<TestBoardCell> row = Collections.emptyList();
 	
 	
 	//Field for the gameBoard
-	private Set<Set<TestBoardCell>> gameBoard;
+	private List<List<TestBoardCell>> gameBoard;
 	
 	//Constructs the gameBoard based off the parameters passed.
 	//The dimension can be altered via the static fields within this class.
@@ -42,11 +43,13 @@ public class TestBoard {
 		this.row.clear();
 	}
 	
-	public Set<TestBoardCell> getTargets() {
+	public List<TestBoardCell> getTargets() {
 		//Just returning an empty set for testing
 		this.row.clear();
 		return this.row;
 	}
 	
-
+	public TestBoardCell getCell(int row, int column) {
+		return this.gameBoard.get(row).get(column);
+	}
 }
