@@ -1,5 +1,15 @@
 package experiment;
 
+/**
+ * TestBoardCell
+ * 
+ * Purpose: This class is for testing out individual cells within the TestBoard Class
+ * 
+ * @author Jonathan Dimercurio
+ * @author Senya Stein
+ * 
+ */
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;

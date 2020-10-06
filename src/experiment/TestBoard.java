@@ -1,3 +1,14 @@
+/**
+ * TestBoard Class
+ * 
+ * Purpose: This TestBoard class will generate a game board based of the constant fields.
+ * 
+ * @author Jonathan Dimercurio
+ * @author Senya Stein
+ * 
+ */
+
+
 package experiment;
 
 import java.util.ArrayList;
