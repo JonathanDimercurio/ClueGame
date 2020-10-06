@@ -38,7 +38,7 @@ public class TestBoard {
 		}
 	}
 	
-	private void calcTargets( TestBoardCell startCell, int pathlength) {
+	public void calcTargets( TestBoardCell startCell, int pathlength) {
 		//Just clearing row for no reason for testing
 		this.row.clear();
 	}
