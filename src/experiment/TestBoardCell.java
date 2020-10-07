@@ -58,8 +58,8 @@ public class TestBoardCell {
 	}
 	
 	public ArrayList<CellStatus> getMyStatus() {
-		return 
+		return;
 	}
 	
-	
+	// arraylists aren't static- use set because its static and board shouldn't change during game 
 }
