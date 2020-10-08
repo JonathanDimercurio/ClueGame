@@ -10,9 +10,9 @@ public class TestBoardCellV2 {
 	
 	private int cRow, cColumn;
 	
-	private boolean isRoom = false,		isBorder = false,	isBorderCell = false,
-					isOccupied = false,	hasDoor = false,
-					edgeRow = false,	isWalkable = false,
+	private boolean isRoom = false,		isBorder = false,		isBorderCell = false,
+					isOccupied = false,	hasDoor = false,		min = false,
+					edgeRow = false,	isWalkable = false, 	max = false,
 					edgeCol = false, 	isBrokenRide = false;
 		
 	private ArrayList<CellStatus> myStatus = new ArrayList<CellStatus>();
@@ -35,14 +35,11 @@ public class TestBoardCellV2 {
 		switch (this.findCase(edgeRow, edgeCol)) {
 		
 		case 1:
-			switch (this.cRow + this.cColumn) {
-				
-				case 0:
-					//code here
-					break;
-					
-				case 
-			}
+			
+			
+			
+		default: 
+			break;
 		
 		}
 	}
@@ -55,10 +52,10 @@ public class TestBoardCellV2 {
 	}
 	
 	private void checkIfBorderCell () {
-		if(cRow == 0) 	{ this.edgeRow = true; }
-		if(cColumn == 0){ this.edgeCol = true; }
-		if(cRow == TestBoard.BOARD_WIDTH) 	{ this.edgeRow = true; }
-		if(cColumn == TestBoard.BOARD_HIEGHT) 	{ this.edgeCol = true; }
+		if(cRow == 0) 	{ this.edgeRow = true; min = true;}
+		if(cColumn == 0){ this.edgeCol = true; min = true;}
+		if(cRow == TestBoard.BOARD_WIDTH) 		{ this.edgeRow = true; max = true;}
+		if(cColumn == TestBoard.BOARD_HIEGHT) 	{ this.edgeCol = true; max = true;}
 	}
 	
 }
