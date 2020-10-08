@@ -16,13 +16,19 @@ import java.util.Set;
 
 public class TestBoardCell {
 	
+	/*
 	//potential solution for BoardCell indexing
 	//Set of adjacent target cells
 	//potential fields to track the location of each cell
+	*/
 	
-	public static boolean[][] locArray = new boolean[TestBoard.BOARD_HIEGHT][TestBoard.BOARD_WIDTH];
 	
-	private ArrayList<TestBoardCell> adjacencies = new ArrayList<TestBoardCell>();
+	/*****
+	//public static boolean[][] locArray = new boolean[TestBoard.BOARD_HIEGHT][TestBoard.BOARD_WIDTH];
+	*/
+	
+	//This field is for storing the adjacent cells
+	private ArrayList<TestBoardCell> adjCells = new ArrayList<TestBoardCell>();
 	
 	private int cellRow, cellColumn;
 	private ArrayList<CellStatus> myStatus = new ArrayList<CellStatus>();
@@ -32,7 +38,7 @@ public class TestBoardCell {
 	public TestBoardCell (int locRow, int locColumn) {
 		this.cellRow = locRow;
 		this.cellColumn = locColumn;
-		locArray[locRow][locColumn] = true;
+		//locArray[locRow][locColumn] = true;
 	}
 
 	//sets whether the cell is has a status. i.e. occupied, walkable.
@@ -40,16 +46,11 @@ public class TestBoardCell {
 		this.myStatus.add(status);
 	}
 	
-	public boolean checkForStatus(checkForStat) {
-		for(CellStatus tempStatus: myStatus) {
-			
-		}
-	}
-	
+
 	public ArrayList<TestBoardCell> getAdjacencies() {
 		//Just returning an empty set for testing
-		this.adjacencies.clear();
-		return this.adjacencies;
+		this.adjCells.clear();
+		return this.adjCells;
 	}
 	
 	public String getCoordinates () {
@@ -57,9 +58,18 @@ public class TestBoardCell {
 		return coords;
 	}
 	
-	public ArrayList<CellStatus> getMyStatus() {
-		return 
+	/*
+	public boolean checkForStatus(checkForStat) {
+		for(CellStatus tempStatus: myStatus) {
+		}
 	}
+	*/
 	
+	/*
+	public ArrayList<CellStatus> getMyStatus() {
+		return;
+	}
+	*/
 	
+	// arraylists aren't static- use set because its static and board shouldn't change during game 
 }
