@@ -57,19 +57,4 @@ public class TestBoardCell {
 		String coords = new String(String.valueOf(cellRow) + " " + String.valueOf(cellColumn));
 		return coords;
 	}
-	
-	/*
-	public boolean checkForStatus(checkForStat) {
-		for(CellStatus tempStatus: myStatus) {
-		}
-	}
-	*/
-	
-	/*
-	public ArrayList<CellStatus> getMyStatus() {
-		return;
-	}
-	*/
-	
-	// arraylists aren't static- use set because its static and board shouldn't change during game 
-}
+}	
