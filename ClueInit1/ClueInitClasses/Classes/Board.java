@@ -16,10 +16,6 @@ public class Board {
 		
 	}
 	private void loadConfigFiles() {
-		
-		
-	}
-	private void loadSetupConfig() { // scans in clue setup text file
 		try(Scanner txtScanner = new Scanner (new File("ClueSetup.txt"))) {
 			while(txtScanner.hasNextLine()) {
 				layoutConfigFile+=(txtScanner.nextLine());
@@ -30,8 +26,6 @@ public class Board {
 			e.printStackTrace();
 		}
 		
-	}
-	private void loadLayoutConfig() {  // scans in clue map layout csv file
 		try(Scanner csvScanner = new Scanner (new File("ClueLayout.csv"))) {
 			while(csvScanner.hasNextLine()) {
 				layoutConfigFile+=(csvScanner.nextLine());
@@ -40,6 +34,15 @@ public class Board {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+	}
+	
+	private void loadSetupConfig() { 
+		
+		
+	}
+	private void loadLayoutConfig() {  
 		
 	}
 	
