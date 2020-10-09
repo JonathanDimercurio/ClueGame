@@ -4,24 +4,29 @@ import experiment.*;
 import java.util.ArrayList;
 
 public class TestBoardCellV2 {
-	public static int[][] gridAssigner = new int[TestBoard.BOARD_HIEGHT][TestBoard.BOARD_WIDTH];
 	
-	//suggested fields
-	
+	private ArrayList<CellStatus> myStatus = new ArrayList<CellStatus>();
 	private int cRow, cColumn;
 	
 	private boolean isRoom = false,		isBorder = false,		isBorderCell = false,
 					isOccupied = false,	hasDoor = false,		min = false,
 					edgeRow = false,	isWalkable = false, 	max = false,
 					edgeCol = false, 	isBrokenRide = false;
-		
-	private ArrayList<CellStatus> myStatus = new ArrayList<CellStatus>();
 	
 	public TestBoardCellV2 (int locRow, int locCol) {
 		this.cColumn 	= locCol;
 		this.cRow		= locRow;
 		this.checkIfBorderCell();
 	}
+	
+	public TestBoardCellV2 (int locRow, int locCol, ArrayList<CellStatus> cellStatus) {
+		this.cColumn 	= locCol;
+		this.cRow		= locRow;
+		this.checkIfBorderCell();
+		for (CellStatus toAdd: cellStatus) {
+			this.addCellStatus(toAdd);
+		}
+ 	}
 	
 	public void addCellStatus(CellStatus status) {
 		this.myStatus.add(status);
