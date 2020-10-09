@@ -1,5 +1,7 @@
 package Classes;
 
-public class BadConfigurationException {
+@SuppressWarnings("serial")
+public class BadConfigurationException extends Exception{
+
 
 }
