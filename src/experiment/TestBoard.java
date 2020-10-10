@@ -11,59 +11,129 @@
 
 package experiment;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
 public class TestBoard {
 	
-	//The data structure gameBoard will be 4x4 for testing
 	public final static int BOARD_HIEGHT = 4;
 	public final static int BOARD_WIDTH = 4;
+	private TestBoardCellV2[][] gameGrid = new TestBoardCellV2[BOARD_HIEGHT][BOARD_WIDTH];
 	
-	//Rows to be added to the board
-	private ArrayList<TestBoardCell> row = new ArrayList<TestBoardCell>();
 	
-	//Field for the gameBoard
-	private ArrayList<ArrayList<TestBoardCell>> gameBoard = new ArrayList<ArrayList<TestBoardCell>>();
+	//private Set<TestBoardCellV2> gameBoard;
 	
-	//Constructs the gameBoard based off the parameters passed.
-	//The dimension can be altered via the static fields within this class.
+	private Set<TestBoardCellV2> targets;
+	private Set<TestBoardCellV2> visited;
+	
+	
 	public TestBoard() {
-		int column = 0;
-		while (column < BOARD_WIDTH) {
-			this.gameBoard.add(populateRow(column));
-			column += 1;
-		}
+		//gameGrid = null;
+		this.genGrid();
 	}
+		
+
 	
-	//This method populates the row set to be added to the game board
-	//This is called inside TestBoard() and written here for clarity.
-	private ArrayList<TestBoardCell> populateRow(int column) {
-		ArrayList<TestBoardCell> addingRow = new ArrayList<TestBoardCell>();
-		int currentRow = 0;
-		while (currentRow < BOARD_HIEGHT) {
-			addingRow.add(new TestBoardCell(currentRow, column));
-			currentRow += 1;
-		}
-		return addingRow;
-	}
 	
+
 	public void calcTargets( TestBoardCell startCell, int pathlength) {
-		//Just clearing row for no reason for testing
-		this.row.clear();
+	
 	}
 	
-	public ArrayList<TestBoardCell> getTargets() {
-		//Just returning an empty set for testing
-		this.row.clear();
-		return this.row;
+	public Set<TestBoardCellV2> getTargets() {
+		//need logic to check visited list
+		Set<TestBoardCellV2> targetList = new HashSet<TestBoardCellV2>();
+		//need logic here to assign actual targts
+		return targetList;
 	}
 	
-	public TestBoardCell getCell(int row, int column) {
-		return this.gameBoard.get(row).get(column);
+	public TestBoardCellV2 getCellFromGrid(int x, int y) {
+		return gameGrid[x][y];		
 	}
+	
+	private void genGrid() {
+		int cRow = 0, cColumn = 0;
+		int control = (TestBoard.BOARD_HIEGHT - 1) * (TestBoard.BOARD_WIDTH - 1);
+		while (cRow * cColumn != control) {
+			if (cColumn < TestBoard.BOARD_WIDTH - 1) {
+				while (cRow < TestBoard.BOARD_WIDTH - 1) {
+					gameGrid[cRow][cColumn] = new TestBoardCellV2(cRow, cColumn);
+					cRow += 1;
+				}
+			}
+			if (cColumn != TestBoard.BOARD_WIDTH - 1) {
+				cRow = 0;
+			}
+			cColumn += 1;
+		}
+	}	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************************
+*/////Obsolete Code 
+
+
+/*
+ * 	//private ArrayList<TestBoardCell> row = new ArrayList<TestBoardCell>();
+ *	//private ArrayList<ArrayList<TestBoardCell>> gameBoard = new ArrayList<ArrayList<TestBoardCell>>();
+ * 
+ * 
+public TestBoard() {
+	int column = 0;
+	while (column < BOARD_WIDTH) {
+		this.gameBoard.add(populateRow(column));
+		column += 1;
+	}
+	
+			//int index1 = 0, index2 = 0;
+		//gameBoard = new HashSet<TestBoardCellV2>();
+		//for (TestBoardCellV2 iCell: gameBoard) {
+			
+			//iCell = new TestBoardCellV2();
+			//gameBoard.add(iCell);
+			//}
+		
+}
+
+private ArrayList<TestBoardCell> populateRow(int column) {
+	ArrayList<TestBoardCell> addingRow = new ArrayList<TestBoardCell>();
+	int currentRow = 0;
+	while (currentRow < BOARD_HIEGHT) {
+		addingRow.add(new TestBoardCell(currentRow, column));
+		currentRow += 1;
+	}
+	return addingRow;
+}
+*/
+
+/*
+public TestBoardCell getCell(int row, int column) {
+	return this.gameBoard.get(row).get(column);
+}
+*/
