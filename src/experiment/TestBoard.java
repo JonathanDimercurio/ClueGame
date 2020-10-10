@@ -22,45 +22,57 @@ public class TestBoard {
 	
 	public final static int BOARD_HIEGHT = 4;
 	public final static int BOARD_WIDTH = 4;
+	private TestBoardCellV2[][] gameGrid = new TestBoardCellV2[BOARD_HIEGHT][BOARD_WIDTH];
 	
-	//static TestBoardCellV2[][] grid = new TestBoardCellV2[BOARD_HIEGHT][BOARD_WIDTH];
-	private static TestBoardCellV2[][] grid = new TestBoardCellV2[BOARD_HIEGHT][BOARD_WIDTH];
-	private Set<TestBoardCellV2> gameBoard;
+	
+	//private Set<TestBoardCellV2> gameBoard;
 	
 	private Set<TestBoardCellV2> targets;
 	private Set<TestBoardCellV2> visited;
 	
 	
 	public TestBoard() {
-		grid = null;
-		gameBoard = new HashSet<TestBoardCellV2>();
-		
-		//int index1 = 0, index2 = 0;
-		
-		for (TestBoardCellV2 iCell: gameBoard) {
-			iCell = new TestBoardCellV2();
-			gameBoard.add(iCell);
-			}
-		
+		//gameGrid = null;
+		this.genGrid();
 	}
+		
+
 	
 	
 
 	public void calcTargets( TestBoardCell startCell, int pathlength) {
+	
 	}
 	
 	public Set<TestBoardCellV2> getTargets() {
-		return this.gameBoard;
+		//need logic to check visited list
+		Set<TestBoardCellV2> targetList = new HashSet<TestBoardCellV2>();
+		//need logic here to assign actual targts
+		return targetList;
 	}
-		
-	public static void addCellToGrid(TestBoardCellV2 cellToAdd) {
-		grid[cellToAdd.getcRow()][cellToAdd.getcColumn()] = cellToAdd;
+	
+	public TestBoardCellV2 getCellFromGrid(int x, int y) {
+		return gameGrid[x][y];		
 	}
+	
+	private void genGrid() {
+		int cRow = 0, cColumn = 0;
+		int control = (TestBoard.BOARD_HIEGHT - 1) * (TestBoard.BOARD_WIDTH - 1);
+		while (cRow * cColumn != control) {
+			if (cColumn < TestBoard.BOARD_WIDTH - 1) {
+				while (cRow < TestBoard.BOARD_WIDTH - 1) {
+					gameGrid[cRow][cColumn] = new TestBoardCellV2(cRow, cColumn);
+					cRow += 1;
+				}
+			}
+			if (cColumn != TestBoard.BOARD_WIDTH - 1) {
+				cRow = 0;
+			}
+			cColumn += 1;
+		}
+	}	
 
 }
-
-
-
 
 
 
@@ -98,6 +110,15 @@ public TestBoard() {
 		this.gameBoard.add(populateRow(column));
 		column += 1;
 	}
+	
+			//int index1 = 0, index2 = 0;
+		//gameBoard = new HashSet<TestBoardCellV2>();
+		//for (TestBoardCellV2 iCell: gameBoard) {
+			
+			//iCell = new TestBoardCellV2();
+			//gameBoard.add(iCell);
+			//}
+		
 }
 
 private ArrayList<TestBoardCell> populateRow(int column) {
