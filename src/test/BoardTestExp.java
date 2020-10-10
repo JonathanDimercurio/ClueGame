@@ -28,7 +28,7 @@ class BoardTestExp {
 	this.tBoard = new TestBoard();
 	}
 
-	
+	/*
 	//Required test for getAdjacencies().
 	@Test
 	public void testAdjacency() {
@@ -114,5 +114,5 @@ class BoardTestExp {
 		
 	}
 	
-
+*/
 }
