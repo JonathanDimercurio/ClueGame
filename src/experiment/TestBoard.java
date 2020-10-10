@@ -20,52 +20,40 @@ public class TestBoard {
 	public final static int BOARD_HIEGHT = 4;
 	public final static int BOARD_WIDTH = 4;
 	private TestBoardCellV2[][] gameGrid = new TestBoardCellV2[BOARD_HIEGHT][BOARD_WIDTH];
-	
-	
-	//private Set<TestBoardCellV2> gameBoard;
-	
-	private Set<TestBoardCellV2> targets = new HashSet<TestBoardCellV2>();
-	private Set<TestBoardCellV2> visited = new HashSet<TestBoardCellV2>();
-	
+	private Set<TestBoardCellV2> targets;
+	private Set<TestBoardCellV2> visited;
 	
 	public TestBoard() {
-		//gameGrid = null;
 		genGrid();
 		genAdj();
 	}
-		
-
 	
-	
-
-	public void calcTargets( TestBoardCellV2 startCell, int pathlength) {
-		while(0 < pathlength) {
-			visited.add(startCell);
-			targets.addAll(startCell.getAdjList());
-			for (TestBoardCellV2 newTargets: targets) {
-				calcTargets(newTargets, pathlength - 1);
-			}
-			visited.addAll(targets);	
-			}
-		
-		/*
-		 * targets.removeAll(visited);
-		for (TestBoardCellV2 statusCheck: visited) {
-				
-			}
-			
-		for (TestBoardCellV2 newTargets: targets) {
-			calcTargets(newTargets, pathlength);
-		}
-		*/
-		visited.removeAll(visited);
+	public void calcTargets(TestBoardCellV2 startCell, int pathL) {
+		targets = new HashSet<TestBoardCellV2>();
+		visited = new HashSet<TestBoardCellV2>();
+		visited.add(startCell);
+		dfs(startCell, pathL);
+		targets.remove(startCell);
 	}
 	
+	public void dfs(TestBoardCellV2 start, int path) {
+		for (TestBoardCellV2 node: start.getAdjList()){
+			if(!visited.contains(node)) {
+				visited.add(node);
+				if(path == 1) {
+					if (!node.isOccupied())
+					targets.add(node);
+				} else {
+					dfs(node, path - 1);
+				}
+				visited.remove(node);
+			}
+		}
+	}
+	
+
 	public Set<TestBoardCellV2> getTargets() {
-		//need logic to check visited list
-		Set<TestBoardCellV2> targetList = new HashSet<TestBoardCellV2>();
-		//need logic here to assign actual targts
-		return targetList;
+		return this.targets;
 	}
 	
 
@@ -75,7 +63,7 @@ public class TestBoard {
 		while (cColumn != TestBoard.BOARD_WIDTH) {
 			if (cColumn < TestBoard.BOARD_WIDTH) {
 				while (cRow != TestBoard.BOARD_HIEGHT) {
-					gameGrid[cColumn][cRow] = new TestBoardCellV2(cRow, cColumn);
+					gameGrid[cColumn][cRow] = new TestBoardCellV2(cColumn, cRow);
 					cRow += 1;
 				}
 			if (cColumn != TestBoard.BOARD_WIDTH) {
@@ -106,14 +94,13 @@ public class TestBoard {
 	//Solid. Works well.
 	private Set<TestBoardCellV2> checkAdjList(int x, int y) {
 		Set<TestBoardCellV2> tempAdjList = new HashSet<TestBoardCellV2>();
-		
 		if((x - 1) >= 0) 								{ tempAdjList.add(getCell(x-1,y)); } 
 		if((y - 1) >= 0) 								{ tempAdjList.add(getCell(x,y-1)); }
 		if((x + 1) <= TestBoard.BOARD_WIDTH - 1) 		{ tempAdjList.add(getCell(x+1,y)); }
 		if((y + 1) <= TestBoard.BOARD_HIEGHT - 1) 		{ tempAdjList.add(getCell(x,y+1)); }
 		return tempAdjList;
 	}
-
+	
 	public TestBoardCellV2 getCell(int x, int y) {
 		TestBoardCellV2 tempCell = gameGrid[x][y];
 		return tempCell;
@@ -125,8 +112,45 @@ public class TestBoard {
 
 /********************************
 */////Obsolete Code 
+/*
+private Set<TestBoardCellV2> checkAdjList(int x, int y) {
+	Set<TestBoardCellV2> tempAdjList = new HashSet<TestBoardCellV2>();
+	if((x - 1) >= 0	&& getCell(x-1,y).isWalkable())		{ tempAdjList.add(getCell(x-1,y)); } 
+	if((y - 1) >= 0 && getCell(x,y-1).isWalkable())		{ tempAdjList.add(getCell(x,y-1)); }
+	if((x + 1) <= TestBoard.BOARD_WIDTH - 1 && getCell(x+1,y).isWalkable()) {
+		tempAdjList.add(getCell(x+1,y)); 
+	}
+	if((y + 1) <= TestBoard.BOARD_HIEGHT - 1 && getCell(x,y+1).isWalkable()) { 
+		tempAdjList.add(getCell(x,y+1)); 
+	}
+	return tempAdjList;
+}
 
 
+/*
+ * targets.removeAll(visited);
+for (TestBoardCellV2 statusCheck: visited) {
+		
+	}
+	
+	
+while(0 < pathlength) {
+	visited.add(startCell);
+	visited.addAll(startCell.getAdjList());
+	for (TestBoardCellV2 newTargets: visited) {
+		visited.addAll(newTargets.getAdjList());
+	}
+	pathlength -= 1;
+}
+	
+for (TestBoardCellV2 newTargets: targets) {
+	calcTargets(newTargets, pathlength);
+}
+
+	visited.removeAll(visited);
+}
+
+*/
 
 
 

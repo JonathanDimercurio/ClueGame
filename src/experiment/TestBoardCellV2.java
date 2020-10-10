@@ -10,24 +10,36 @@
 
 package experiment;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class TestBoardCellV2 {
 	
+	public static Set<TestBoardCellV2> gameBoardData = new HashSet<TestBoardCellV2>();
 	private Set<TestBoardCellV2> adjList = new HashSet<TestBoardCellV2>();
-	private ArrayList<CellStatus> myStatus = new ArrayList<CellStatus>();
+	private Set<CellStatus> myStatus = new HashSet<CellStatus>();
 	private int cRow, cColumn;
 	
-	private boolean isRoom = false,			isBrokenRide = false,
-					isOccupied = false,		hasDoor = false,		isWalkable = false;
+	private boolean isOccupied = false,	isWalkable = true;
 	
 	public TestBoardCellV2 (int locCol, int locRow) {
 		this.cColumn 	= locCol;
 		this.cRow		= locRow;
+		gameBoardData.add(this);
 	}
 
+	public void adjustCellStatus(CellStatus addStat) {
+		this.myStatus.add(addStat);
+		if(addStat == CellStatus.VOID || addStat == CellStatus.BROKENRIDE || addStat == CellStatus.WALL ) {
+			for(TestBoardCellV2 tempCell: gameBoardData) {
+				tempCell.adjList.remove(this);
+			}
+		}
+		if(addStat == CellStatus.OCCUPIED)
+			this.setOccupied(true);
+	}
+
+	
 	public void buildAdjList(Set<TestBoardCellV2> inputList) {
 		this.adjList.addAll(inputList);
 	}
@@ -46,23 +58,11 @@ public class TestBoardCellV2 {
 		return cColumn;
 	}
 	
-	public void addCellStatus(CellStatus status) {
-		this.myStatus.add(status);
-	}
-
-	public boolean isRoom() {
-		return isRoom;
-	}
-
-	public void setRoom(boolean isRoom) {
-		this.isRoom = isRoom;
-	}
-
 	public boolean isOccupied() {
 		return isOccupied;
 	}
 
-	public void setOccupied(boolean isOccupied) {
+	private void setOccupied(boolean isOccupied) {
 		this.isOccupied = isOccupied;
 	}
 
@@ -73,6 +73,13 @@ public class TestBoardCellV2 {
 	public void setWalkable(boolean isWalkable) {
 		this.isWalkable = isWalkable;
 	}
+	
+	@Override
+	public String toString() {
+		return "TestBoardCellV2 [cColumn=" + cColumn + ", cRow=" + cRow + "]";
+	}
+	
+	
 	
 }
 	/*
