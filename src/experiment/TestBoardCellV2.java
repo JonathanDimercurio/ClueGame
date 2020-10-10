@@ -10,39 +10,34 @@
 
 package experiment;
 
-import experiment.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class TestBoardCellV2 {
 	
-	private Set<TestBoardCellV2> adjList;
+	private Set<TestBoardCellV2> adjList = new HashSet<TestBoardCellV2>();
 	private ArrayList<CellStatus> myStatus = new ArrayList<CellStatus>();
 	private int cRow, cColumn;
 	
-	private boolean isRoom = false,		isBrokenRide = false,
-					isOccupied = false,	hasDoor = false,		isWalkable = false;
+	private boolean isRoom = false,			isBrokenRide = false,
+					isOccupied = false,		hasDoor = false,		isWalkable = false;
 	
-
-	public TestBoardCellV2() {
-		//genCoord();
-	}
-	
-	public TestBoardCellV2 (int locRow, int locCol) {
+	public TestBoardCellV2 (int locCol, int locRow) {
 		this.cColumn 	= locCol;
 		this.cRow		= locRow;
 	}
-	
-	public void addCellStatus(CellStatus status) {
-		this.myStatus.add(status);
+
+	public void buildAdjList(Set<TestBoardCellV2> inputList) {
+		this.adjList.addAll(inputList);
 	}
-	
-	private void buildAdjList() {
 		
+	public Set<TestBoardCellV2> getAdjList() {
+		//Set<TestBoardCellV2> tempList = this.adjList;
+		//return tempList;
+		return this.adjList;
 	}
-	
-	
+
 	public int getcRow() {
 		return cRow;
 	}
@@ -50,8 +45,34 @@ public class TestBoardCellV2 {
 	public int getcColumn() {
 		return cColumn;
 	}
-
 	
+	public void addCellStatus(CellStatus status) {
+		this.myStatus.add(status);
+	}
+
+	public boolean isRoom() {
+		return isRoom;
+	}
+
+	public void setRoom(boolean isRoom) {
+		this.isRoom = isRoom;
+	}
+
+	public boolean isOccupied() {
+		return isOccupied;
+	}
+
+	public void setOccupied(boolean isOccupied) {
+		this.isOccupied = isOccupied;
+	}
+
+	public boolean isWalkable() {
+		return isWalkable;
+	}
+
+	public void setWalkable(boolean isWalkable) {
+		this.isWalkable = isWalkable;
+	}
 	
 }
 	/*
@@ -100,12 +121,6 @@ public class TestBoardCellV2 {
 		
 		}
 	}
-	
-
-	private int findCase(boolean onRow, boolean onColumn) {
-		if (!onRow && onColumn) { return 1; }
-		if (onRow && !onColumn) { return 2; }
-		if (onRow && onColumn) 	{ return 3; }
 		
 		//if(edgeCellCaseDefiner())
 		
@@ -129,6 +144,44 @@ public class TestBoardCellV2 {
 		TestBoard.addCellToGrid(this);
  	}
 
+		
+	private int findCase(int onRow, int onColumn) {
+		if ((onRow == 0 && onColumn != 0) || ((onRow == TestBoard.BOARD_HIEGHT && onColumn != 0))) 	{ return 1; }
+		if ((onRow != 0 && onColumn == 0) || ((onColumn == TestBoard.BOARD_WIDTH && onRow != 0))) 	{ return 2; }
+		if (onRow == 0 && onColumn == 0) 															{ return 3; }
+		if (onRow == 0 && onColumn == TestBoard.BOARD_WIDTH) 										{ return 4; }
+		if (onRow == TestBoard.BOARD_HIEGHT && onColumn == 0) 										{ return 5; }
+		if (onRow == TestBoard.BOARD_HIEGHT && onColumn == TestBoard.BOARD_WIDTH) 					{ return 6; }
+		return 0;
+	}
 
+		private void checkAdjCells () {
+	switch (this.findCase(cRow, cColumn)) {
+		case 1: 
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		default:
+			//Our default case is the cell is within normal checkAdj function space.
+			break;
+		}
+	}
+
+		private boolean checkIfBorderCell() {
+		if (this.cRow != 0 && this.cColumn != 0 && this.cColumn != TestBoard.BOARD_HIEGHT && this.cRow != 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 }
 */

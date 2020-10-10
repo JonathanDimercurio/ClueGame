@@ -11,10 +11,7 @@
 
 package experiment;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -27,21 +24,41 @@ public class TestBoard {
 	
 	//private Set<TestBoardCellV2> gameBoard;
 	
-	private Set<TestBoardCellV2> targets;
-	private Set<TestBoardCellV2> visited;
+	private Set<TestBoardCellV2> targets = new HashSet<TestBoardCellV2>();
+	private Set<TestBoardCellV2> visited = new HashSet<TestBoardCellV2>();
 	
 	
 	public TestBoard() {
 		//gameGrid = null;
-		this.genGrid();
+		genGrid();
+		genAdj();
 	}
 		
 
 	
 	
 
-	public void calcTargets( TestBoardCell startCell, int pathlength) {
-	
+	public void calcTargets( TestBoardCellV2 startCell, int pathlength) {
+		while(0 < pathlength) {
+			visited.add(startCell);
+			targets.addAll(startCell.getAdjList());
+			for (TestBoardCellV2 newTargets: targets) {
+				calcTargets(newTargets, pathlength - 1);
+			}
+			visited.addAll(targets);	
+			}
+		
+		/*
+		 * targets.removeAll(visited);
+		for (TestBoardCellV2 statusCheck: visited) {
+				
+			}
+			
+		for (TestBoardCellV2 newTargets: targets) {
+			calcTargets(newTargets, pathlength);
+		}
+		*/
+		visited.removeAll(visited);
 	}
 	
 	public Set<TestBoardCellV2> getTargets() {
@@ -51,47 +68,58 @@ public class TestBoard {
 		return targetList;
 	}
 	
-	public TestBoardCellV2 getCellFromGrid(int x, int y) {
-		return gameGrid[x][y];		
-	}
-	
+
+	//Solid. Working well
 	private void genGrid() {
 		int cRow = 0, cColumn = 0;
-		int control = (TestBoard.BOARD_HIEGHT - 1) * (TestBoard.BOARD_WIDTH - 1);
-		while (cRow * cColumn != control) {
-			if (cColumn < TestBoard.BOARD_WIDTH - 1) {
-				while (cRow < TestBoard.BOARD_WIDTH - 1) {
-					gameGrid[cRow][cColumn] = new TestBoardCellV2(cRow, cColumn);
+		while (cColumn != TestBoard.BOARD_WIDTH) {
+			if (cColumn < TestBoard.BOARD_WIDTH) {
+				while (cRow != TestBoard.BOARD_HIEGHT) {
+					gameGrid[cColumn][cRow] = new TestBoardCellV2(cRow, cColumn);
 					cRow += 1;
 				}
-			}
-			if (cColumn != TestBoard.BOARD_WIDTH - 1) {
+			if (cColumn != TestBoard.BOARD_WIDTH) {
 				cRow = 0;
+				}
 			}
 			cColumn += 1;
 		}
-	}	
+	}
+		
+	//Solid works as intended
+	private void genAdj() {
+		int cRow = 0, cColumn = 0;
+		while (cColumn != TestBoard.BOARD_WIDTH) {
+			if (cColumn < TestBoard.BOARD_WIDTH) {
+				while (cRow != TestBoard.BOARD_HIEGHT) {
+					gameGrid[cColumn][cRow].buildAdjList(checkAdjList(cColumn, cRow));
+					cRow += 1;
+				}
+			if (cColumn != TestBoard.BOARD_WIDTH) {
+				cRow = 0;
+				}
+			}
+			cColumn += 1;
+		}
+	}
+	
+	//Solid. Works well.
+	private Set<TestBoardCellV2> checkAdjList(int x, int y) {
+		Set<TestBoardCellV2> tempAdjList = new HashSet<TestBoardCellV2>();
+		
+		if((x - 1) >= 0) 								{ tempAdjList.add(getCell(x-1,y)); } 
+		if((y - 1) >= 0) 								{ tempAdjList.add(getCell(x,y-1)); }
+		if((x + 1) <= TestBoard.BOARD_WIDTH - 1) 		{ tempAdjList.add(getCell(x+1,y)); }
+		if((y + 1) <= TestBoard.BOARD_HIEGHT - 1) 		{ tempAdjList.add(getCell(x,y+1)); }
+		return tempAdjList;
+	}
 
-}
+	public TestBoardCellV2 getCell(int x, int y) {
+		TestBoardCellV2 tempCell = gameGrid[x][y];
+		return tempCell;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}	
 
 
 
@@ -99,9 +127,20 @@ public class TestBoard {
 */////Obsolete Code 
 
 
+
+
+
 /*
  * 	//private ArrayList<TestBoardCell> row = new ArrayList<TestBoardCell>();
  *	//private ArrayList<ArrayList<TestBoardCell>> gameBoard = new ArrayList<ArrayList<TestBoardCell>>();
+ * 
+ * 
+  		if(cRow - 1 >= 0) 							{ adjList.add(TestBoard.getCell(cRow-1,cColumn)); } 
+		if(cColumn - 1 >= 0) 						{ adjList.add(TestBoard.getCell(cRow,cColumn-1)); }
+		if(cRow + 1 <= TestBoard.BOARD_HIEGHT) 		{ adjList.add(TestBoard.getCell(cRow+1,cColumn)); }
+		if(cColumn + 1 >= TestBoard.BOARD_WIDTH) 	{ adjList.add(TestBoard.getCell(cRow,cColumn+1)); }
+ * 
+ * 
  * 
  * 
 public TestBoard() {

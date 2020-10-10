@@ -26,6 +26,8 @@ class BoardTestExp {
 	@Test
 	void creatTestBoard() {
 	this.tBoard = new TestBoard();
+	tBoard.calcTargets(tBoard.getCell(1, 1), 2);
+	
 	}
 
 	
