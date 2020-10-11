@@ -19,7 +19,9 @@ public class TestBoard {
 	
 	public final static int BOARD_HIEGHT = 4;
 	public final static int BOARD_WIDTH = 4;
+	
 	private TestBoardCellV2[][] gameGrid = new TestBoardCellV2[BOARD_HIEGHT][BOARD_WIDTH];
+	
 	private Set<TestBoardCellV2> targets;
 	private Set<TestBoardCellV2> visited;
 	
