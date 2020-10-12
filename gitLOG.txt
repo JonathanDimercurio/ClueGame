@@ -1,109 +1,37 @@
-commit 132e1d6da61e003e1f435c70a6849477e384f500
+commit 95674c746a4e0dbba382df7f4d3946fb2a9cd54f
 Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Sat Oct 10 09:57:26 2020 -0600
+Date:   Sun Oct 11 21:57:26 2020 -0600
 
-    Update README.md
+    Final push before submission
 
-commit fa06703e352a223662ffe1d77c22967ffea90cad
+commit 0783c19a967dbb432ef342d4bc12cfd531d455b7
 Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Sat Oct 10 09:56:01 2020 -0600
+Date:   Sun Oct 11 18:16:44 2020 -0600
 
-    Finally Done
+    Final gitLog before submission. Skeleton methods almost complete
 
-commit 8346c94feeb8f516f9cc068a3cf06bfc7d52c53a
+commit fa9ee7ab92a44d08fa2fce323d9d42f9644eda32
 Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Sat Oct 10 04:37:59 2020 -0600
+Date:   Sun Oct 11 17:50:39 2020 -0600
 
-    Updating
+    Almost Finished C13A-2
 
-commit f83ca5b839efbe826729afe843dd65b7cedecc14
-Author: Senya Stein <senyarocks11@gmail.com>
-Date:   Fri Oct 9 19:45:00 2020 -0600
-
-    Added .project
-
-commit 9910c771aa4afc5542f64b9ff70185ad288708ab
-Author: Senya Stein <senyarocks11@gmail.com>
-Date:   Fri Oct 9 19:43:30 2020 -0600
-
-    Changes to file structure (I think?)
-
-commit 492ca3a7c5d9846e848574599be760928abc0793
+commit 6d682165029d049c7cad09aff96c6b62b4732958
 Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Fri Oct 9 19:42:16 2020 -0600
+Date:   Sun Oct 11 04:16:42 2020 -0600
 
-    Adjusted File system
+    Testing
 
-commit 369b501a4276ac971a67153a6e605e94bef76455
-Merge: 3f5d227 593e42c
+commit 6541b5623b31aa31e11e7760879fdfc74a285c94
+Merge: 6e49c50 22c599d
 Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Fri Oct 9 19:38:29 2020 -0600
+Date:   Sun Oct 11 04:16:37 2020 -0600
 
-    Merge branch 'C13A-1_CluePaths2' into Main
+    Merge branch 'Main' of https://github.com/JonathanDimercurio/ClueGame into Main
 
-commit 3f5d227be6368f047b4723fe4bb102d8a1bc4952
-Author: Senya Stein <senyarocks11@gmail.com>
-Date:   Fri Oct 9 19:31:28 2020 -0600
-
-    Started JUnit tests for file reads
-
-commit 593e42c0e809cdb148bfe8fb03c66519ba1c5b88
+commit 6e49c50383d4c295d8ad6ba54d2b55d94d7b86b5
 Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Fri Oct 9 19:31:22 2020 -0600
+Date:   Sun Oct 11 02:50:25 2020 -0600
 
-    CheckPoint push
+    Testing commit to main
 
-commit df58e07b57776f3f2564d698f1c3f39deb0be7e0
-Author: Jonathan Dimercurio <70610851+JonathanDimercurio@users.noreply.github.com>
-Date:   Fri Oct 9 17:11:11 2020 -0600
-
-    revisions to TesBoard, implimenting TestBoardCellV2
-
-commit 463281dec3bde78442556ee8ed1bb042e502eed9
-Author: JonathanDimercurio <jonathanDimercurio@mymail.mines.edu>
-Date:   Fri Oct 9 14:09:05 2020 -0600
-
-    submitting changes to TestBoardCellV2
-
-commit d2b659fa290e658b3b1048acad1cb840f394c3eb
-Merge: 0c090e9 94d3dce
-Author: JonathanDimercurio <jonathanDimercurio@mymail.mines.edu>
-Date:   Thu Oct 8 17:49:59 2020 -0600
-
-    Merge branch 'C13A-1_CluePaths2' of github.com:JonathanDimercurio/ClueGame into C13A-1_CluePaths2
-
-commit 0c090e9a881713eee4fdcbbee043ec1aea529e73
-Author: JonathanDimercurio <jonathanDimercurio@mymail.mines.edu>
-Date:   Thu Oct 8 17:36:27 2020 -0600
-
-    Nonsense comment
-
-commit c3c63e09aed0c61a68ef86763ad929ae2ed60f27
-Author: JonathanDimercurio <jonathanDimercurio@mymail.mines.edu>
-Date:   Thu Oct 8 17:32:29 2020 -0600
-
-    Added more files
-
-commit 94d3dce539d77d57a4e85de06c5e35bcd238d972
-Author: Senya Stein <senyarocks11@gmail.com>
-Date:   Tue Oct 6 18:46:05 2020 -0600
-
-    Commented about arraylists vs sets
-
-commit 81e747e22a6ac2fa25049dda5f9fcbc7391fd6c9
-Author: Senya Stein <senyarocks11@gmail.com>
-Date:   Tue Oct 6 18:37:08 2020 -0600
-
-    Fixed typos and added our names
-
-commit a31850135a26af2f570c7f7769b435b672a0e57c
-Author: JonathanDimercurio <jonathanDimercurio@mymail.mines.edu>
-Date:   Tue Oct 6 18:15:53 2020 -0600
-
-    Initiating C13A-1 Paths 2 (Clue Pair)
-
-commit 2bfc1668e83ddc1a67cf72bffab0d1895a37ed4b
-Author: Senya Stein <senyarocks11@gmail.com>
-Date:   Tue Oct 6 18:11:15 2020 -0600
-
-    Fixed spelling error, added our names
