@@ -6,20 +6,20 @@ package tests;
  */
 
 import java.io.FileNotFoundException;
-
 import org.junit.Test;
-import clueGame.BadConfigFormatException;
-import clueGame.Board;
+import clueGame.*;
 
 public class ExceptionTests306 {
 
-	// Test that an exception is thrown for a config file that does not
+	// Test that an exception ++is thrown for a config file that does not
 	// have the same number of columns for each row
 	@Test(expected = BadConfigFormatException.class)
 	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 		// Note that we are using a LOCAL Board variable, because each
 		// test will load different files
 		Board board = Board.getInstance();
+
+
 		board.setConfigFiles("ClueLayoutBadColumns306.csv", "ClueSetup306.txt");
 		// Instead of initialize, we call the two load functions directly.
 		// This is necessary because initialize contains a try-catch.
@@ -48,5 +48,4 @@ public class ExceptionTests306 {
 		board.loadSetupConfig();
 		board.loadLayoutConfig();
 	}
-
 }

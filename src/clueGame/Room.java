@@ -5,6 +5,11 @@ public class Room {
 	private BoardCell centerCell;
 	private BoardCell labelCell;
 	
+	public Room () {
+		this.name = "turkey";
+		//TODO -Fill in dat constructor
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -28,7 +28,6 @@ public class BoardCell {
 	private Set<BoardCell> adjList = new HashSet<BoardCell>();
 	private Set<CellStatus> myStatus = new HashSet<CellStatus>();	
 
-	
 	public DoorDirection getDoorDirection() {
 		return doorDirection;
 	}
@@ -38,7 +37,7 @@ public class BoardCell {
 	}
 
 	public BoardCell (int locXCol, int locYRow) {
-		this.xCol 	= locXCol;
+		this.xCol 		= locXCol;
 		this.yRow		= locYRow;
 		gameBoardData.add(this);
 	}
@@ -47,14 +46,14 @@ public class BoardCell {
 		this.adjList = adjList;
 	}
 
-	public void adjustCellStatus(CellStatus addStat) {
-		this.myStatus.add(addStat);
-		if(addStat == CellStatus.VOID || addStat == CellStatus.BROKENRIDE || addStat == CellStatus.WALL ) {
+	public void adjustCellStatus(CellStatus tempStat) {
+		this.myStatus.add(tempStat);
+		if(tempStat == CellStatus.VOID || tempStat == CellStatus.BROKENRIDE || tempStat == CellStatus.WALL ) {
 			for(BoardCell tempCell: gameBoardData) {
 				tempCell.adjList.remove(this);
 			}
 		}
-		if(addStat == CellStatus.OCCUPIED)
+		if(tempStat == CellStatus.OCCUPIED)
 			this.setOccupied(true);
 	}
 
@@ -97,6 +96,21 @@ public class BoardCell {
 	@Override
 	public String toString() {
 		return "TestBoardCellV2 [xCol=" + xCol + ", yRow=" + yRow + "]";
+	}
+
+	public boolean isLabel() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isRoomCenter() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public char getSecretPassage() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

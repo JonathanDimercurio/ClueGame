@@ -16,14 +16,14 @@ import java.io.FileReader;
 import java.util.*;
 public class Board {
 	
-	//public static Board theInstance = new Board(); 
-	private int numRows, numColumns;
+	//Member variables
+	private int numRows = 25, numColumns = 25;
 	private String layoutConfigFile, setupConfigFile;
 	
-	
-	private BoardCell[][] gameGrid;
+	//Data Structures
+	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
+	private BoardCell[][] gameGrid = new BoardCell[25][25];
 	private String[][] boardStats;
-	private Map<Character, Room> roomMap;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 		
@@ -34,11 +34,18 @@ public class Board {
 	//Singleton Pattern
 	private static Board theInstance = new Board();
 	private Board() {
-		super();
+		genGrid();
+		genAdj();
 	}
 	public void initialize() {
-		
 	}
+	public static Board getInstance() {
+        if (theInstance == null){
+        	theInstance = new Board();
+        }
+        return theInstance;
+	}
+	
 	//*****************
 	
 	public void loadConfigFiles() throws BadConfigFormatException, FileNotFoundException {
@@ -146,9 +153,18 @@ public class Board {
 		this.numColumns = numColumns;
 	}
 	
-	public Room getRoom(char c) {
+	public Map<Character, Room> getRoomMap() {
+		return roomMap;
+	}
+	public Room getRoom(BoardCell c) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Room getRoom(char c) {
+		// TODO Auto-generated method stub
+		Room a = new Room();
+		return a;
 	}
 
 }
