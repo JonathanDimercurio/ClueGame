@@ -9,7 +9,6 @@
  * 
  */
 
-
 package clueGame;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,44 +17,46 @@ import java.util.*;
 public class Board {
 	
 	//public static Board theInstance = new Board(); 
+	private int numRows, numColumns;
+	private String layoutConfigFile, setupConfigFile;
+	
 	
 	private BoardCell[][] gameGrid;
 	private String[][] boardStats;
-	private int numRows, numColumns;
 	private Map<Character, Room> roomMap;
-	
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
-	
-	private String layoutConfigFile, setupConfigFile;
-	
+		
 	//FileReader reader;
 	private Scanner inputFile;
-	private String csvFileInput = "/ClueInit1/ClueInitFiles/data/ClueSetup.txt";
+	private String fileInput;
 		
 	//Singleton Pattern
 	private static Board theInstance = new Board();
-	
 	private Board() {
 		super();
 	}
-	
 	public void initialize() {
 		
 	}
-		
 	//*****************
 	
-	public void loadConfigFiles(String newInput) throws FileNotFoundException {
+	public void loadConfigFiles() throws BadConfigFormatException, FileNotFoundException {
+			//TODO -fill it out playa
 	}
 		
-	private void loadSetupConfig(String newInput) throws FileNotFoundException { 
+	public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
+			//TODO -fill it out playa
 	}
 	
-	private void loadLayoutConfig(String newInput) throws FileNotFoundException {  
+	public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
+			//TODO -fill it out playa
 	}
 	
-
+	public void setConfigFiles(String string, String string2) {
+			// TODO Auto-generated method stub
+	}
+	
 	public void calcTargets(BoardCell startCell, int pathL) {
 		targets = new HashSet<BoardCell>();
 		visited = new HashSet<BoardCell>();
@@ -79,12 +80,9 @@ public class Board {
 		}
 	}
 	
-
 	public Set<BoardCell> getTargets() {
 		return this.targets;
 	}
-	
-
 	//Solid. Working well
 	private void genGrid() {
 		int cRow = 0, cColumn = 0;
@@ -101,8 +99,6 @@ public class Board {
 			cColumn += 1;
 		}
 	}
-		
- 
 	//Generates the adjLists inside gameGrid
 	private void genAdj() {
 		int cRow = 0, cColumn = 0;
@@ -119,7 +115,6 @@ public class Board {
 			cColumn += 1;
 		}
 	}
-	
 	//Solid. Works well.
 	private Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<BoardCell>();
@@ -134,53 +129,26 @@ public class Board {
 		BoardCell tempCell = gameGrid[x][y];
 		return tempCell;
 	}
-
+	
 	public int getNumRows() {
 		return numRows;
 	}
-
+	
 	public void setNumRows(int numRows) {
 		this.numRows = numRows;
 	}
-
+	
 	public int getNumColumns() {
 		return numColumns;
 	}
-
+	
 	public void setNumColumns(int numColumns) {
 		this.numColumns = numColumns;
 	}
 	
-	
+	public Room getRoom(char c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
-
-
-
-//	private void loadConfigFiles() {
-//		try(Scanner txtScanner = new Scanner (new File("ClueSetup.txt"))) {
-//			//while(txtScanner.hasNextLine()) {
-//				//layoutConfigFile+=(txtScanner.nextLine());
-//			//}
-//		
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		try(Scanner csvScanner = new Scanner (new File("ClueLayout.csv"))) {
-//			//while(csvScanner.hasNextLine()) {
-//				//layoutConfigFile+=(csvScanner.nextLine());
-//			//}
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//	}
-/*
-
-*/
-
-

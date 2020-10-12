@@ -29,6 +29,14 @@ public class BoardCell {
 	private Set<CellStatus> myStatus = new HashSet<CellStatus>();	
 
 	
+	public DoorDirection getDoorDirection() {
+		return doorDirection;
+	}
+
+	public void setDoorDirection(DoorDirection doorDirection) {
+		this.doorDirection = doorDirection;
+	}
+
 	public BoardCell (int locXCol, int locYRow) {
 		this.xCol 	= locXCol;
 		this.yRow		= locYRow;
@@ -90,7 +98,5 @@ public class BoardCell {
 	public String toString() {
 		return "TestBoardCellV2 [xCol=" + xCol + ", yRow=" + yRow + "]";
 	}
-	
-	
-	
+
 }

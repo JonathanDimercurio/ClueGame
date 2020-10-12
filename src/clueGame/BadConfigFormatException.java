@@ -12,7 +12,7 @@
 package clueGame;
 
 @SuppressWarnings("serial")
-public class BadConfigurationException extends Exception{
+public class BadConfigFormatException extends Exception{
 
 
 }
