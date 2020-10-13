@@ -61,7 +61,7 @@ public class Board {
 	
 	public void loadConfigFiles() throws BadConfigFormatException {
 			//loadSetupConfig();
-			loadLayoutConfig();
+			//loadLayoutConfig();
 	}
 		
 
@@ -70,7 +70,7 @@ public class Board {
 		try {
 			File layoutInput = new File(setupConfigFile);
 			scanIt = new BufferedReader(new FileReader(layoutInput));
-			while( scanIt.readLine() != null) {
+			while( scanIt.ready()) {
 				String line = scanIt.readLine();
 				this.setupF.add(line);				
 			}
@@ -88,7 +88,7 @@ public class Board {
 		try {
 			File layoutInput = new File(layoutConfigFile);
 			scanIt = new BufferedReader(new FileReader(layoutInput));
-			while( scanIt.readLine() != null) {
+			while( scanIt.ready()) {
 				String line = scanIt.readLine();
 				this.layoutF.add(line);		
 			}
@@ -104,12 +104,13 @@ public class Board {
 	private void checkFormatLayout(ArrayList<String> checkFile) throws BadConfigFormatException {
 		for (String tempF: checkFile) {
 				String[] arrOfStr = tempF.split(",", 50);
-				for (String tempS : arrOfStr) {				
+				for (String tempS : arrOfStr) {
+					if (tempS.startsWith(" ")) {tempS = tempS.substring(1); }
 					if (tempS == "") { throw  new BadConfigFormatException(); }
 					if (tempS == "Y" ) { throw  new BadConfigFormatException(); }
 				}
 			}
-	}
+		}
 
 		
 	
