@@ -10,20 +10,32 @@
  */
 
 package clueGame;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 public class Board {
 	
 	//Member variables
 	private int numRows = 25, numColumns = 25;
 	private String layoutConfigFile, setupConfigFile;
 	
+	private String test1layout;
+	
 	//Data Structures
 	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
 	private BoardCell[][] gameGrid = new BoardCell[25][25];
-	private String[][] boardStats;
+	
+	ArrayList<String> setupF = new ArrayList<String>();
+	ArrayList<String> layoutF = new ArrayList<String>();
+	
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 		
@@ -33,37 +45,92 @@ public class Board {
 		
 	//Singleton Pattern
 	private static Board theInstance = new Board();
+	
 	private Board() {
 		genGrid();
 		genAdj();
 	}
+	
 	public void initialize() {
 	}
 	public static Board getInstance() {
-        if (theInstance == null){
-        	theInstance = new Board();
-        }
         return theInstance;
 	}
 	
 	//*****************
 	
-	public void loadConfigFiles() throws BadConfigFormatException, FileNotFoundException {
-			//TODO -fill it out playa
+	public void loadConfigFiles() throws BadConfigFormatException {
+			//loadSetupConfig();
+			loadLayoutConfig();
 	}
 		
-	public void loadSetupConfig() throws BadConfigFormatException, FileNotFoundException {
-			//TODO -fill it out playa
-	}
+
+	public void loadSetupConfig() throws BadConfigFormatException {
+		BufferedReader scanIt;
+		try {
+			File layoutInput = new File(setupConfigFile);
+			scanIt = new BufferedReader(new FileReader(layoutInput));
+			while( scanIt.readLine() != null) {
+				String line = scanIt.readLine();
+				this.setupF.add(line);				
+			}
+			scanIt.close();
+			} catch  (IOException e1) {
+				e1.printStackTrace();
+			}
+		setupF.remove(null);	
+		checkFormatLayout(setupF);
+		
+		}
 	
-	public void loadLayoutConfig() throws BadConfigFormatException, FileNotFoundException {
-			//TODO -fill it out playa
-	}
+	public void loadLayoutConfig() throws BadConfigFormatException {
+		BufferedReader scanIt;
+		try {
+			File layoutInput = new File(layoutConfigFile);
+			scanIt = new BufferedReader(new FileReader(layoutInput));
+			while( scanIt.readLine() != null) {
+				String line = scanIt.readLine();
+				this.layoutF.add(line);		
+			}
+			scanIt.close();
+			} catch  (IOException e1) {
+				e1.printStackTrace();
+			}
+		layoutF.remove(null);
+		checkFormatLayout(layoutF);
+		
+		}
 	
-	public void setConfigFiles(String string, String string2) {
-			// TODO Auto-generated method stub
+	private void checkFormatLayout(ArrayList<String> checkFile) throws BadConfigFormatException {
+		for (String tempF: checkFile) {
+				String[] arrOfStr = tempF.split(",", 50);
+				for (String tempS : arrOfStr) {				
+					if (tempS == "") { throw  new BadConfigFormatException(); }
+					if (tempS == "Y" ) { throw  new BadConfigFormatException(); }
+				}
+			}
 	}
+
+		
 	
+	public void setConfigFiles(String layoutInput, String setupInput)  throws BadConfigFormatException  {
+		this.layoutConfigFile = "data/" + layoutInput;
+		this.setupConfigFile =  "data/" + setupInput;
+		this.loadConfigFiles();
+	}
+
+	public String getLayoutConfigFile() {
+		return layoutConfigFile;
+	}
+	public String getSetupConfigFile() {
+		return setupConfigFile;
+	}
+	public void setSetupConfigFile(String setupConfigFile) {
+		this.setupConfigFile = setupConfigFile;
+	}
+	public Scanner getInputFile() {
+		return inputFile;
+	}
 	public void calcTargets(BoardCell startCell, int pathL) {
 		targets = new HashSet<BoardCell>();
 		visited = new HashSet<BoardCell>();

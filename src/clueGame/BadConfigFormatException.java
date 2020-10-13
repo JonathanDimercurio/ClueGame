@@ -11,8 +11,9 @@
 
 package clueGame;
 
+import java.io.IOException;
+
 @SuppressWarnings("serial")
 public class BadConfigFormatException extends Exception{
-
-
+	
 }
