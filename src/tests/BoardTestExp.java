@@ -10,16 +10,12 @@
 
 package tests;
  
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import experiment.*;
 
 class BoardTestExp {
-
 	
 	private TestBoard tBoard;
 
@@ -113,11 +109,5 @@ class BoardTestExp {
 		System.out.println("----------dice roll of 3-----------");
 		System.out.println("-----------------------------------");
 	}
-
-	
-	
-	
-	
-
 
 }

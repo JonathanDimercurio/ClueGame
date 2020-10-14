@@ -15,8 +15,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import clueGame.CellStatus;
-
 public class BoardCell {
 	private int yRow, xCol;
 	private char intial;

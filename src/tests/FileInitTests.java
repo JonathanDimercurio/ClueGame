@@ -9,30 +9,19 @@
  * 
  */
 package tests;
-
-
 import static org.junit.Assert.*;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
-import clueGame.DoorDirection;
-import clueGame.Room;
-import experiment.CellStatus;
-import experiment.TestBoard;
-import experiment.TestBoardCellV2;
 
 public class FileInitTests {
 	
@@ -152,7 +141,7 @@ public class FileInitTests {
 	//targetsMixed test for a complex situation where there may be a cell that 
 	//represents a wall and another that is occupied by an opponent
 	@Test
-	public void testTargetsMixed() {
+	public void testTargetsMixedRoomsAndWalkways() {
 		board.getCell(4, 6).setOccupied(true);
 		board.getCell(6, 6).setOccupied(true);
 		board.getCell(6, 5).setOccupied(true);

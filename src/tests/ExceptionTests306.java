@@ -1,22 +1,10 @@
 package tests;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-
 /*
  * This program tests that, when loading config files, exceptions 
  * are thrown appropriately.
  */
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.util.Scanner;
-import java.util.stream.Stream;
-
 import org.junit.Test;
 import clueGame.*;
 

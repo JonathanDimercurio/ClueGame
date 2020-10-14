@@ -2,7 +2,6 @@ package clueGame;
 
 public class Room {
 	private String name;
-	private String type;
 	private char key;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
@@ -14,7 +13,7 @@ public class Room {
 				throw new BadConfigFormatException("Setup File contains improper formated data, please check.       ");
 			}
 		}
-		this.type = new String(inputStrArray[0]);
+		new String(inputStrArray[0]);
 		this.name = new String(inputStrArray[1]);
 		this.key = inputStrArray[2].charAt(0);
 	}
