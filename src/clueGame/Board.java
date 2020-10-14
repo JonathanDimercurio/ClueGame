@@ -203,8 +203,6 @@ public class Board {
 			if (findRoomCenter.getIntial() == roomType) {
 				cellDorr.addToAdjList(findRoomCenter.getThis());
 				findRoomCenter.addToAdjList(cellDorr.getThis());
-				int count = 0;
-				count += 1;
 			}
 		}
 	}
@@ -212,9 +210,9 @@ public class Board {
 	private int doorToRoomLinker(BoardCell cellDoor) {
 		switch(cellDoor.getDoorDirection()) {
 			case UP:
-				return -(this.numRows);
+				return -(this.numRows - 1);
 			case DOWN:
-				return this.numRows;
+				return this.numRows + 1;
 			case LEFT:
 				return  -1;
 			case RIGHT:
@@ -232,23 +230,16 @@ public class Board {
 	}
 	
 	private void linkSecretPassage(BoardCell cellWithSP) {
-			BoardCell 	tempCell1 = null,
-						tempCell2 = null;
-			
 			for (BoardCell linkRoomCenter: BoardCell.roomCenters) {
 				if (cellWithSP.getSecretPassage() == linkRoomCenter.getIntial()) {
-					tempCell1 = linkRoomCenter;
+					cellWithSP.secretPassageCell =  linkRoomCenter;
 				}
-				if (cellWithSP.getIntial() == linkRoomCenter.getIntial()) {
-					tempCell2 = linkRoomCenter;
+			}
+			for (BoardCell linkRoomCenter: BoardCell.roomCenters) {
+				if (linkRoomCenter.getIntial() == linkRoomCenter.getIntial()) {
+				linkRoomCenter.addToAdjList(linkRoomCenter.secretPassageCell);
 				}
-				
-			}
-			
-			if (tempCell1 != null && tempCell2 != null) {
-				tempCell1.addToAdjList(tempCell2);
-				tempCell2.addToAdjList(tempCell1);
-			}
+			}	
 	}
 
 	Set<BoardCell> checkAdjList(int x, int y) {
@@ -291,15 +282,18 @@ public class Board {
 		for (BoardCell node: start.getAdjList()){
 			if(!visited.contains(node)) {
 				visited.add(node);
-				if(node.isRoomCenter())
+				if(node.isRoomCenter() && node.isSecretPassage()) {
 					targets.add(node);
-					else if(path == 1) {
+					targets.add(node.secretPassageCell);
+				} else if(node.isRoomCenter()) {
+					targets.add(node);
+				} else if(path == 1) {
 					if (!node.isOccupied())
 					targets.add(node);
 				} else {
 					dfs(node, path - 1);
 				}
-				visited.remove(node);
+			visited.remove(node);
 			}
 		}
 	}

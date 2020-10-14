@@ -32,6 +32,7 @@ public class BoardCell {
 					isWalkable 	= 	false,
 					isSecretPassage = false;
 	
+	BoardCell secretPassageCell;
 	char secretPassage;
 	
 	//Reference Data structures
