@@ -210,9 +210,9 @@ public class Board {
 	private int doorToRoomLinker(BoardCell cellDoor) {
 		switch(cellDoor.getDoorDirection()) {
 			case UP:
-				return -(this.numRows - 1);
+				return -(this.numColumns);
 			case DOWN:
-				return this.numRows + 1;
+				return this.numColumns;
 			case LEFT:
 				return  -1;
 			case RIGHT:
@@ -230,18 +230,8 @@ public class Board {
 	}
 	
 	private void linkSecretPassage(BoardCell cellWithSP) {
-			for (BoardCell linkRoomCenter: BoardCell.roomCenters) {
-				if (cellWithSP.getSecretPassage() == linkRoomCenter.getIntial()) {
-					cellWithSP.secretPassageCell =  linkRoomCenter;
-				}
-			}
-			for (BoardCell linkRoomCenter: BoardCell.roomCenters) {
-				if (linkRoomCenter.getIntial() == linkRoomCenter.getIntial()) {
-				linkRoomCenter.addToAdjList(linkRoomCenter.secretPassageCell);
-				}
-			}	
+			roomMap.get(cellWithSP.getIntial()).getCenterCell().addToAdjList(roomMap.get(cellWithSP.getSecretPassage()).getCenterCell());
 	}
-
 	Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<BoardCell>();
 		if((x - 1) >= 0) {
@@ -280,7 +270,7 @@ public class Board {
 	
 	public void dfs(BoardCell start, int path) {
 		for (BoardCell node: start.getAdjList()){
-			if(!visited.contains(node)) {
+			if((!visited.contains(node) && !node.isOccupied()) || node.isRoomCenter()) {
 				visited.add(node);
 				if(node.isRoomCenter() && node.isSecretPassage()) {
 					targets.add(node);

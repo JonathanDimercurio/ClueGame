@@ -39,14 +39,7 @@ class BoardTestExp {
 	void creatTestBoard() {
 	this.tBoard = new TestBoard();
 	tBoard.calcTargets(tBoard.getCell(0, 1), 4);
-	for (TestBoardCellV2 temp : tBoard.getTargets()) {
-		System.out.println(temp.toString());
-		}
-	System.out.println("----------dice roll of 4-----------");
-	System.out.println("-----------------------------------");
-	
 	Set<TestBoardCellV2> testTargets = tBoard.getTargets();
-	
 	Assert.assertTrue(testTargets.contains(tBoard.getCell(3,0)));
 	Assert.assertTrue(testTargets.contains(tBoard.getCell(2,3)));
 	Assert.assertTrue(testTargets.contains(tBoard.getCell(1,2)));

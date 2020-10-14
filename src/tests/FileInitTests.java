@@ -101,43 +101,51 @@ public class FileInitTests {
 	//Old Experiment Test#1
 	@Test
 	void testAdjacency() {
-		BoardCell cell = board.getCell(1,6);
-		Set<BoardCell> testList = cell.getAdjList();
-		Assert.assertTrue(testList.contains(board.getCell(0,6)));
-		Assert.assertTrue(testList.contains(board.getCell(1,5)));
-		Assert.assertTrue(testList.contains(board.getCell(1,7)));
-		Assert.assertTrue(testList.contains(board.getCell(2,6)));
-		Assert.assertEquals(4, testList.size());
+		BoardCell cell = board.getCell(14,8);
+		Set<BoardCell> testList1 = cell.getAdjList();
+		Assert.assertTrue(testList1.contains(board.getCell(13,8)));
+		Assert.assertTrue(testList1.contains(board.getCell(15,8)));
+		Assert.assertTrue(testList1.contains(board.getCell(14,7)));
+		Assert.assertTrue(testList1.contains(board.getCell(14,9)));
+		Assert.assertEquals(4, testList1.size());
+		
+		cell = board.getCell(18,6);
+		Set<BoardCell> testList2 = cell.getAdjList();
+		Assert.assertTrue(testList2.contains(board.getCell(16,4)));
+		Assert.assertTrue(testList2.contains(board.getCell(18,7)));
+		Assert.assertEquals(2, testList2.size());
+		
+		
 	}
 
 	//Old Experiment Test#2
 	//Basic Movement with a dice roll of 4, all cells are walkable and unoccupied.
 	@Test
 	void creatTestBoard() {
-	board.calcTargets(board.getCell(0, 1), 4);
+	board.calcTargets(board.getCell(13,12), 4);
 	Set<BoardCell> testTargets = board.getTargets();
-	Assert.assertTrue(testTargets.contains(board.getCell(3,0)));
-	Assert.assertTrue(testTargets.contains(board.getCell(2,3)));
-	Assert.assertTrue(testTargets.contains(board.getCell(1,2)));
-	Assert.assertTrue(testTargets.contains(board.getCell(3,2)));
-	Assert.assertTrue(testTargets.contains(board.getCell(0,3)));
-	Assert.assertTrue(testTargets.contains(board.getCell(1,0)));
+	Assert.assertEquals(20, testTargets.size());
+	Assert.assertTrue(testTargets.contains(board.getCell(13,14)));
+	Assert.assertTrue(testTargets.contains(board.getCell(11,12)));
+	Assert.assertTrue(testTargets.contains(board.getCell(11,10)));
+	Assert.assertTrue(testTargets.contains(board.getCell(10,13)));
+	Assert.assertTrue(testTargets.contains(board.getCell(16,13)));
+	Assert.assertTrue(testTargets.contains(board.getCell(15,14)));
+	Assert.assertTrue(testTargets.contains(board.getCell(14,11)));
+	Assert.assertTrue(testTargets.contains(board.getCell(15,12)));
+	Assert.assertTrue(testTargets.contains(board.getCell(14,9)));
+	Assert.assertTrue(testTargets.contains(board.getCell(10,13)));
+	
 	}
 
 	//Old Experiment Test#4
 	//Target Tests adjacency list is the correct size and has exactly the right elements.
 	@Test
 	public void testTargetsNormal() {
-		BoardCell cell = board.getCell(0,0);
-		board.calcTargets(cell, 3);
-		Set<BoardCell> targets =  board.getTargets();
-		Assert.assertEquals(6, targets.size());
-		Assert.assertTrue(targets.contains(board.getCell(3,0)));
-		Assert.assertTrue(targets.contains(board.getCell(2,1)));
-		Assert.assertTrue(targets.contains(board.getCell(0,1)));
-		Assert.assertTrue(targets.contains(board.getCell(1,2)));
-		Assert.assertTrue(targets.contains(board.getCell(0,3)));
-		Assert.assertTrue(targets.contains(board.getCell(1,0)));
+		board.calcTargets(board.getCell(1,2), 6);
+		Set<BoardCell> testTargets = board.getTargets();
+		Assert.assertEquals(1, testTargets.size());
+		Assert.assertTrue(testTargets.contains(board.getCell(3,6)));
 	}
 	
 	//Old Experiment Test#5
@@ -145,16 +153,19 @@ public class FileInitTests {
 	//represents a wall and another that is occupied by an opponent
 	@Test
 	public void testTargetsMixed() {
-		board.getCell(0,2).adjustCellStatus(clueGame.CellStatus.OCCUPIED);
-		board.getCell(1,2).adjustCellStatus(clueGame.CellStatus.VOID);
-		BoardCell cell= board.getCell(0,3);
-		board.calcTargets(cell,3);
+		board.getCell(4, 6).setOccupied(true);
+		board.getCell(6, 6).setOccupied(true);
+		board.getCell(6, 5).setOccupied(true);
+		board.calcTargets(board.getCell(5, 6),3);
 		Set<BoardCell> targets = board.getTargets();
-		Assert.assertEquals(9, targets.size());
-		Assert.assertTrue(targets.contains(board.getCell(0,0)));
-		Assert.assertTrue(targets.contains(board.getCell(1,1)));
-		Assert.assertTrue(targets.contains(board.getCell(2,2)));
-		Assert.assertTrue(targets.contains(board.getCell(3,3)));
+		board.getCell(4, 6).setOccupied(false);
+		board.getCell(6, 6).setOccupied(false);
+		board.getCell(6, 5).setOccupied(false);
+		Assert.assertEquals(4, targets.size());
+		Assert.assertTrue(targets.contains(board.getCell(4,8)));
+		Assert.assertTrue(targets.contains(board.getCell(3,2)));
+		Assert.assertTrue(targets.contains(board.getCell(6,4)));
+		Assert.assertTrue(targets.contains(board.getCell(5,9)));
 	}
 
 	//Old Experiment Test #6
