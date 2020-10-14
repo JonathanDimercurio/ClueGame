@@ -63,3 +63,6 @@ Room is not valid, please check data/ClueSetupBadFormat306.txt      Wed Oct 14 0
 Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 01:51:02 MDT 2020
 Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 01:51:02 MDT 2020
 Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 01:51:02 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 02:08:19 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 02:08:19 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 02:08:19 MDT 2020

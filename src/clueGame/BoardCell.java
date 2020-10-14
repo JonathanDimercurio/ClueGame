@@ -21,22 +21,28 @@ public class BoardCell {
 	private int yRow, xCol;
 	private char intial;
 	private Room myRoomType;
-	
+	private int key;
+
 	private DoorDirection doorDirection = DoorDirection.NONE;
 	
 	private boolean roomLabel 	= 	false,
 					roomCenter 	= 	false, 
 					isDoorway 	= 	false,
 					isOccupied 	= 	false,	
-					isWalkable 	= 	false;
+					isWalkable 	= 	false,
+					isSecretPassage = false;
 	
 	char secretPassage;
 	
-	//Data structures
-	public static Set<BoardCell> gameBoardData = new HashSet<BoardCell>();
-	public static Map<Integer, BoardCell> mapGameBoardData = new HashMap<Integer, BoardCell>();
-	private Set<BoardCell> adjList = new HashSet<BoardCell>();
-	private Set<CellStatus> myStatus = new HashSet<CellStatus>();	
+	//Reference Data structures
+	public static Set<BoardCell> 			gameBoardData 		= new HashSet<BoardCell>();
+	public static Map<Integer, BoardCell> 	mapGameBoardData 	= new HashMap<Integer, BoardCell>();
+	public static Set<BoardCell>			roomCenters 		= new HashSet<BoardCell>();
+	public static Set<BoardCell>			roomDoors			= new HashSet<BoardCell>();
+	
+	//Instanced Structures
+	private Set<BoardCell>					adjList 			= new HashSet<BoardCell>();
+	private Set<CellStatus> 				myStatus 			= new HashSet<CellStatus>();	
 
 	//Two Parameter constructor 	//Obsolete
 	public BoardCell (int locXCol, int locYRow) {
@@ -46,10 +52,11 @@ public class BoardCell {
 	}
 	
 	//Three parameter constructor 	//Primary
-	public BoardCell (String cellDisc, char cellType, Room setRoomType) {
+	public BoardCell (String cellDisc, char cellType, Room setRoomType, int myKey) {
 		gameBoardData.add(this);
 		this.myRoomType = setRoomType;
 		this.intial = cellType;
+		this.key = myKey;
 		if(this.intial == 'W') {
 			this.isWalkable = true;
 		}
@@ -68,36 +75,42 @@ public class BoardCell {
 			case '*':
 				this.roomCenter = true;
 				Board.getInstance().getRoom(this.intial).setCenterCell(this);
+				BoardCell.roomCenters.add(this);
 				break;
 				
 			case '<':
 				this.doorDirection = DoorDirection.LEFT;
 				this.isDoorway = true;
+				BoardCell.roomDoors.add(this);
 				break;
 				
 			case '^':
 				this.doorDirection = DoorDirection.UP;
 				this.isDoorway = true;
+				BoardCell.roomDoors.add(this);
 				break;
 								
 			case '>':
 				this.doorDirection = DoorDirection.RIGHT;
 				this.isDoorway = true;
+				BoardCell.roomDoors.add(this);
 				break;
 				
 			case'v':
 				this.doorDirection = DoorDirection.DOWN;
 				this.isDoorway = true;
+				BoardCell.roomDoors.add(this);
 				break;
 				
 			default:
 				this.secretPassage = feature;
+				this.isSecretPassage = true;
 				break;
 		}
 	}
 
 	public void setAdjList(Set<BoardCell> adjList) {
-		this.adjList = adjList;
+		this.adjList.addAll(adjList);
 	}
 
 	//Might be obsolete
@@ -116,6 +129,10 @@ public class BoardCell {
 		return isDoorway;
 	}
 
+	public void addToAdjList(BoardCell addCell) {
+		this.adjList.add(addCell);
+	}
+	
 	public Set<BoardCell> getAdjList() {
 		return this.adjList;
 	}
@@ -144,7 +161,7 @@ public class BoardCell {
 		return isOccupied;
 	}
 
-	private void setOccupied(boolean isOccupied) {
+	public void setOccupied(boolean isOccupied) {
 		this.isOccupied = isOccupied;
 	}
 
@@ -170,5 +187,22 @@ public class BoardCell {
 
 	public Room getMyRoomType() {
 		return myRoomType;
+	}
+	
+	public int getKey() {
+		return key;
+	}
+
+	public char getIntial() {
+		return intial;
+	}
+
+	
+	public BoardCell getThis() {
+		return this;
+	}
+	
+	public boolean isSecretPassage() {
+		return isSecretPassage;
 	}
 }

@@ -144,7 +144,7 @@ public class Board {
 		
 	//Start	Grid&Adj block
 	private void genMapGameBoardData(String gbCell, char validatedCell) {
-		BoardCell.mapGameBoardData.put(this.mapIndex++, new BoardCell(gbCell, validatedCell, getRoom(validatedCell)));		
+		BoardCell.mapGameBoardData.put(this.mapIndex, new BoardCell(gbCell, validatedCell, getRoom(validatedCell), mapIndex++));		
 	}
 	
 	private void genGrid() {
@@ -169,18 +169,111 @@ public class Board {
 
 	private void genAdj() {
 		int cRow = 0, cColumn = 0;
-		while (cColumn < numColumns) {
-			if (cColumn < numColumns) {
-				while (cRow != numRows) {
-					gameGrid[cColumn][cRow].setAdjList(checkAdjList(cColumn, cRow));
-					cRow += 1;
+		while (cRow < numRows) {
+				while (cColumn < numColumns) {
+					BoardCell tempCell = gameGrid[cColumn][cRow];
+					doorChecker(tempCell);
+					secretPassageCheck(tempCell);
+					if(tempCell.isWalkable()) {
+						tempCell.setAdjList(checkAdjList(cColumn, cRow));
+					}
+					cColumn += 1;
 				}
-			if (cColumn != numColumns) {
-				cRow = 0;
+			if (cRow != numRows) {
+				cColumn = 0;
 				}
+			cRow += 1;
 			}
-			cColumn += 1;
+	}
+	
+	void doorChecker (BoardCell checkDoor) {
+		if (checkDoor.isDoorway()) {
+			roomFinder(checkDoor);
 		}
+	}
+	
+	private void roomFinder(BoardCell cellDoor) {
+		int indexer = doorToRoomLinker(cellDoor);
+		char roomType = BoardCell.mapGameBoardData.get((cellDoor.getKey() + indexer)).getIntial();
+		roomCenterFinder(cellDoor, roomType);
+	}
+	
+	private void roomCenterFinder(BoardCell cellDorr, char roomType) {
+		for (BoardCell findRoomCenter: BoardCell.roomCenters) {
+			if (findRoomCenter.getIntial() == roomType) {
+				cellDorr.addToAdjList(findRoomCenter.getThis());
+				findRoomCenter.addToAdjList(cellDorr.getThis());
+				int count = 0;
+				count += 1;
+			}
+		}
+	}
+	
+	private int doorToRoomLinker(BoardCell cellDoor) {
+		switch(cellDoor.getDoorDirection()) {
+			case UP:
+				return -(this.numRows);
+			case DOWN:
+				return this.numRows;
+			case LEFT:
+				return  -1;
+			case RIGHT:
+				return 1;
+			default:
+				return 0;
+				
+		}
+	}
+	
+	void secretPassageCheck(BoardCell checkCellForSP) {
+		if (checkCellForSP.isSecretPassage()) {
+			linkSecretPassage(checkCellForSP);			
+		}
+	}
+	
+	private void linkSecretPassage(BoardCell cellWithSP) {
+			BoardCell 	tempCell1 = null,
+						tempCell2 = null;
+			
+			for (BoardCell linkRoomCenter: BoardCell.roomCenters) {
+				if (cellWithSP.getSecretPassage() == linkRoomCenter.getIntial()) {
+					tempCell1 = linkRoomCenter;
+				}
+				if (cellWithSP.getIntial() == linkRoomCenter.getIntial()) {
+					tempCell2 = linkRoomCenter;
+				}
+				
+			}
+			
+			if (tempCell1 != null && tempCell2 != null) {
+				tempCell1.addToAdjList(tempCell2);
+				tempCell2.addToAdjList(tempCell1);
+			}
+	}
+
+	Set<BoardCell> checkAdjList(int x, int y) {
+		Set<BoardCell> tempAdjList = new HashSet<BoardCell>();
+		if((x - 1) >= 0) {
+			if (getSmartCell(x-1,y).isWalkable()){
+			 tempAdjList.add(getSmartCell(x-1,y)); 
+			 } 
+		}
+		if((y - 1) >= 0) {
+			if (getSmartCell(x,y-1).isWalkable()) {
+			tempAdjList.add(getSmartCell(x,y-1));
+			}
+		}
+		if((x + 1) <= numColumns - 1) {
+			if(getSmartCell(x+1,y).isWalkable()) {
+				tempAdjList.add(getSmartCell(x+1,y));	
+			}
+		}
+		if((y + 1) <= numRows - 1) {
+			if(getSmartCell(x,y+1).isWalkable()){ 
+			tempAdjList.add(getSmartCell(x,y+1)); 
+			}
+		}
+		return tempAdjList;
 	}
 	//End	Grid&Adj block
 	
@@ -198,7 +291,9 @@ public class Board {
 		for (BoardCell node: start.getAdjList()){
 			if(!visited.contains(node)) {
 				visited.add(node);
-				if(path == 1) {
+				if(node.isRoomCenter())
+					targets.add(node);
+					else if(path == 1) {
 					if (!node.isOccupied())
 					targets.add(node);
 				} else {
@@ -215,15 +310,7 @@ public class Board {
 	//End	Pathing Algorithm Block
 	
 	
-	private Set<BoardCell> checkAdjList(int x, int y) {
-		Set<BoardCell> tempAdjList = new HashSet<BoardCell>();
-		if((x - 1) >= 0) 					{ tempAdjList.add(getSmartCell(x-1,y)); } 
-		if((y - 1) >= 0) 					{ tempAdjList.add(getSmartCell(x,y-1)); }
-		if((x + 1) <= numColumns - 1) 		{ tempAdjList.add(getSmartCell(x+1,y)); }
-		if((y + 1) <= numRows - 1) 			{ tempAdjList.add(getSmartCell(x,y+1)); }
-		return tempAdjList;
-	}
-	
+	//Start getCell & smartGetCell
 	public BoardCell getCell (int y, int x) {
 		BoardCell tempCell = gameGrid[x][y];
 		return tempCell;
@@ -233,21 +320,17 @@ public class Board {
 		BoardCell tempCell = gameGrid[x][y];
 		return tempCell;
 	}
+	//End 	getCell & smartGetCell	
 	
+	
+	
+	//Generic Getters
 	public int getNumRows() {
 		return numRows;
 	}
 	
-	public void setNumRows(int numRows) {
-		this.numRows = numRows;
-	}
-	
 	public int getNumColumns() {
 		return numColumns;
-	}
-	
-	public void setNumColumns(int numColumns) {
-		this.numColumns = numColumns;
 	}
 	
 	public Map<Character, Room> getRoomMap() {
@@ -268,6 +351,10 @@ public class Board {
 
 	public Room getRoom(char c) {
 		return roomMap.get(c);
+	}
+
+	public Set<BoardCell> getAdjList(int i, int j) {
+		return getCell(i,j).getAdjList();
 	}
 
 }
