@@ -40,7 +40,7 @@ public class TestBoard {
 	
 	
 
-	public void calcTargets( TestBoardCell startCell, int pathlength) {
+	public void calcTargets( TestBoardCellV2 startCell, int pathlength) {
 	
 	}
 	
@@ -57,41 +57,25 @@ public class TestBoard {
 	
 	private void genGrid() {
 		int cRow = 0, cColumn = 0;
-		int control = (TestBoard.BOARD_HIEGHT - 1) * (TestBoard.BOARD_WIDTH - 1);
-		while (cRow * cColumn != control) {
-			if (cColumn < TestBoard.BOARD_WIDTH - 1) {
-				while (cRow < TestBoard.BOARD_WIDTH - 1) {
-					gameGrid[cRow][cColumn] = new TestBoardCellV2(cRow, cColumn);
+		while (cColumn != TestBoard.BOARD_WIDTH) {
+			if (cColumn < TestBoard.BOARD_WIDTH) {
+				while (cRow != TestBoard.BOARD_HIEGHT) {
+					gameGrid[cColumn][cRow] = new TestBoardCellV2(cRow, cColumn);
 					cRow += 1;
 				}
-			}
-			if (cColumn != TestBoard.BOARD_WIDTH - 1) {
+			if (cColumn != TestBoard.BOARD_WIDTH) {
 				cRow = 0;
+				}
 			}
 			cColumn += 1;
 		}
-	}	
+	}
+		
+	public TestBoardCellV2 getCell(int row, int column) {
+		return this.gameBoard[row][column];
+	}
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}	
 
 
 
