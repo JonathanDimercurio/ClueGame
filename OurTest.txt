@@ -1,0 +1,9 @@
+The 'Casino Arcade' room, labeled 'C', has a door that opens to the east
+The 'Parking Lot' room, labeled 'P', has a door that opens south
+The 'Netune's Kingdom' room, labeled 'N', has a door that opens north and east
+The 'Giant Dipper', labeled 'D', has a door that opens west, and east
+The 'Beach', labeled 'B', has three doors taht open north
+The 'Food Court', labeled 'F', has a door that opens west
+The 'Logger's Revenge', labeled 'L' has a door that opens south
+The 'Ticket Stand', labeled 'T' has a door that opens west
+

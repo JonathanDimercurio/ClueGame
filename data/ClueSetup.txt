@@ -1,0 +1,15 @@
+//Rooms and room cards 
+Room, Casino Arcade, C 
+Room, Giant Dipper, D
+Room, Beach, B
+Room, Parking Lot, P 
+Room, Pirate Ship, S
+Room, Food Court, F
+Room, Neptune's Kingdom, N 
+Room, Logger's Revenge, L
+Room, Ticket Stand, T
+Room, Haunted Castle, H
+//Other unused spaces on board
+Space, Broken Ride, Q
+Space, Boardwalk, W
+Space, Umbrella, U

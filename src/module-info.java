@@ -1,6 +1,7 @@
 module ClueGame {
+	exports tests;
 	exports experiment;
-	exports test;
+	exports clueGame;
 
 	requires junit;
 	requires org.junit.jupiter.api;

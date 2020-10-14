@@ -1,0 +1,68 @@
+
+Room is not valid, please check fileTue Oct 13 22:27:18 MDT 2020
+Setup File contains improper formated data, please check.Tue Oct 13 22:27:18 MDT 2020
+Room is not valid, please check data/ClueSetup306.txt      Tue Oct 13 22:30:29 MDT 2020
+Setup File contains improper formated data, please check.       Tue Oct 13 22:30:29 MDT 2020
+Room is not valid, please check data/ClueSetup306.txt      Tue Oct 13 22:31:55 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:51:21 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:51:33 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:51:33 MDT 2020
+Setup File contains improper formated data, please check.       Tue Oct 13 22:51:33 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:51:52 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:52:50 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:54:14 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:54:45 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:55:17 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:55:26 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:55:26 MDT 2020
+Setup File contains improper formated data, please check.       Tue Oct 13 22:55:26 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:55:32 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:56:11 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:56:53 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 22:57:32 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 23:14:05 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 23:14:57 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 23:15:04 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 23:16:04 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 23:16:57 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Tue Oct 13 23:58:17 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:00:44 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:01:06 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:02:06 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:02:08 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:02:23 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:02:53 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:03:36 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:05:00 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:05:19 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:05:41 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:06:04 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:06:43 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:08:37 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:08:37 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:09:50 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:09:51 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:14:21 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:14:50 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:15:09 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:17:36 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:18:23 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:19:30 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:20:16 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:20:42 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:21:18 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:22:26 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:23:43 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:24:38 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:25:19 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:25:45 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 00:27:46 MDT 2020
+A cell within the LayoutConfig file is missing data please check.          Wed Oct 14 01:44:52 MDT 2020
+Room is not valid, please check data/ClueSetup306.txt      Wed Oct 14 01:47:08 MDT 2020
+Room is not valid, please check data/ClueSetupBadFormat306.txt      Wed Oct 14 01:47:08 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 01:51:02 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 01:51:02 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 01:51:02 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 02:08:19 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 02:08:19 MDT 2020
+Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 02:08:19 MDT 2020
