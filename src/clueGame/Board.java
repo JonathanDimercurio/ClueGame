@@ -12,59 +12,61 @@
 package clueGame;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
+
 public class Board {
 	
-	//Member variables
-	private int numRows = 25, numColumns = 25;
-	private String layoutConfigFile, setupConfigFile;
+	//Member variables	
+	private int numRows, numColumns, mapIndex = 0;	
+	private BoardCell[][] gameGrid;
 	
-	private String test1layout;
+	private String layoutConfigFile, setupConfigFile;
 	
 	//Data Structures
 	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
-	private BoardCell[][] gameGrid = new BoardCell[25][25];
-	
 	ArrayList<String> setupF = new ArrayList<String>();
 	ArrayList<String> layoutF = new ArrayList<String>();
-	
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 		
-	//FileReader reader;
-	private Scanner inputFile;
-	private String fileInput;
-		
-	//Singleton Pattern
+	//Start	Singleton Pattern
 	private static Board theInstance = new Board();
 	
 	private Board() {
-		genGrid();
-		genAdj();
 	}
 	
 	public void initialize() {
+		try {
+			this.loadConfigFiles();
+		} catch (BadConfigFormatException e) {
+			
+		}
 	}
+	
 	public static Board getInstance() {
         return theInstance;
 	}
+	//End	Singleton Pattern
 	
-	//*****************
+	
+	//Start Set&Load ConfigFiles block
+	public void setConfigFiles(String layoutInput, String setupInput) {
+			this.layoutConfigFile = "data/" + layoutInput;
+			this.setupConfigFile =  "data/" + setupInput;
+	}
 	
 	public void loadConfigFiles() throws BadConfigFormatException {
-			//loadSetupConfig();
-			//loadLayoutConfig();
+			loadSetupConfig();
+			loadLayoutConfig();
+			genGrid();
+			genAdj();
 	}
-		
-
+	//End 	Set&Load ConfigFiles block
+	
+	
+	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
 		BufferedReader scanIt;
 		try {
@@ -79,10 +81,21 @@ public class Board {
 				e1.printStackTrace();
 			}
 		setupF.remove(null);	
-		checkFormatLayout(setupF);
-		
-		}
+		initSetupConfig(setupF);
+	}
 	
+	public void initSetupConfig(ArrayList<String> checkSetup) throws BadConfigFormatException{
+		for (String temp1: checkSetup) {
+			if (!temp1.startsWith("//")) {
+				Room addRoom = new Room(temp1);
+				roomMap.put(addRoom.getKey(), addRoom);
+			}
+		}
+	}
+	//End 	SetupFile Init&Check block
+	
+	
+	//Start LayoutFile Init&Check block
 	public void loadLayoutConfig() throws BadConfigFormatException {
 		BufferedReader scanIt;
 		try {
@@ -98,40 +111,81 @@ public class Board {
 			}
 		layoutF.remove(null);
 		checkFormatLayout(layoutF);
-		
 		}
 	
-	private void checkFormatLayout(ArrayList<String> checkFile) throws BadConfigFormatException {
-		for (String tempF: checkFile) {
-				String[] arrOfStr = tempF.split(",", 50);
-				for (String tempS : arrOfStr) {
-					if (tempS.startsWith(" ")) {tempS = tempS.substring(1); }
-					if (tempS == "") { throw  new BadConfigFormatException(); }
-					if (tempS == "Y" ) { throw  new BadConfigFormatException(); }
-				}
+	private void checkFormatLayout(ArrayList<String> checkLayoutFullTable) throws BadConfigFormatException {
+		numRows = checkLayoutFullTable.size();
+		this.mapIndex = 0;
+		String[] temp1 = checkLayoutFullTable.get(0).split(",");
+		this.numColumns = temp1.length;
+		this.gameGrid = new BoardCell[this.numColumns][this.numRows];
+		for (String layoutRows: checkLayoutFullTable) {
+			String[] boardCellArray = layoutRows.split(",");
+			if (this.numColumns != boardCellArray.length) { throw new BadConfigFormatException("Columns are not in correct format, please check layoutConfigFile.     "); }
+			for (String boardCellArrayIndex : boardCellArray) {
+					cellValidator(boardCellArrayIndex);
 			}
 		}
+	}
 
-		
+	private void cellValidator(String gbCell) throws BadConfigFormatException {
+		char validateCell = gbCell.charAt(0);
+		checkForRoom(validateCell);
+		genMapGameBoardData(gbCell, validateCell);
+	}
 	
-	public void setConfigFiles(String layoutInput, String setupInput)  throws BadConfigFormatException  {
-		this.layoutConfigFile = "data/" + layoutInput;
-		this.setupConfigFile =  "data/" + setupInput;
-		this.loadConfigFiles();
+	public void checkForRoom(char c) throws BadConfigFormatException {
+		if (!roomMap.containsKey(c)){
+			throw new BadConfigFormatException ("Room is not valid, please check " + this.getSetupConfigFile() + "      ");		
+		} 
+	}
+	//End 	LayoutFile Init&Check block
+	
+		
+	//Start	Grid&Adj block
+	private void genMapGameBoardData(String gbCell, char validatedCell) {
+		BoardCell.mapGameBoardData.put(this.mapIndex++, new BoardCell(gbCell, validatedCell, getRoom(validatedCell)));		
+	}
+	
+	private void genGrid() {
+		int cRow = 0, cColumn = 0, count = 0;
+		while (cRow < numRows) {
+				while (cColumn < numColumns) {
+					gameGrid[cColumn][cRow] = BoardCell.mapGameBoardData.get(count);
+					adjustCellCoords(cColumn, cRow, count++);
+					cColumn += 1;
+				}
+			if (cRow != numRows) {
+				cColumn = 0;
+				}
+			cRow += 1;
+			}	
 	}
 
-	public String getLayoutConfigFile() {
-		return layoutConfigFile;
+	private void adjustCellCoords(int x, int y, int key) {
+		BoardCell.mapGameBoardData.get(key).setxCol(x);
+		BoardCell.mapGameBoardData.get(key).setyRow(y);
 	}
-	public String getSetupConfigFile() {
-		return setupConfigFile;
+
+	private void genAdj() {
+		int cRow = 0, cColumn = 0;
+		while (cColumn < numColumns) {
+			if (cColumn < numColumns) {
+				while (cRow != numRows) {
+					gameGrid[cColumn][cRow].setAdjList(checkAdjList(cColumn, cRow));
+					cRow += 1;
+				}
+			if (cColumn != numColumns) {
+				cRow = 0;
+				}
+			}
+			cColumn += 1;
+		}
 	}
-	public void setSetupConfigFile(String setupConfigFile) {
-		this.setupConfigFile = setupConfigFile;
-	}
-	public Scanner getInputFile() {
-		return inputFile;
-	}
+	//End	Grid&Adj block
+	
+	
+	//Start Pathing Algorithm Block
 	public void calcTargets(BoardCell startCell, int pathL) {
 		targets = new HashSet<BoardCell>();
 		visited = new HashSet<BoardCell>();
@@ -158,49 +212,24 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return this.targets;
 	}
-	//Solid. Working well
-	private void genGrid() {
-		int cRow = 0, cColumn = 0;
-		while (cColumn != numColumns) {
-			if (cColumn < numColumns) {
-				while (cRow != numRows) {
-					gameGrid[cColumn][cRow] = new BoardCell(cColumn, cRow);
-					cRow += 1;
-				}
-			if (cColumn != numColumns) {
-				cRow = 0;
-				}
-			}
-			cColumn += 1;
-		}
-	}
-	//Generates the adjLists inside gameGrid
-	private void genAdj() {
-		int cRow = 0, cColumn = 0;
-		while (cColumn != numColumns) {
-			if (cColumn < numColumns) {
-				while (cRow != numRows) {
-					gameGrid[cColumn][cRow].setAdjList(checkAdjList(cColumn, cRow));
-					cRow += 1;
-				}
-			if (cColumn != numColumns) {
-				cRow = 0;
-				}
-			}
-			cColumn += 1;
-		}
-	}
-	//Solid. Works well.
+	//End	Pathing Algorithm Block
+	
+	
 	private Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<BoardCell>();
-		if((x - 1) >= 0) 								{ tempAdjList.add(getCell(x-1,y)); } 
-		if((y - 1) >= 0) 								{ tempAdjList.add(getCell(x,y-1)); }
-		if((x + 1) <= numColumns - 1) 		{ tempAdjList.add(getCell(x+1,y)); }
-		if((y + 1) <= numRows - 1) 		{ tempAdjList.add(getCell(x,y+1)); }
+		if((x - 1) >= 0) 					{ tempAdjList.add(getSmartCell(x-1,y)); } 
+		if((y - 1) >= 0) 					{ tempAdjList.add(getSmartCell(x,y-1)); }
+		if((x + 1) <= numColumns - 1) 		{ tempAdjList.add(getSmartCell(x+1,y)); }
+		if((y + 1) <= numRows - 1) 			{ tempAdjList.add(getSmartCell(x,y+1)); }
 		return tempAdjList;
 	}
 	
-	public BoardCell getCell(int x, int y) {
+	public BoardCell getCell (int y, int x) {
+		BoardCell tempCell = gameGrid[x][y];
+		return tempCell;
+	}
+	
+	public BoardCell getSmartCell(int x, int y) {
 		BoardCell tempCell = gameGrid[x][y];
 		return tempCell;
 	}
@@ -224,15 +253,21 @@ public class Board {
 	public Map<Character, Room> getRoomMap() {
 		return roomMap;
 	}
+	
 	public Room getRoom(BoardCell c) {
-		// TODO Auto-generated method stub
-		return null;
+		return c.getMyRoomType();
+	}
+		
+	public String getLayoutConfigFile() {
+		return layoutConfigFile;
+	}
+
+	public String getSetupConfigFile() {
+		return setupConfigFile;
 	}
 
 	public Room getRoom(char c) {
-		// TODO Auto-generated method stub
-		Room a = new Room();
-		return a;
+		return roomMap.get(c);
 	}
 
 }

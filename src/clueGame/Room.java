@@ -2,35 +2,45 @@ package clueGame;
 
 public class Room {
 	private String name;
+	private String type;
+	private char key;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
-	
-	public Room () {
-		this.name = "turkey";
-		//TODO -Fill in dat constructor
+		
+	public Room (String addRoom) throws BadConfigFormatException{
+		String[] inputStrArray = addRoom.split(", ");
+		if (!inputStrArray[0].contains("Room"))  {
+			if (!inputStrArray[0].contains("Space")) {
+				throw new BadConfigFormatException("Setup File contains improper formated data, please check.       ");
+			}
+		}
+		this.type = new String(inputStrArray[0]);
+		this.name = new String(inputStrArray[1]);
+		this.key = inputStrArray[2].charAt(0);
 	}
 	
-	public String getName() {
-		return name;
+	public char getKey() {
+		return key;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public BoardCell getCenterCell() {
-		return centerCell;
-	}
-	public void setCenterCell(BoardCell centerCell) {
-		this.centerCell = centerCell;
-	}
+
 	public BoardCell getLabelCell() {
 		return labelCell;
 	}
+
 	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
 	}
-	
-	@Override
-	public String toString() {
-		return "Room [name=" + name + "]";
+
+	public void setCenterCell(BoardCell centerCell) {
+		this.centerCell = centerCell;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public BoardCell getCenterCell() {
+		return centerCell;
+	}
+
 }

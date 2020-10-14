@@ -1,4 +1,3 @@
-
 //Rooms and room cards 
 Room, Casino Arcade, C 
 Room, Giant Dipper, D
@@ -10,12 +9,7 @@ Room, Neptune's Kingdom, N
 Room, Logger's Revenge, L
 Room, Ticket Stand, T
 Room, Haunted Castle, H
-
 //Other unused spaces on board
+Space, Broken Ride, Q
 Space, Boardwalk, W
-Obstacle ("closet"), Broken Ride, BR
-Non walkable space, Umbrella, U
-
-//Secret Passages
-Passage, Sky Glider, SG
-Passage, Bike Path, BP 
+Space, Umbrella, U
