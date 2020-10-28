@@ -1,0 +1,38 @@
+C18A-1 Code Reveiw 
+Senya Stein
+Software Engineering Section C
+
+Questions: 
+
+-Is the code readable and easy to follow? How could we improve this?
+-Is there anything that looks like it could cause future errors? 
+-What portions could use the most refactoring?
+-Does it work the way it should without issues?
+-Are our class/variable/method names consisent and logical?
+
+
+Comments about our code:
+
+-line 189 make public or private
+-door to room linker 
+-way more comments
+-seperate line 233 to make easier to read 
+-more intuitive var names (change x, y, to rows and columns,  genAdj <- line 170) and rename methods
+-refactor methods for scanning in files
+-checkRooms has random long space in string, refactor w "\n" or "\t"
+-like the different methods for linking rooms and doors
+-be clear and comment when function is recursive 
+-make sure each class file has authors' names
+
+
+
+My comments on other groups' code:
+
+-Group 1 has really good comments, makes it easy to see what's going on
+-Group 1 looked for substr of '//' to check for commented lines when reading in - clever 
+-Group 1 needs to refactor calcAdj, or throw code into new method and call it
+-Group 1 added more than the defalt to DoorDirection enum to streamline it
+-Group 2 checks txt format card types to check for formatting 
+-Group 2 has very neat readable code, could use more commenting
+-Group 2 initilization could use a little refactoring/clarifying comments
+-Group 2 handles oopening file and getting info in a single functions, a little redundant code and confusing shrot var names 
