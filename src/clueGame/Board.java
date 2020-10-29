@@ -286,11 +286,12 @@ public class Board {
 		targets = new HashSet<>();
 		visited = new HashSet<>();
 		visited.add(startCell);
-		dfs(startCell, pathL);
+		depthFirstSearch(startCell, pathL);
 		targets.remove(startCell);
 	}
 	
-	public void dfs(BoardCell start, int path) {
+	//Recursive Function
+	public void depthFirstSearch(BoardCell start, int path) {
 		for (BoardCell node: start.getAdjList()){
 			if((!visited.contains(node) && !node.isOccupied()) || node.isRoomCenter()) {
 				visited.add(node);
@@ -302,7 +303,7 @@ public class Board {
 				} else if(path == 1 && (!node.isOccupied())){
 					targets.add(node);
 				} else {
-					dfs(node, path - 1);
+					depthFirstSearch(node, path - 1);
 				}
 			visited.remove(node);
 			}
