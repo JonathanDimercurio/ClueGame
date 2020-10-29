@@ -64,7 +64,7 @@ public class Board {
 			loadSetupConfig();
 			loadLayoutConfig();
 			genGrid();
-			genAdj();
+			generateAdjacencyList();
 	}
 	//End 	Set&Load ConfigFiles block
 	
@@ -188,12 +188,12 @@ public class Board {
 			}	
 	}
 
-	private void adjustCellCoords(int x, int y, int key) {
-		BoardCell.mapGameBoardData.get(key).setxCol(x);
-		BoardCell.mapGameBoardData.get(key).setyRow(y);
+	private void adjustCellCoords(int columns, int rows, int key) {
+		BoardCell.mapGameBoardData.get(key).setxCol(columns);
+		BoardCell.mapGameBoardData.get(key).setyRow(rows);
 	}
 
-	private void genAdj() {
+	private void generateAdjacencyList() {
 		int cRow = 0;
 		int cColumn = 0;
 		while (cRow < numRows) {
