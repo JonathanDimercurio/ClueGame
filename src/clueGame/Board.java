@@ -192,7 +192,7 @@ public class Board {
 			}
 	}
 	
-	void doorChecker (BoardCell checkDoor) {
+	private void doorChecker (BoardCell checkDoor) {
 		if (checkDoor.isDoorway()) {
 			roomFinder(checkDoor);
 		}
@@ -236,7 +236,10 @@ public class Board {
 	}
 	
 	private void linkSecretPassage(BoardCell cellWithSP) {
-			roomMap.get(cellWithSP.getIntial()).getCenterCell().addToAdjList(roomMap.get(cellWithSP.getSecretPassage()).getCenterCell());
+			roomMap.get(cellWithSP.getIntial())
+			.getCenterCell()
+			.addToAdjList(roomMap.get(cellWithSP.getSecretPassage())
+			.getCenterCell());
 	}
 	Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<>();
