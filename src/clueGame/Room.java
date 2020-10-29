@@ -8,13 +8,11 @@ public class Room {
 		
 	public Room (String addRoom) throws BadConfigFormatException{
 		String[] inputStrArray = addRoom.split(", ");
-		if (!inputStrArray[0].contains("Room"))  {
-			if (!inputStrArray[0].contains("Space")) {
+		if (!inputStrArray[0].contains("Room") && !inputStrArray[0].contains("Space")) {
 				throw new BadConfigFormatException("Setup File contains improper formated data, please check.       ");
-			}
 		}
 		new String(inputStrArray[0]);
-		this.name = new String(inputStrArray[1]);
+		this.name = inputStrArray[1];
 		this.key = inputStrArray[2].charAt(0);
 	}
 	
