@@ -294,13 +294,11 @@ public class Board {
 	
 	//Start getCell & smartGetCell
 	public BoardCell getCell (int y, int x) {
-		BoardCell tempCell = gameGrid[x][y];
-		return tempCell;
+		return gameGrid[x][y];
 	}
 	
 	public BoardCell getSmartCell(int x, int y) {
-		BoardCell tempCell = gameGrid[x][y];
-		return tempCell;
+		return gameGrid[x][y];
 	}
 	//End 	getCell & smartGetCell	
 	
