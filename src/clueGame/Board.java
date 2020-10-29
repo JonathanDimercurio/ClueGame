@@ -1,4 +1,4 @@
-/**
+/*
  * Board
  * 
  * Purpose: Board will form, generate and maintain the game board.
@@ -19,10 +19,13 @@ import java.util.*;
 public class Board {
 	
 	//Member variables	
-	private int numRows, numColumns, mapIndex = 0;	
+	private int numRows = 0;
+	private int numColumns = 0;
+	private int mapIndex = 0;	
 	private BoardCell[][] gameGrid;
 	
-	private String layoutConfigFile, setupConfigFile;
+	private String layoutConfigFile;
+	private String setupConfigFile;
 	
 	//Data Structures
 	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
@@ -148,7 +151,9 @@ public class Board {
 	}
 	
 	private void genGrid() {
-		int cRow = 0, cColumn = 0, count = 0;
+		int cRow = 0;
+		int cColumn = 0;
+		int count = 0;
 		while (cRow < numRows) {
 				while (cColumn < numColumns) {
 					gameGrid[cColumn][cRow] = BoardCell.mapGameBoardData.get(count);
@@ -168,7 +173,8 @@ public class Board {
 	}
 
 	private void genAdj() {
-		int cRow = 0, cColumn = 0;
+		int cRow = 0;
+		int cColumn = 0;
 		while (cRow < numRows) {
 				while (cColumn < numColumns) {
 					BoardCell tempCell = gameGrid[cColumn][cRow];
@@ -233,27 +239,19 @@ public class Board {
 			roomMap.get(cellWithSP.getIntial()).getCenterCell().addToAdjList(roomMap.get(cellWithSP.getSecretPassage()).getCenterCell());
 	}
 	Set<BoardCell> checkAdjList(int x, int y) {
-		Set<BoardCell> tempAdjList = new HashSet<BoardCell>();
-		if((x - 1) >= 0) {
-			if (getSmartCell(x-1,y).isWalkable()){
+		Set<BoardCell> tempAdjList = new HashSet<>();
+		if((x - 1) >= 0) && (getSmartCell(x-1,y).isWalkable()){
 			 tempAdjList.add(getSmartCell(x-1,y)); 
 			 } 
-		}
-		if((y - 1) >= 0) {
-			if (getSmartCell(x,y-1).isWalkable()) {
+		if((y - 1) >= 0) && (getSmartCell(x,y-1).isWalkable()) {
 			tempAdjList.add(getSmartCell(x,y-1));
 			}
-		}
-		if((x + 1) <= numColumns - 1) {
-			if(getSmartCell(x+1,y).isWalkable()) {
+		if((x + 1) <= numColumns - 1) && (getSmartCell(x+1,y).isWalkable()) {
 				tempAdjList.add(getSmartCell(x+1,y));	
 			}
-		}
-		if((y + 1) <= numRows - 1) {
-			if(getSmartCell(x,y+1).isWalkable()){ 
+		if((y + 1) <= numRows - 1) && (getSmartCell(x,y+1).isWalkable()){ 
 			tempAdjList.add(getSmartCell(x,y+1)); 
 			}
-		}
 		return tempAdjList;
 	}
 	//End	Grid&Adj block
