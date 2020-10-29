@@ -1,6 +1,36 @@
-Our most significant refactor was ...
+Our most significant refactor was refactoring our methods for scanning in the files.
 
 BEFORE:
+public void loadSetupConfig() throws BadConfigFormatException {
+		BufferedReader scanIt;
+		try {
+			File layoutInput = new File(setupConfigFile);
+			scanIt = new BufferedReader(new FileReader(layoutInput));
+			while( scanIt.ready()) {
+				String line = scanIt.readLine();
+				this.setupF.add(line);				
+			}
+			scanIt.close();
+			} catch  (IOException e1) {
+				e1.printStackTrace();
+			}
+		setupF.remove(null);	
+		initSetupConfig(setupF);
+	}
+}
 
-AFTEr:
+AFTER:
+public void loadSetupConfig() throws BadConfigException {
+File layoutInput = new File(setupConfigFile);
+		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
+			String line = scanIt.readLine();
+			this.setupF.add(line);	
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		setupF.remove(null);
+		initSetupConfig(setupF);
+	}
+}
 
+We did the same refactoring in loadLayoutConfig() as well. 
