@@ -25,13 +25,14 @@ public class BadConfigFormatException extends Exception{
 		super(message);
 		try {
 			Date date = new Date();
+			String errorLog = "errorLog.txt";
 			message = System.lineSeparator() + message + date;
-		    File myObj = new File("errorLog.txt");
+		    File myObj = new File(errorLog);
 		    if (myObj.createNewFile()) {
 		    	System.out.println("File created: " + myObj.getName());
-		    	Files.write(Paths.get("errorLog.txt"), message.getBytes(), StandardOpenOption.APPEND);
+		    	Files.write(Paths.get(errorLog), message.getBytes(), StandardOpenOption.APPEND);
 		    } else {
-		    	Files.write(Paths.get("errorLog.txt"), message.getBytes(), StandardOpenOption.APPEND);
+		    	Files.write(Paths.get(errorLog), message.getBytes(), StandardOpenOption.APPEND);
 		      }
 		    } catch (IOException e) {
 		    	System.out.println("An error occurred.");
