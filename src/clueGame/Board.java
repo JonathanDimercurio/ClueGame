@@ -28,9 +28,9 @@ public class Board {
 	private String setupConfigFile;
 	
 	//Data Structures
-	private Map<Character, Room> roomMap = new HashMap<Character, Room>();
-	ArrayList<String> setupF = new ArrayList<String>();
-	ArrayList<String> layoutF = new ArrayList<String>();
+	private Map<Character, Room> roomMap = new HashMap<>();
+	ArrayList<String> setupF = new ArrayList<>();
+	ArrayList<String> layoutF = new ArrayList<>();
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 		
@@ -240,16 +240,16 @@ public class Board {
 	}
 	Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<>();
-		if((x - 1) >= 0) && (getSmartCell(x-1,y).isWalkable()){
+		if((x - 1) >= 0 && getSmartCell(x-1,y).isWalkable()){
 			 tempAdjList.add(getSmartCell(x-1,y)); 
 			 } 
-		if((y - 1) >= 0) && (getSmartCell(x,y-1).isWalkable()) {
+		if((y - 1) >= 0 && getSmartCell(x,y-1).isWalkable()) {
 			tempAdjList.add(getSmartCell(x,y-1));
 			}
-		if((x + 1) <= numColumns - 1) && (getSmartCell(x+1,y).isWalkable()) {
+		if((x + 1) <= numColumns - 1 && getSmartCell(x+1,y).isWalkable()) {
 				tempAdjList.add(getSmartCell(x+1,y));	
 			}
-		if((y + 1) <= numRows - 1) && (getSmartCell(x,y+1).isWalkable()){ 
+		if((y + 1) <= numRows - 1 && getSmartCell(x,y+1).isWalkable()){ 
 			tempAdjList.add(getSmartCell(x,y+1)); 
 			}
 		return tempAdjList;
@@ -259,8 +259,8 @@ public class Board {
 	
 	//Start Pathing Algorithm Block
 	public void calcTargets(BoardCell startCell, int pathL) {
-		targets = new HashSet<BoardCell>();
-		visited = new HashSet<BoardCell>();
+		targets = new HashSet<>();
+		visited = new HashSet<>();
 		visited.add(startCell);
 		dfs(startCell, pathL);
 		targets.remove(startCell);
@@ -275,8 +275,7 @@ public class Board {
 					targets.add(node.secretPassageCell);
 				} else if(node.isRoomCenter()) {
 					targets.add(node);
-				} else if(path == 1) {
-					if (!node.isOccupied())
+				} else if(path == 1 && (!node.isOccupied())){
 					targets.add(node);
 				} else {
 					dfs(node, path - 1);
