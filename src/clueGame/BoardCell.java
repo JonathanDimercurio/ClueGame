@@ -16,32 +16,33 @@ import java.util.Map;
 import java.util.Set;
 
 public class BoardCell {
-	private int yRow, xCol;
+	private int yRow;
+	private int xCol;
 	private char intial;
 	private Room myRoomType;
 	private int key;
 
 	private DoorDirection doorDirection = DoorDirection.NONE;
 	
-	private boolean roomLabel 	= 	false,
-					roomCenter 	= 	false, 
-					isDoorway 	= 	false,
-					isOccupied 	= 	false,	
-					isWalkable 	= 	false,
-					isSecretPassage = false;
+	private boolean roomLabel 	= 	false;
+	private boolean roomCenter 	= 	false;
+	private boolean	isDoorway 	= 	false;
+	private boolean isOccupied 	= 	false;
+	private boolean isWalkable 	= 	false;
+	private boolean isSecretPassage = false;
 	
 	BoardCell secretPassageCell;
 	char secretPassage;
 	
 	//Reference Data structures
-	public static Set<BoardCell> 			gameBoardData 		= new HashSet<BoardCell>();
-	public static Map<Integer, BoardCell> 	mapGameBoardData 	= new HashMap<Integer, BoardCell>();
-	public static Set<BoardCell>			roomCenters 		= new HashSet<BoardCell>();
-	public static Set<BoardCell>			roomDoors			= new HashSet<BoardCell>();
+	public static Set<BoardCell> 			gameBoardData 		= new HashSet<>();
+	public static Map<Integer, BoardCell> 	mapGameBoardData 	= new HashMap<>();
+	public static Set<BoardCell>			roomCenters 		= new HashSet<>();
+	public static Set<BoardCell>			roomDoors			= new HashSet<>();
 	
 	//Instanced Structures
-	private Set<BoardCell>					adjList 			= new HashSet<BoardCell>();
-	private Set<CellStatus> 				myStatus 			= new HashSet<CellStatus>();	
+	private Set<BoardCell>					adjList 			= new HashSet<>();
+	private Set<CellStatus> 				myStatus 			= new HashSet<>();	
 
 	//Two Parameter constructor 	//Obsolete
 	public BoardCell (int locXCol, int locYRow) {
