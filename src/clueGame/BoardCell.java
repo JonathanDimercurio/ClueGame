@@ -35,6 +35,8 @@ public class BoardCell {
 	char secretPassage;
 	
 	//Reference Data structures
+	//make these package not public
+	//probably remove some of these entirely
 	public static Set<BoardCell> 			gameBoardData 		= new HashSet<>();
 	public static Map<Integer, BoardCell> 	mapGameBoardData 	= new HashMap<>();
 	public static Set<BoardCell>			roomCenters 		= new HashSet<>();

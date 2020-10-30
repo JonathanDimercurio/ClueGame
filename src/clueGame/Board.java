@@ -282,7 +282,7 @@ public class Board {
 	
 	
 	//Start Pathing Algorithm Block
-	public void calcTargets(BoardCell startCell, int pathL) {
+	public void calcTargets(BoardCell startCell, int pathL) { //path length, how many space to move
 		targets = new HashSet<>();
 		visited = new HashSet<>();
 		visited.add(startCell);
