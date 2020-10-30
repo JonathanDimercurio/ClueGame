@@ -18,9 +18,18 @@ import java.util.*;
 
 public class Board {
 	
-	//Member variables	
+	//Member variables
+	/*numRows, numColumns:
+	 *Defaulted to zero. 
+	 *During object instantiation they are set to the dimensions of the board.
+	 */
 	private int numRows = 0;
 	private int numColumns = 0;
+	
+	/* mapIndex"
+	 * mapIndex is used as a key for BoardCell.
+	 * 
+	 */
 	private int mapIndex = 0;	
 	private BoardCell[][] gameGrid;
 	
@@ -40,6 +49,7 @@ public class Board {
 	private Board() {
 	}
 	
+	//Dependencies: loadConfigFiles()
 	public void initialize() {
 		try {
 			this.loadConfigFiles();
@@ -55,11 +65,14 @@ public class Board {
 	
 	
 	//Start Set&Load ConfigFiles block
+	//setConfigFiles - Purpose: prefix file path strings with appropriate directories.
+	//Dependencies: None.
 	public void setConfigFiles(String layoutInput, String setupInput) {
 			this.layoutConfigFile = "data/" + layoutInput;
 			this.setupConfigFile =  "data/" + setupInput;
 	}
 	
+	//
 	public void loadConfigFiles() throws BadConfigFormatException {
 			loadSetupConfig();
 			loadLayoutConfig();
@@ -71,30 +84,21 @@ public class Board {
 	
 	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
-		//BufferedReader scanIt;
-		//try {
-			//File layoutInput = new File(setupConfigFile);
-			//scanIt = new BufferedReader(new FileReader(layoutInput));
-			//while( scanIt.ready()) {
-			//	String line = scanIt.readLine();
-			//	this.setupF.add(line);				
-			//}
-			//scanIt.close();
-			//} catch  (IOException e1) {
-			//	e1.printStackTrace();
-			//}
-		//setupF.remove(null);	
-		//initSetupConfig(setupF);
-		
-		File layoutInput = new File(setupConfigFile);
-		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
-			String line = scanIt.readLine();
-			this.setupF.add(line);	
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		setupF.remove(null);
+		BufferedReader scanIt;
+		try {
+			File layoutInput = new File(setupConfigFile);
+			scanIt = new BufferedReader(new FileReader(layoutInput));
+			while( scanIt.ready()) {
+				String line = scanIt.readLine();
+				this.setupF.add(line);				
+			}
+			scanIt.close();
+			} catch  (IOException e1) {
+				e1.printStackTrace();
+			}
+		setupF.remove(null);	
 		initSetupConfig(setupF);
+
 	}
 	
 	public void initSetupConfig(ArrayList<String> checkSetup) throws BadConfigFormatException{
@@ -110,7 +114,7 @@ public class Board {
 	
 	//Start LayoutFile Init&Check block
 	public void loadLayoutConfig() throws BadConfigFormatException {
-		/*BufferedReader scanIt;
+		BufferedReader scanIt;
 		try {
 			File layoutInput = new File(layoutConfigFile);
 			scanIt = new BufferedReader(new FileReader(layoutInput));
@@ -125,20 +129,9 @@ public class Board {
 		layoutF.remove(null);
 		checkFormatLayout(layoutF);
 		}
-		*/
-		File layoutInput = new File(layoutConfigFile);
-		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
-			String line = scanIt.readLine();
-			this.layoutF.add(line);	
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		layoutF.remove(null);
-		checkFormatLayout(layoutF);
-	}
-	
+
 	private void checkFormatLayout(ArrayList<String> checkLayoutFullTable) throws BadConfigFormatException {
-		numRows = checkLayoutFullTable.size();
+		this.numRows = checkLayoutFullTable.size();
 		this.mapIndex = 0;
 		String[] temp1 = checkLayoutFullTable.get(0).split(",");
 		this.numColumns = temp1.length;
@@ -250,7 +243,7 @@ public class Board {
 		}
 	}
 	
-	void secretPassageCheck(BoardCell checkCellForSP) {
+	private void secretPassageCheck(BoardCell checkCellForSP) {
 		if (checkCellForSP.isSecretPassage()) {
 			linkSecretPassage(checkCellForSP);			
 		}
@@ -262,7 +255,8 @@ public class Board {
 			.addToAdjList(roomMap.get(cellWithSP.getSecretPassage())
 			.getCenterCell());
 	}
-	Set<BoardCell> checkAdjList(int x, int y) {
+	
+	private Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<>();
 		if((x - 1) >= 0 && getSmartCell(x-1,y).isWalkable()){
 			 tempAdjList.add(getSmartCell(x-1,y)); 
