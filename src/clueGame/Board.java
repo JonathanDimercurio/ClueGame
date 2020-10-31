@@ -90,6 +90,9 @@ public class Board {
 		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
 			String line = scanIt.readLine();
 			this.setupF.add(line);	
+			while( scanIt.ready()) {
+				this.layoutF.add(line);		
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -130,6 +133,9 @@ public class Board {
 		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
 			String line = scanIt.readLine();
 			this.layoutF.add(line);	
+			while( scanIt.ready()) {
+				this.layoutF.add(line);		
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -262,7 +268,7 @@ public class Board {
 			.addToAdjList(roomMap.get(cellWithSP.getSecretPassage())
 			.getCenterCell());
 	}
-	Set<BoardCell> checkAdjList(int x, int y) {
+	private Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<>();
 		if((x - 1) >= 0 && getSmartCell(x-1,y).isWalkable()){
 			 tempAdjList.add(getSmartCell(x-1,y)); 
