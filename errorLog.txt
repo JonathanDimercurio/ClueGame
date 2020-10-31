@@ -81,3 +81,4 @@ Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14
 Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 16:59:55 MDT 2020
 Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 16:59:55 MDT 2020
 Columns are not in correct format, please check layoutConfigFile.     Wed Oct 14 16:59:55 MDT 2020
+Room is not valid, please check data/ClueSetup.txt      Fri Oct 30 19:09:14 MDT 2020

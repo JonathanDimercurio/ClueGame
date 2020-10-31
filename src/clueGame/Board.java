@@ -88,10 +88,9 @@ public class Board {
 		
 		File layoutInput = new File(setupConfigFile);
 		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
-			String line = scanIt.readLine();
-			this.setupF.add(line);	
 			while( scanIt.ready()) {
-				this.layoutF.add(line);		
+				String line = scanIt.readLine();
+				this.setupF.add(line);		
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -130,10 +129,9 @@ public class Board {
 		}
 		*/
 		File layoutInput = new File(layoutConfigFile);
-		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
-			String line = scanIt.readLine();
-			this.layoutF.add(line);	
+		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){	
 			while( scanIt.ready()) {
+				String line = scanIt.readLine();
 				this.layoutF.add(line);		
 			}
 		} catch (IOException e1) {
