@@ -79,12 +79,18 @@ public class Board {
 			e1.printStackTrace();
 		}
 		setupF.remove(null);
-		initSetupConfig(setupF);
+		initGameAssets(setupF);
 	}
 	
-	// Need comments
-	// Reworked during C19A
-	public void initSetupConfig(ArrayList<String> checkSetup) throws BadConfigFormatException{
+	//perhaps check formatting here and direct strings to correct places0o
+	
+	/* initGameAssets(ArrayList<String>)
+	 * Purpose:	initSetupConfig takes an ArrayList of Strings, a line from the
+	 * 			SetupConfig file, line by line, then checks for commenting inside the file.
+	 * 			Finally it passes the string to constructDeck, then adds rooms objects to 
+	 * 			roomMap. 
+	 */
+	public void initGameAssets(ArrayList<String> checkSetup) throws BadConfigFormatException{
 		for (String temp1: checkSetup) {
 			if (!temp1.startsWith("//")) {
 				constructDeck(temp1);
@@ -92,6 +98,9 @@ public class Board {
 					Room addRoom = new Room(temp1);
 					roomMap.put(addRoom.getKey(), addRoom);
 				}				
+			}
+			if (temp1.startsWith("Person")) {
+				addPlayerList(temp1);
 			}
 		}
 	}
