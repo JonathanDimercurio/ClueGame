@@ -10,13 +10,15 @@
 package clueGame;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public class Card {
 
-	static private String totalRooms = new String();
-	static private String totalPersons = new String();
-	static private String totalWeapons = new String();
+	static private List<Card> undealtRooms = new Vector<Card>();
+	static private List<Card> undealtPeople = new Vector<Card>();
+	static private List<Card> undealtWeapons = new Vector<Card>();
 	private String cardName;
 	private String cardSymbol;
 
@@ -40,15 +42,15 @@ public class Card {
 		switch (checkType) {
 			case "Person":
 				this.cardtype = CardType.PERSON;
-				Card.totalPersons.concat(this.cardSymbol + '-');
+				Card.undealtPeople.add(this);
 				break;
 			case "Weapon":
 				this.cardtype = CardType.WEAPON;
-				Card.totalWeapons.concat(this.cardSymbol + '-');
+				Card.undealtWeapons.add(this);
 				break;
 			case "Room":
 				this.cardtype = CardType.ROOM;
-				Card.totalRooms.concat(this.cardSymbol + '-');
+				Card.undealtRooms.add(this);
 				break;
 			default:
 				new BadConfigFormatException ("Card is not valid, please check ClueSetup.txt for errors.");

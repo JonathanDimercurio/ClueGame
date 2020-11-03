@@ -314,10 +314,7 @@ public class Board {
 		}
 	}
 	
-	private void deal() {
-		Random timR = new Random();
-		timR % Card.getTotalPersons()
-		
+	private void deal() {		
 	}
 	//End	Deck methods
 	
