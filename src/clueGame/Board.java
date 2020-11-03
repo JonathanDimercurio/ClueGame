@@ -71,21 +71,6 @@ public class Board {
 	
 	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
-		//BufferedReader scanIt;
-		//try {
-			//File layoutInput = new File(setupConfigFile);
-			//scanIt = new BufferedReader(new FileReader(layoutInput));
-			//while( scanIt.ready()) {
-			//	String line = scanIt.readLine();
-			//	this.setupF.add(line);				
-			//}
-			//scanIt.close();
-			//} catch  (IOException e1) {
-			//	e1.printStackTrace();
-			//}
-		//setupF.remove(null);	
-		//initSetupConfig(setupF);
-		
 		File layoutInput = new File(setupConfigFile);
 		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
 			while( scanIt.ready()) {
@@ -112,22 +97,6 @@ public class Board {
 	
 	//Start LayoutFile Init&Check block
 	public void loadLayoutConfig() throws BadConfigFormatException {
-		/*BufferedReader scanIt;
-		try {
-			File layoutInput = new File(layoutConfigFile);
-			scanIt = new BufferedReader(new FileReader(layoutInput));
-			while( scanIt.ready()) {
-				String line = scanIt.readLine();
-				this.layoutF.add(line);		
-			}
-			scanIt.close();
-			} catch  (IOException e1) {
-				e1.printStackTrace();
-			}
-		layoutF.remove(null);
-		checkFormatLayout(layoutF);
-		}
-		*/
 		File layoutInput = new File(layoutConfigFile);
 		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){	
 			while( scanIt.ready()) {
