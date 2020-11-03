@@ -28,6 +28,7 @@ public class Board {
 	private Map<Character, Room> roomMap = new HashMap<>();
 	ArrayList<String> setupF = new ArrayList<>();
 	ArrayList<String> layoutF = new ArrayList<>();
+	private List<Card> deck = new Vector<>();
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 		
@@ -81,21 +82,16 @@ public class Board {
 		initSetupConfig(setupF);
 	}
 	
+	// Need comments
+	// Reworked during C19A
 	public void initSetupConfig(ArrayList<String> checkSetup) throws BadConfigFormatException{
 		for (String temp1: checkSetup) {
 			if (!temp1.startsWith("//")) {
-				Room addRoom = new Room(temp1);
-				roomMap.put(addRoom.getKey(), addRoom);
-			}
-		}
-	}
-	
-	//Reworked initSetupConfigFile to handle all aspects of the file, not just rooms.
-	public void initSetupConfigFile(ArrayList<String> checkSetup) throws BadConfigFormatException{
-		for (String temp1: checkSetup) {
-			if (!temp1.startsWith("//")) {
-				Room addRoom = new Room(temp1);
-				roomMap.put(addRoom.getKey(), addRoom);
+				constructDeck(temp1);
+				if (temp1.startsWith("Room") || temp1.startsWith("Space")) {
+					Room addRoom = new Room(temp1);
+					roomMap.put(addRoom.getKey(), addRoom);
+				}				
 			}
 		}
 	}
@@ -309,11 +305,18 @@ public class Board {
 	
 	
 	//Start Deck methods
-	private void constructDeck() {
-		
+	private void constructDeck(String addCardType) {
+		String[] spliter = new String[4];
+		spliter = addCardType.split(", ");
+		if (!spliter[0].equals("Space")) {
+			Card tempCard = new Card(spliter[0],spliter[1],spliter[2]);
+			this.deck.add(tempCard);
+		}
 	}
 	
 	private void deal() {
+		Random timR = new Random();
+		timR % Card.getTotalPersons()
 		
 	}
 	//End	Deck methods

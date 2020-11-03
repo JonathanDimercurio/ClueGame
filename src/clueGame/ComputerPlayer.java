@@ -6,6 +6,7 @@ public class ComputerPlayer extends Player {
 		super(playerName, playerColor, playerPositon);
 		// TODO Auto-generated constructor stub
 	}
+	
 	void updateHand(Card newCard) {
 		
 	}
