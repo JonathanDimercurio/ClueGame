@@ -16,16 +16,16 @@ import java.util.Vector;
 
 public class Card {
 
+	//Data Structures and member fields
 	static private List<Card> undealtRooms = new Vector<Card>();
 	static private List<Card> undealtPeople = new Vector<Card>();
 	static private List<Card> undealtWeapons = new Vector<Card>();
 	private String cardName;
 	private String cardSymbol;
-
-	static private Map<String, Card> totalDeck = new HashMap<>();
 	CardType cardtype = CardType.NONE;
+	static private Map<String, Card> totalDeck = new HashMap<>();
 
-		
+	//Constructor
 	public Card(String cardType, String cardID, String cardSym) {
 		this.cardName = new String(cardID);
 		this.cardSymbol = new String(cardSym);
@@ -33,7 +33,7 @@ public class Card {
 		checkType(cardType);
 	}
 	
-	/* checkType(String)
+	/*checkType(String)
 	 * Purpose:	This method checks, and sets each card type.
 	 * 			If an incorrect card type attempts to enter
 	 * 			the deck, an exception is created.
@@ -58,7 +58,7 @@ public class Card {
 		}
 	}
 
-	/* equals(...)
+	/*equals(...)
 	 * Purpose: The object compares a parameter Card type
 	 * 			to it's self and returns true if it is the same
 	 */
@@ -70,6 +70,34 @@ public class Card {
 		}
 	}
 
-	
-	
+
+	//Getters
+	public static List<Card> getUndealtRooms() {
+		return undealtRooms;
+	}
+
+	public static List<Card> getUndealtPeople() {
+		return undealtPeople;
+	}
+
+	public static List<Card> getUndealtWeapons() {
+		return undealtWeapons;
+	}
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public String getCardSymbol() {
+		return cardSymbol;
+	}
+
+
+	public CardType getCardtype() {
+		return cardtype;
+	}
+	public static Map<String, Card> getTotalDeck() {
+		return totalDeck;
+	}
+
 }
