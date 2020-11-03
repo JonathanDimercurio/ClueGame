@@ -1,12 +1,9 @@
-/*
- * Board
- * 
+/* Board
  * Purpose: Board will form, generate and maintain the game board.
  * 			Skeleton version with TestBoardCell workable methods and fields.
  * 
  * @author Jonathan Dimercurio
- * @author Senya Stein
- * 
+ * @author Senya Stein 
  */
 
 package clueGame;
@@ -85,6 +82,16 @@ public class Board {
 	}
 	
 	public void initSetupConfig(ArrayList<String> checkSetup) throws BadConfigFormatException{
+		for (String temp1: checkSetup) {
+			if (!temp1.startsWith("//")) {
+				Room addRoom = new Room(temp1);
+				roomMap.put(addRoom.getKey(), addRoom);
+			}
+		}
+	}
+	
+	//Reworked initSetupConfigFile to handle all aspects of the file, not just rooms.
+	public void initSetupConfigFile(ArrayList<String> checkSetup) throws BadConfigFormatException{
 		for (String temp1: checkSetup) {
 			if (!temp1.startsWith("//")) {
 				Room addRoom = new Room(temp1);
@@ -235,6 +242,7 @@ public class Board {
 			.addToAdjList(roomMap.get(cellWithSP.getSecretPassage())
 			.getCenterCell());
 	}
+	
 	private Set<BoardCell> checkAdjList(int x, int y) {
 		Set<BoardCell> tempAdjList = new HashSet<>();
 		if((x - 1) >= 0 && getSmartCell(x-1,y).isWalkable()){
@@ -299,6 +307,16 @@ public class Board {
 	}
 	//End 	getCell & smartGetCell	
 	
+	
+	//Start Deck methods
+	private void constructDeck() {
+		
+	}
+	
+	private void deal() {
+		
+	}
+	//End	Deck methods
 	
 	
 	//Generic Getters
