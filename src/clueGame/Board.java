@@ -99,9 +99,6 @@ public class Board {
 					roomMap.put(addRoom.getKey(), addRoom);
 				}				
 			}
-			if (temp1.startsWith("Person")) {
-				addPlayerList(temp1);
-			}
 		}
 	}
 	//End 	SetupFile Init&Check block
