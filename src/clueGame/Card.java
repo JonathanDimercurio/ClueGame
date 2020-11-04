@@ -6,10 +6,10 @@
  * @author Jonathan Dimercurio
  * @author Senya Stein 
  */
-
 package clueGame;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -17,12 +17,12 @@ import java.util.Vector;
 public class Card {
 
 	//Data Structures and member fields
-	static private List<Card> undealtRooms = new Vector<Card>();
-	static private List<Card> undealtPeople = new Vector<Card>();
-	static private List<Card> undealtWeapons = new Vector<Card>();
+	static private List<Card> totalRooms 	= new Vector<Card>();
+	static private List<Card> totalPeople 	= new Vector<Card>();
+	static private List<Card> totalWeapons 	= new Vector<Card>();
 	private String cardName;
 	private String cardSymbol;
-	CardType cardtype = CardType.NONE;
+	private CardType cardtype = CardType.NONE;
 	static private Map<String, Card> totalDeck = new HashMap<>();
 
 	//Constructor
@@ -42,15 +42,15 @@ public class Card {
 		switch (checkType) {
 			case "Person":
 				this.cardtype = CardType.PERSON;
-				Card.undealtPeople.add(this);
+				Card.totalPeople.add(this);
 				break;
 			case "Weapon":
 				this.cardtype = CardType.WEAPON;
-				Card.undealtWeapons.add(this);
+				Card.totalWeapons.add(this);
 				break;
 			case "Room":
 				this.cardtype = CardType.ROOM;
-				Card.undealtRooms.add(this);
+				Card.totalRooms.add(this);
 				break;
 			default:
 				new BadConfigFormatException ("Card is not valid, please check ClueSetup.txt for errors.");
@@ -70,33 +70,32 @@ public class Card {
 		}
 	}
 
-
 	//Getters
-	public static List<Card> getUndealtRooms() {
-		return undealtRooms;
+	public static List<Card> getTotalRooms() {
+		return totalRooms;
 	}
-
-	public static List<Card> getUndealtPeople() {
-		return undealtPeople;
+	public static List<Card> getTotalPeople() {
+		return totalPeople;
 	}
-
-	public static List<Card> getUndealtWeapons() {
-		return undealtWeapons;
+	public static List<Card> getTotalWeapons() {
+		return totalWeapons;
 	}
-
 	public String getCardName() {
 		return cardName;
 	}
-
 	public String getCardSymbol() {
 		return cardSymbol;
 	}
-
 	public CardType getCardtype() {
 		return cardtype;
 	}
 	public static Map<String, Card> getTotalDeck() {
 		return totalDeck;
+	}
+
+		@Override
+	public String toString() {
+		return "Card [cardName=" + cardName + ", cardSymbol=" + cardSymbol + "]";
 	}
 
 }

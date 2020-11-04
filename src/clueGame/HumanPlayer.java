@@ -1,3 +1,7 @@
+/* HumanPlayer, implements parent class, Player.
+ * Purpose:	
+ * Authors:	Jonathan Dimercurio, Senya Stein
+ */
 package clueGame;
 
 public class HumanPlayer extends Player {
@@ -14,6 +18,15 @@ public class HumanPlayer extends Player {
 	}
 	
 	void updateHand(Card newCard) {
-		
+		//TODO
+	}
+
+	public static String getChoice() {
+		return choice;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " human";
 	}
 }	

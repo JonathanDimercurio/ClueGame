@@ -25,12 +25,13 @@ public class Board {
 	private String setupConfigFile;
 	
 	//Data Structures
-	private Map<Character, Room> roomMap = new HashMap<>();
-	ArrayList<String> setupF = new ArrayList<>();
-	ArrayList<String> layoutF = new ArrayList<>();
-	private List<Card> deck = new Vector<>();
-	private Set<BoardCell> targets;
-	private Set<BoardCell> visited;
+	private Map<Character, Room> 	roomMap = new HashMap<>();
+	private ArrayList<String> 		setupF 	= new ArrayList<>();
+	private ArrayList<String> 		layoutF = new ArrayList<>();
+	private List<Card> 				deck 	= new Vector<>();
+	private Set<Player>				players = new HashSet<>();
+	private Set<BoardCell> 			targets;
+	private Set<BoardCell> 			visited;
 		
 	//Start	Singleton Pattern
 	private static Board theInstance = new Board();
@@ -61,13 +62,12 @@ public class Board {
 	public void loadConfigFiles() throws BadConfigFormatException {
 			loadSetupConfig();
 			loadLayoutConfig();
-			genGrid();
+			generateGrid();
 			generateAdjacencyList();
 			generatePlayerList();
+			deal();
 	}
-
 	//End 	Set&Load ConfigFiles block
-	
 	
 	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
@@ -95,7 +95,7 @@ public class Board {
 	public void initGameAssets(ArrayList<String> checkSetup) throws BadConfigFormatException{
 		for (String temp1: checkSetup) {
 			if (!temp1.startsWith("//")) {
-				constructDeck(temp1);
+				constructDecksByCardType(temp1);
 				if (temp1.startsWith("Room") || temp1.startsWith("Space")) {
 					Room addRoom = new Room(temp1);
 					roomMap.put(addRoom.getKey(), addRoom);
@@ -155,7 +155,7 @@ public class Board {
 		BoardCell.mapGameBoardData.put(this.mapIndex, new BoardCell(gbCell, validatedCell, getRoom(validatedCell), mapIndex++));		
 	}
 	
-	private void genGrid() {
+	private void generateGrid() {
 		int cRow = 0;
 		int cColumn = 0;
 		int count = 0;
@@ -313,7 +313,7 @@ public class Board {
 	
 	
 	//Start Deck methods
-	private void constructDeck(String addCardType) {
+	private void constructDecksByCardType(String addCardType) {
 		String[] spliter = new String[4];
 		spliter = addCardType.split(", ");
 		if (!spliter[0].equals("Space")) {
@@ -321,17 +321,79 @@ public class Board {
 			this.deck.add(tempCard);
 		}
 	}
-	
-	private void deal() {		
-	}
-	//End	Deck methods
-	
-	private void generatePlayerList() {
-		 ArrayList<Card> undealtPeople = new ArrayList<Card>(Card.getUndealtPeople());
-		 
+		
+	private void deal() {
+		Set<Card> theDeck = new HashSet<Card>();
+		theDeck.addAll(shuffleCardsAndRemoveSolution());
 		
 	}
+	
+	private HashSet<Card> shuffleCardsAndRemoveSolution() {
+		ArrayList<Vector<Card>> individualDecks = new ArrayList<Vector<Card>>();
+		individualDecks.add(new Vector<Card>(Card.getTotalRooms()));
+		individualDecks.add(new Vector<Card>(Card.getTotalPeople()));
+		individualDecks.add(new Vector<Card>(Card.getTotalWeapons()));
+		
+		for (Vector<Card> eachDeck: individualDecks) {
+			Collections.shuffle(eachDeck);
+		}
+		
+		generateSolution(individualDecks);
+		return shuffleDecksTogether(individualDecks);
+	}
+	
+	/* generateSolution()
+	 * Purpose: This method will establish the winning combination of cards.
+	 * 			After doing so, it removes them from the List, and returns
+	 * 			a modified List of cards.
+	 */
+	private void generateSolution(ArrayList<Vector<Card>> allDecks) {
+		
+	}
+	
+	/* shuffleDeck()
+	 * Purpose:	Here we shuffle all the totalDecks found at the static
+	 * 			fields of the Card class. 
+	 */
+	private HashSet<Card> shuffleDecksTogether(ArrayList<Vector<Card>> tempAllDecks) {
+		return null;
+	}
+	
+	
+	//End	Deck methods
+	
+	//
+	private void generatePlayerList() {
+		unDealtPlayerList();
+	}
 
+	
+	/* generatePlayerList()
+	 * Purpose:	This method takes the total of people
+	 */
+	private void unDealtPlayerList() {
+		 ArrayList<Card> undealtPeople = new ArrayList<Card>(Card.getTotalPeople());
+		 for (Card tempCard: undealtPeople) {
+			 if (checkForHumanPlayer(tempCard)) {
+				 Player hPlayer = new HumanPlayer(tempCard.getCardName(), tempCard.getCardSymbol());
+				 players.add(hPlayer);
+			 } else {
+				 players.add(new ComputerPlayer(tempCard.getCardName(), tempCard.getCardSymbol()));
+			 }
+		 }
+	}
+
+	/* checkForHumanPlayer()
+	 * Purpose:	Checks for HumanPlayer.choice so we can determine
+	 * 			which person the human player wants to be.
+	 */
+	private boolean checkForHumanPlayer(Card checkCard) {
+		if (checkCard.getCardSymbol().contains(HumanPlayer.getChoice())) {
+			return true;
+		 } else {
+			 return false;
+		 }
+	}
 	
 	
 	//Generic Getters

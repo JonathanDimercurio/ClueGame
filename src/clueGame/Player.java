@@ -1,14 +1,22 @@
+/* Player Abstract Class
+ * Purpose:	This class is a parent is all
+ * 			player classes for the board game.
+ * Authors:	Jonathan Dimercurio, Senya Stein
+ */
 package clueGame;
 
 import java.util.List;
 import java.util.Vector;
 
 public abstract class Player {
+	
+	//Data structures and fields
 	private List<Card> hand = new Vector<>();
 	private String name;
 	private String color;
 	private String position;
 
+	//abstract updateHane method
 	abstract void updateHand(Card newCard);
 	
 	//Constructor
@@ -18,7 +26,7 @@ public abstract class Player {
 	}
 	
 	/* setStartLocation(String)
-	 * Purpose:	Using playerID, we use a swtich statment to set
+	 * Purpose:	Using playerID, we use a switch statement to set
 	 * the starting location and color
 	 */
 	private void setStartLocationAndColor(String playerid) {
@@ -65,7 +73,6 @@ public abstract class Player {
 	}
 
 
-	
 	//Getters
 	public List<Card> getHand() {
 		return hand;
@@ -82,5 +89,9 @@ public abstract class Player {
 	public String getPosition() {
 		return position;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Player [hand=" + hand + ", name=" + name + ", color=" + color + ", position=" + position + "]";
+	}
 }
