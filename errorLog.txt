@@ -204,3 +204,10 @@ Card is not valid, please check ClueSetup.txt for errors.Mon Nov 02 22:48:07 MST
 Card is not valid, please check ClueSetup.txt for errors.Mon Nov 02 22:48:08 MST 2020
 Card is not valid, please check ClueSetup.txt for errors.Mon Nov 02 22:48:10 MST 2020
 Card is not valid, please check ClueSetup.txt for errors.Mon Nov 02 22:48:18 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
+Columns are not in correct format, please check layoutConfigFile.     Tue Nov 03 22:56:28 MST 2020
