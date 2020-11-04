@@ -92,7 +92,6 @@ public class Card {
 		return cardSymbol;
 	}
 
-
 	public CardType getCardtype() {
 		return cardtype;
 	}

@@ -7,13 +7,80 @@ public abstract class Player {
 	private List<Card> hand = new Vector<>();
 	private String name;
 	private String color;
-	private int position;
-	
-	public Player (String playerName, String playerColor, int playerPositon) {
-		this.name = new String(playerName);
-		this.color = new String(playerColor);
-	}
+	private String position;
 
 	abstract void updateHand(Card newCard);
+	
+	//Constructor
+	public Player (String playerName, String playerID) {
+		this.name = new String(playerName);
+		setStartLocationAndColor(playerID);
+	}
+	
+	/* setStartLocation(String)
+	 * Purpose:	Using playerID, we use a swtich statment to set
+	 * the starting location and color
+	 */
+	private void setStartLocationAndColor(String playerid) {
+		switch (playerid) {
+			case "NP":
+				this.color = new String("BLUE");
+				this.position = new String("2,1");
+				break;
+				
+			case "NM":
+				this.color = new String("RED");
+				this.position = new String("0,18");
+				break;
+				
+			case "AR":
+				this.color = new String("GREEN");
+				this.position = new String("25,6");
+				break;
+				
+			case "CJ":
+				this.color = new String("BLACK");
+				this.position = new String("25,2");
+				break;
+				
+			case "SC":
+				this.color = new String("ORANGE");
+				this.position = new String("21,21");
+				break;
+				
+			case "DJ":
+				this.color = new String("PURPLE");
+				this.position = new String("7,21");
+				break;
+				
+			case "SB":
+				this.color = new String("YELLOW");
+				this.position = new String("3,12");
+				break;
+				
+			default:
+			new BadConfigFormatException ("Starting location is not valid. Please check.");
+			break;
+		}
+	}
 
+
+	
+	//Getters
+	public List<Card> getHand() {
+		return hand;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+	
 }

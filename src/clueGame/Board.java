@@ -63,7 +63,9 @@ public class Board {
 			loadLayoutConfig();
 			genGrid();
 			generateAdjacencyList();
+			generatePlayerList();
 	}
+
 	//End 	Set&Load ConfigFiles block
 	
 	
@@ -323,6 +325,13 @@ public class Board {
 	private void deal() {		
 	}
 	//End	Deck methods
+	
+	private void generatePlayerList() {
+		 ArrayList<Card> undealtPeople = new ArrayList<Card>(Card.getUndealtPeople());
+		 
+		
+	}
+
 	
 	
 	//Generic Getters

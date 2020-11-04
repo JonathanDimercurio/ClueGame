@@ -2,11 +2,15 @@ package clueGame;
 
 public class HumanPlayer extends Player {
 
+	/* ####Player Choice####
+	 * For future builds when the user is prompted for the option to
+	 * choose the person they wish to play. Until then we are hard
+	 * coding the choice.
+	 */
+	static final String choice = new String("NP");
 	
-	
-	public HumanPlayer(String playerName, String playerColor, int playerPositon) {
-		super(playerName, playerColor, playerPositon);
-		// TODO Auto-generated constructor stub
+	public HumanPlayer(String playerName, String playerPositon) {
+		super(playerName, playerPositon);
 	}
 	
 	void updateHand(Card newCard) {
