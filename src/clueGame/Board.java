@@ -456,6 +456,16 @@ public class Board {
 	
 	public List<Card> getDeck() {
 		return deck;
-	}	
+	}
+
+	public boolean checkForSolution() {
+		if (this.theSolution == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	
 	
 }

@@ -14,9 +14,9 @@ public class Solution {
 	private Card goalWeapon;
 	
 	public Solution(Card thePerson, Card theRoom, Card theWeapon) {
-		this.goalPerson = new Card("Person", thePerson.getCardName(), thePerson.getCardSymbol());
-		this.goalRoom	= new Card("Room", theRoom.getCardName(), theRoom.getCardSymbol());
-		this.goalWeapon	= new Card("Weapon", theWeapon.getCardName(), theWeapon.getCardSymbol());
+		this.goalPerson = thePerson;
+		this.goalRoom	= theRoom;
+		this.goalWeapon	= theWeapon;
 	}
 	
 	public Card getGoalPerson() {

@@ -9,15 +9,12 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import clueGame.*;
@@ -36,7 +33,6 @@ public class gameSetupTests {
 		board.initialize();
 	}
 	
-	
 	/*load people and weapons from cluesetup.txt
 	* During board.initialize(), all players, weapons and rooms are loaded.
 	* Here we will test that. We also test to ensure that no duplicate players
@@ -45,40 +41,83 @@ public class gameSetupTests {
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	void checkPlayers() {
-		List<Player> testPlayerListSize = board.getPlayers();
-		assertEquals(7, testPlayerListSize.size());
+		List<Player> setTest1Players = board.getPlayers();
+		assertEquals(7, setTest1Players.size());
 		
 		//Now we'll test for duplicate players.
-		Set<Player> setTestPlayers = new HashSet<Player>(testPlayerListSize);
-		if (testPlayerListSize.size() < setTestPlayers.size()) { assert false; }
+		Set<Player> setTest2Players = new HashSet<Player>(setTest1Players);
+		if (setTest1Players.size() < setTest2Players.size()) { assert false; }
 	}
 	
-	
 	/*check deck size, and ensure no duplicates
-	 * 
+	 *	Testing:
+	 *		deck size
+	 *		ensure no duplicates
+	 *		check numbers of each type of card, weapons, rooms, people
 	 */
 	@Test
 	void checkDeck() {
 		
 		//First we check the deck size to ensure it is correct
-		List<Card> testDeck1 = new Vector<Card>(board.getDeck());
+		List<Card> testDeck1 = board.getDeck();
 		assertEquals(24, testDeck1.size());
 		
 		//Now we can check the deck for duplicates
-		Set<Player> setTestPlayers = new HashSet<Player>(testDeck1);
+		Set<Card> testDeck2 = new HashSet<Card>(testDeck1);
+		if (testDeck2.size() < testDeck1.size()) { assert false; }
 		
-		//Now we check the Solution is dealt
-		List<Card> test1Deck
+		//Checking the number of weapon cards
+		assertEquals(7, Card.getTotalWeapons().size());
 		
+		//Checking the number of room cards
+		assertEquals(10, Card.getTotalRooms().size());
+		
+		//Checking the number of people cards
+		assertEquals(7, Card.getTotalPeople().size());
+
 	}
-	//Create Player class with human and computer child classes.   
-	//Use people data to instantiate 6 players (1 human and 5 computer)
 	
+	/*check deal, solution, and all players hands
+	 *  Tests:
+	 *  	ensure solution is dealt
+	 *  	ensure all cards are dealt
+	 *  	ensure all players have the same amount
+	 */
+	@Test
+	void checkForSolution() {
+		List<Player> 	testPlayerList = board.getPlayers();
+		
+		//Checking for the solution
+		assertTrue(board.checkForSolution());
+	}
 	
-	//Create complete deck of cards (weapons, people and rooms)
+	//Ensure each player is dealt a hand
+	@Test
+	void checkPlayerHands() {	
+		List<Player> 	testPlayerList = board.getPlayers();
+		List<Card>		testDeck3		= board.getDeck();
+		
+
+		//Check if each player has a hand dealt 
+		//and asserting the size is the same
+		for(Player eachPlayer: testPlayerList) {
+			if (eachPlayer.getHand() != null) { assert true; } 
+			else { assert false; }
+		}
+	}
 	
+	//Ensure that no duplicates were dealt
+	@Test
+	void checkDuplicatesCardsInHand() {
+		List<Player> 	testPlayerList = board.getPlayers();
+		Set<Card> testingList1 = new HashSet<Card>();
+		List<Card> testingList2 = new ArrayList<Card>();
+		for (Player playerHand: testPlayerList) {
+			testingList1.addAll(playerHand.getHand());
+			testingList2.addAll(playerHand.getHand());
+		}
+		assertEquals(testingList1.size(), testingList2.size());
+	}
 	
-	//Deal cards to the Answer and the players 
-	//(all cards dealt, players have roughly same # of cards, no card dealt twice) 
 
 }

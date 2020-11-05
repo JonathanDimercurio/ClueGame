@@ -12,14 +12,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 public class Card {
 
 	//Data Structures and member fields
-	static private List<Card> totalRooms 	= new Vector<Card>();
-	static private List<Card> totalPeople 	= new Vector<Card>();
-	static private List<Card> totalWeapons 	= new Vector<Card>();
+	static private Set<Card> totalRooms 	= new HashSet<Card>();
+	static private Set<Card> totalPeople 	= new HashSet<Card>();
+	static private Set<Card> totalWeapons 	= new HashSet<Card>();
 	private String cardName;
 	private String cardSymbol;
 	private CardType cardtype = CardType.NONE;
@@ -71,13 +72,13 @@ public class Card {
 	}
 
 	//Getters
-	public static List<Card> getTotalRooms() {
+	public static Set<Card> getTotalRooms() {
 		return totalRooms;
 	}
-	public static List<Card> getTotalPeople() {
+	public static Set<Card> getTotalPeople() {
 		return totalPeople;
 	}
-	public static List<Card> getTotalWeapons() {
+	public static Set<Card> getTotalWeapons() {
 		return totalWeapons;
 	}
 	public String getCardName() {
