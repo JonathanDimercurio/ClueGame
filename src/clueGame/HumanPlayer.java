@@ -27,6 +27,6 @@ public class HumanPlayer extends Player {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " human";
+		return "\nHuman Player\n" + super.toString();
 	}
 }	

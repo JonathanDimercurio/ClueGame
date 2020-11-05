@@ -311,7 +311,8 @@ public class Board {
 		return gameGrid[x][y];
 	}
 	//End 	getCell & smartGetCell	
-		
+	
+	
 	//Start Deck methods
 	private void constructDecksByCardType(String addCardType) {
 		String[] spliter = new String[4];
@@ -383,7 +384,9 @@ public class Board {
 		return combinedDeck;
 	}
 	//End Deck methods
-		
+	
+	
+	//Begin	Player Block
 	/* assignPlayers()
 	 * Purpose:	This method takes the total of people
 	 */
@@ -391,8 +394,7 @@ public class Board {
 		 ArrayList<Card> undealtPeople = new ArrayList<Card>(Card.getTotalPeople());
 		 for (Card tempCard: undealtPeople) {
 			 if (checkForHumanPlayer(tempCard)) {
-				 Player hPlayer = new HumanPlayer(tempCard.getCardName(), tempCard.getCardSymbol());
-				 players.add(hPlayer);
+				 players.add(new HumanPlayer(tempCard.getCardName(), tempCard.getCardSymbol()));
 			 } else {
 				 players.add(new ComputerPlayer(tempCard.getCardName(), tempCard.getCardSymbol()));
 			 }
@@ -410,7 +412,9 @@ public class Board {
 			 return false;
 		 }
 	}
-		
+	//End	Player Block	
+	
+	
 	//Generic Getters
 	public int getNumRows() {
 		return numRows;
@@ -444,4 +448,14 @@ public class Board {
 		return getCell(i,j).getAdjList();
 	}
 
+	
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	
+	public List<Card> getDeck() {
+		return deck;
+	}	
+	
 }

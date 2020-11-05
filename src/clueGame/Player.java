@@ -95,6 +95,17 @@ public abstract class Player {
 
 	@Override
 	public String toString() {
-		return "Player [hand=" + hand + ", name=" + name + ", color=" + color + ", position=" + position + "]";
+		return "Player: " + name + ""
+				+ "\nIn Hand:\n" + handToString() 
+				+ "Color: " + color 
+				+ "\nPosition: (" + position + ")\n";
+	}
+	
+	private String handToString() {
+		String tempString = new String();
+		for (Card tempCard: hand) {
+			tempString = tempString.concat("\tCard Name[" + tempCard.getCardName() + " - " + tempCard.getCardtype() + " - " +tempCard.getCardSymbol() + "]\n");
+		}
+		return tempString;
 	}
 }

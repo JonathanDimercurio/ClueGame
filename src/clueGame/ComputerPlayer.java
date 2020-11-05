@@ -15,4 +15,11 @@ public class ComputerPlayer extends Player {
 	void updateHand(Card newCard) {
 		super.addCardToHand(newCard);
 	}
+
+	@Override
+	public String toString() {
+		return "\nComputer Payer\n" + super.toString();
+	}
+	
+	
 }	
