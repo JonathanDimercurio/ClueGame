@@ -72,7 +72,6 @@ public abstract class Player {
 		}
 	}
 
-
 	//Getters
 	public List<Card> getHand() {
 		return hand;

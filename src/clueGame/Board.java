@@ -301,8 +301,7 @@ public class Board {
 		return this.targets;
 	}
 	//End	Pathing Algorithm Block
-	
-	
+		
 	//Start getCell & smartGetCell
 	public BoardCell getCell (int y, int x) {
 		return gameGrid[x][y];
@@ -312,12 +311,7 @@ public class Board {
 		return gameGrid[x][y];
 	}
 	//End 	getCell & smartGetCell	
-	
-	
-	
-	
-	
-	
+		
 	//Start Deck methods
 	private void constructDecksByCardType(String addCardType) {
 		String[] spliter = new String[4];
@@ -331,11 +325,20 @@ public class Board {
 	private void deal() {
 		List<Card> theDeck = new Vector<Card>();
 		theDeck.addAll(combineAllDecks());
-		dealHands();
+		dealDeck(theDeck);
 	}
 	
-	private void dealHands() {
-		
+	private void dealDeck(List<Card> dealingDeck) {
+		while(!dealingDeck.isEmpty()) {
+			int i = 0;
+			dealCard(i, dealingDeck);
+		}
+	}
+
+	private void dealCard(int i, List<Card> Deck) {
+		players.get(i).updateHand(Deck.get(i++));
+		if (i < 7) { dealCard(i, Deck); }
+		Deck.remove(0);	
 	}
 
 	/* shuffleindividualDecks() 	~ Returns: HashSet<Card>
@@ -379,14 +382,8 @@ public class Board {
 		Collections.shuffle(combinedDeck);
 		return combinedDeck;
 	}
-		
 	//End Deck methods
-	
-	
-	
-	
-	
-	
+		
 	/* assignPlayers()
 	 * Purpose:	This method takes the total of people
 	 */
@@ -413,20 +410,7 @@ public class Board {
 			 return false;
 		 }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	//Generic Getters
 	public int getNumRows() {
 		return numRows;
