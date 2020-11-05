@@ -18,7 +18,7 @@ public class HumanPlayer extends Player {
 	}
 	
 	void updateHand(Card newCard) {
-		//TODO
+		super.addCardToHand(newCard);
 	}
 
 	public static String getChoice() {

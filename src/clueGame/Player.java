@@ -90,6 +90,10 @@ public abstract class Player {
 		return position;
 	}
 
+	public void addCardToHand(Card hand) {
+		this.hand.add(hand);
+	}
+
 	@Override
 	public String toString() {
 		return "Player [hand=" + hand + ", name=" + name + ", color=" + color + ", position=" + position + "]";

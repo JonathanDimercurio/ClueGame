@@ -20,6 +20,7 @@ public class Board {
 	private int numColumns = 0;
 	private int mapIndex = 0;	
 	private BoardCell[][] gameGrid;
+	private Solution theSolution;
 	
 	private String layoutConfigFile;
 	private String setupConfigFile;
@@ -29,7 +30,7 @@ public class Board {
 	private ArrayList<String> 		setupF 	= new ArrayList<>();
 	private ArrayList<String> 		layoutF = new ArrayList<>();
 	private List<Card> 				deck 	= new Vector<>();
-	private Set<Player>				players = new HashSet<>();
+	private List<Player>			players = new Vector<>();
 	private Set<BoardCell> 			targets;
 	private Set<BoardCell> 			visited;
 		
@@ -64,8 +65,9 @@ public class Board {
 			loadLayoutConfig();
 			generateGrid();
 			generateAdjacencyList();
-			generatePlayerList();
+			assignPlayers();
 			deal();
+			//TODO
 	}
 	//End 	Set&Load ConfigFiles block
 	
@@ -312,6 +314,10 @@ public class Board {
 	//End 	getCell & smartGetCell	
 	
 	
+	
+	
+	
+	
 	//Start Deck methods
 	private void constructDecksByCardType(String addCardType) {
 		String[] spliter = new String[4];
@@ -323,55 +329,68 @@ public class Board {
 	}
 		
 	private void deal() {
-		Set<Card> theDeck = new HashSet<Card>();
-		theDeck.addAll(shuffleCardsAndRemoveSolution());
-		
+		List<Card> theDeck = new Vector<Card>();
+		theDeck.addAll(combineAllDecks());
+		dealHands();
 	}
 	
-	private HashSet<Card> shuffleCardsAndRemoveSolution() {
+	private void dealHands() {
+		
+	}
+
+	/* shuffleindividualDecks() 	~ Returns: HashSet<Card>
+	 * Purpose: 
+	 */
+	private List<Card> combineAllDecks() {
 		ArrayList<Vector<Card>> individualDecks = new ArrayList<Vector<Card>>();
 		individualDecks.add(new Vector<Card>(Card.getTotalRooms()));
 		individualDecks.add(new Vector<Card>(Card.getTotalPeople()));
 		individualDecks.add(new Vector<Card>(Card.getTotalWeapons()));
-		
+	
 		for (Vector<Card> eachDeck: individualDecks) {
 			Collections.shuffle(eachDeck);
 		}
-		
-		generateSolution(individualDecks);
-		return shuffleDecksTogether(individualDecks);
+		return generateSolution(individualDecks);
+		//TODO
 	}
 	
-	/* generateSolution()
+	/* generateSolution() 			~ Returns: ArrayList<Vector<Card>> 
 	 * Purpose: This method will establish the winning combination of cards.
 	 * 			After doing so, it removes them from the List, and returns
 	 * 			a modified List of cards.
 	 */
-	private void generateSolution(ArrayList<Vector<Card>> allDecks) {
-		
+	@SuppressWarnings("unlikely-arg-type")
+	private List<Card> generateSolution(ArrayList<Vector<Card>> allDecks) {
+		this.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
+		for (int i = 0; i<3; i++) { allDecks.get(i).remove(0); }
+		return shuffleDecksTogether(allDecks);
 	}
 	
 	/* shuffleDeck()
-	 * Purpose:	Here we shuffle all the totalDecks found at the static
-	 * 			fields of the Card class. 
+	 * Purpose:	Here we shuffle all of the elements of individualDecks together
+	 * 			after having removed the member variables that make up solution.
+	 * 			We return a HashSet of cards to be deal to players.
 	 */
-	private HashSet<Card> shuffleDecksTogether(ArrayList<Vector<Card>> tempAllDecks) {
-		return null;
+	private List<Card> shuffleDecksTogether(ArrayList<Vector<Card>> decksByType) {
+		List<Card> combinedDeck = new Vector<Card>();
+		for (Vector<Card> tempDeck: decksByType) {
+				combinedDeck.addAll(tempDeck);
+			}
+		Collections.shuffle(combinedDeck);
+		return combinedDeck;
 	}
+		
+	//End Deck methods
 	
 	
-	//End	Deck methods
 	
-	//
-	private void generatePlayerList() {
-		unDealtPlayerList();
-	}
-
 	
-	/* generatePlayerList()
+	
+	
+	/* assignPlayers()
 	 * Purpose:	This method takes the total of people
 	 */
-	private void unDealtPlayerList() {
+	private void assignPlayers() {
 		 ArrayList<Card> undealtPeople = new ArrayList<Card>(Card.getTotalPeople());
 		 for (Card tempCard: undealtPeople) {
 			 if (checkForHumanPlayer(tempCard)) {
@@ -394,6 +413,18 @@ public class Board {
 			 return false;
 		 }
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//Generic Getters

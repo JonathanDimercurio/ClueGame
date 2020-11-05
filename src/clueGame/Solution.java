@@ -1,6 +1,6 @@
 /* Solution
- * Purpose: This class will contain the solution to the game.
- * Dependencies:	CardType Enum;
+ * Purpose: 	This class will contain the solution to the game.
+ * Dependencies:	Card class.
  * 
  * @author Jonathan Dimercurio
  * @author Senya Stein
@@ -13,22 +13,22 @@ public class Solution {
 	private Card goalRoom;
 	private Card goalWeapon;
 	
+	public Solution(Card thePerson, Card theRoom, Card theWeapon) {
+		this.goalPerson = new Card("Person", thePerson.getCardName(), thePerson.getCardSymbol());
+		this.goalRoom	= new Card("Room", theRoom.getCardName(), theRoom.getCardSymbol());
+		this.goalWeapon	= new Card("Weapon", theWeapon.getCardName(), theWeapon.getCardSymbol());
+	}
+	
 	public Card getGoalPerson() {
 		return goalPerson;
 	}
-	public void setGoalPerson(Card goalPerson) {
-		this.goalPerson = goalPerson;
-	}
+
 	public Card getGoalRoom() {
 		return goalRoom;
 	}
-	public void setGoalRoom(Card goalRoom) {
-		this.goalRoom = goalRoom;
-	}
+
 	public Card getGoalWeapon() {
 		return goalWeapon;
 	}
-	public void setGoalWeapon(Card goalWeapon) {
-		this.goalWeapon = goalWeapon;
-	}
+
 }

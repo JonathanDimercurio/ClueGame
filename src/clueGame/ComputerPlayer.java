@@ -1,14 +1,18 @@
+/* Computer Player Class
+ * Purpose:	This class is a child class to Player.
+ * 			This will contain infomation and methods
+ * 			relative to the Computer controlled players.
+ * Authors:	Jonathan Dimercurio, Senya Stein
+ */
 package clueGame;
 
 public class ComputerPlayer extends Player {
 
 	public ComputerPlayer(String playerName, String playerPositon) {
 		super(playerName, playerPositon);
-		// TODO Auto-generated constructor stub
 	}
 	
 	void updateHand(Card newCard) {
-		
+		super.addCardToHand(newCard);
 	}
-}
-	
+}	
