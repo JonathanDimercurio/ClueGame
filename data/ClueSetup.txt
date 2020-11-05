@@ -1,11 +1,11 @@
 //Rooms and room cards 
-Room, Casino Arcade, C 
+Room, Casino Arcade, C
 Room, Giant Dipper, D
 Room, Beach, B
-Room, Parking Lot, P 
+Room, Parking Lot, P
 Room, Pirate Ship, S
 Room, Food Court, F
-Room, Neptune's Kingdom, N 
+Room, Neptune's Kingdom, N
 Room, Logger's Revenge, L
 Room, Ticket Stand, T
 Room, Haunted Castle, H
@@ -13,3 +13,19 @@ Room, Haunted Castle, H
 Space, Broken Ride, Q
 Space, Boardwalk, W
 Space, Umbrella, U
+//Player list
+Person, Neptune, NP
+Person, Nemo, NM
+Person, Ariel, AR
+Person, Captain Jack Sparrow, CJ
+Person, Sandy Cheeks, SC
+Person, Davy Jones, DJ
+Person, Sponge BoB, SB
+//Weapon List
+Weapon, Giant water-gun, WG
+Weapon, Salt overdose, SO
+Weapon, Pet jellyfish attack, JF
+Weapon, Sea shell bombardment, SS
+Weapon, Bucket of sea water, BS
+Weapon, Anchor, AN
+Weapon, Sea horse stampede, SE
