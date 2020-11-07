@@ -129,14 +129,19 @@ public class GameSolutionTest {
 		if((testingPlayerList.get(0).testSuggestion(testSuggestionList)) != null) {
 			testReplyList.addAll(testingPlayerList.get(0).testSuggestion(testSuggestionList));
 		}
+		//Each Player is returning 1 card from their hand as an answer
 		assertEquals(testReplyList.size(), 3);
 		assertTrue(testReplyList.contains(testingPlayerList.get(1).getHand().get(0)));
 		assertTrue(testReplyList.contains(testingPlayerList.get(2).getHand().get(1)));
 		assertTrue(testReplyList.contains(testingPlayerList.get(3).getHand().get(2)));
 		
-		
-	}
-	
+		//Ensure, without a doubt that a player will only return 1 card as a reply
+		List<Card> testReplyList2 = new Vector<Card>();
+		List<Card> testSolList2 = new Vector<Card>();
+		testSolList2.addAll(testingPlayerList.get(3).getHand());
+		testReplyList2.addAll(testingPlayerList.get(0).testSuggestion(testSolList2));
+		assertEquals(testReplyList2.size(), 1);
+		}
 	
 	
 }

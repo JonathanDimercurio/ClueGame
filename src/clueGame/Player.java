@@ -151,6 +151,8 @@ public abstract class Player {
 		this.keyPosition = moveMeHere.getKey();
 	}
 
-
+	protected void emptyHand() {
+		this.hand.removeAll(hand);
+	}
 
 }

@@ -32,22 +32,22 @@ public class ComputerPlayer extends Player {
 			if (super.getCellPosition().ifRoomCenter()) {
 				String roomName = super.getCellPosition().getMyRoomType().getRoomName();
 				List<Card> suggestion = guessLogic.generateGuess(roomName);
-				if(super.generateSuggestionReply(suggestion, this) != null) {
-					this.guessLogic.addPossibleSolution(analyzeSuggestionReply(super.generateSuggestionReply(suggestion, this), suggestion));
-				} else {
-					this.guessLogic.addPossibleSolution(suggestion);
-				}			
+				List<Card> replys	  = super.generateSuggestionReply(suggestion, this);
+				replys				  = analyzeSuggestionReply(replys, suggestion);
+				this.guessLogic.addPossibleSolution(replys);			
 			}			
 	}
 		
 	public List<Card> analyzeSuggestionReply(List<Card> suggestionResult, List<Card> playersSuggestion) {
+			List<Card> removeMe = new Vector<Card>();
 			for (Card removeCard: suggestionResult) {
 				for(Card comparingCard: playersSuggestion) {
 					if(removeCard.getCardName() == comparingCard.getCardName()) {
-						playersSuggestion.remove(comparingCard);
+						removeMe.add(removeCard);
 					}
 				}
 			}
+			playersSuggestion.removeAll(removeMe);
 			return playersSuggestion;
 		}
 	
@@ -99,6 +99,10 @@ public class ComputerPlayer extends Player {
 			return reply;
 		}
 		return null;
+	}
+	
+	public void emptyHand() {
+		super.emptyHand();
 	}
 	
 }	
