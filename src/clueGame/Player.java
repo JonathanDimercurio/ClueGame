@@ -15,7 +15,8 @@ public abstract class Player {
 	private List<Card> hand = new Vector<>();
 	private String name;
 	private String color;
-	private String position;
+	private int keyPosition;
+
 
 	public static List<Player>		players = new Vector<>();
 	
@@ -40,37 +41,44 @@ public abstract class Player {
 		switch (playerid) {
 			case "NP":
 				this.color = new String("BLUE");
-				this.position = new String("2,1");
+//				this.position = new String("2,1");
+				this.keyPosition = 29;
 				break;
 				
 			case "NM":
 				this.color = new String("RED");
-				this.position = new String("0,18");
+//				this.position = new String("18,0");
+				this.keyPosition = 486;
 				break;
 				
 			case "AR":
 				this.color = new String("GREEN");
-				this.position = new String("25,6");
+//				this.position = new String("25,6");
+				this.keyPosition = 187;
 				break;
 				
 			case "CJ":
 				this.color = new String("BLACK");
-				this.position = new String("25,2");
+//				this.position = new String("7,2");
+				this.keyPosition = 60;
 				break;
 				
 			case "SC":
 				this.color = new String("ORANGE");
-				this.position = new String("21,21");
+//				this.position = new String("21,21");
+				this.keyPosition = 588;
 				break;
 				
 			case "DJ":
 				this.color = new String("PURPLE");
-				this.position = new String("7,21");
+//				this.position = new String("7,21");
+				this.keyPosition = 574;
 				break;
 				
 			case "SB":
 				this.color = new String("YELLOW");
-				this.position = new String("3,12");
+//				this.position = new String("3,12");
+				this.keyPosition = 312;
 				break;
 				
 			default:
@@ -79,13 +87,11 @@ public abstract class Player {
 		}
 	}
 
-	
-	public List<Card> suggestionList(Card suggestedPerson, Card suggestedRoom, Card suggestedWeapon) {
-		List<Card> suggestionList = new Vector<Card>();
-		suggestionList.add(suggestedPerson);
-		suggestionList.add(suggestedRoom);
-		suggestionList.add(suggestedWeapon);
-		return suggestionList;
+	protected List<Card> generateSuggestionReply(List<Card> suggestion) {
+		for (Player checkingThisPlayer: players) {
+			checkingThisPlayer.checkSuggestion(suggestion);
+		}
+		return null;
 	}
 	
 	/* checkSugggestion() ~ Dependencies: ~ Calls:
@@ -109,6 +115,10 @@ public abstract class Player {
 		return cards.get(0).getCardName();
 	}
 	
+	public List<Card> getHand() {
+		return hand;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -117,27 +127,34 @@ public abstract class Player {
 		return color;
 	}
 
-	public String getPosition() {
-		return position;
+	public BoardCell getCellPosition() {
+		return BoardCell.mapGameBoardData.get(keyPosition);
 	}
 
 	public void addCardToHand(Card hand) {
 		this.hand.add(hand);
 	}
 
-	@Override
-	public String toString() {
-		return "Player: " + name + ""
-				+ "\nIn Hand:\n" + handToString() 
-				+ "Color: " + color 
-				+ "\nPosition: (" + position + ")\n";
+	protected void updateCellPosition(BoardCell moveMeHere) {
+		this.keyPosition = moveMeHere.getKey();
 	}
+
 	
-	private String handToString() {
-		String tempString = new String();
-		for (Card tempCard: hand) {
-			tempString = tempString.concat("\tCard Name[" + tempCard.getCardName() + " - " + tempCard.getCardtype() + " - " +tempCard.getCardSymbol() + "]\n");
-		}
-		return tempString;
-	}
+//	@Override
+//	public String toString() {
+//		return "Player: " + name + ""
+//				+ "\nIn Hand:\n" + handToString() 
+//				+ "Color: " + color 
+//				+ "\nPosition: (" + position + ")\n";
+//	}
+//	
+//	private String handToString() {
+//		String tempString = new String();
+//		for (Card tempCard: hand) {
+//			tempString = tempString.concat("\tCard Name[" + tempCard.getCardName() + " - " + tempCard.getCardtype() + " - " +tempCard.getCardSymbol() + "]\n");
+//		}
+//		return tempString;
+//	}
+
+
 }

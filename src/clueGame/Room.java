@@ -35,6 +35,11 @@ public class Room {
 	public String getName() {
 		return name;
 	}
+	
+	public String getRoomName() {
+		return name;
+	}
+
 
 	public BoardCell getCenterCell() {
 		return centerCell;

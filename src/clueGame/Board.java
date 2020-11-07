@@ -492,7 +492,7 @@ public class Board {
 		return players;
 	}
 
-	public static List<Card> getDeck() {
+	public List<Card> getDeck() {
 		return deck;
 	}
 

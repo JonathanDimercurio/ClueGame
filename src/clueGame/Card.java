@@ -99,4 +99,5 @@ public class Card {
 		return "Card [cardName=" + cardName + ", cardSymbol=" + cardSymbol + "]";
 	}
 
+	
 }
