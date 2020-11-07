@@ -18,6 +18,8 @@ public abstract class Player {
 
 	//abstract updateHane method
 	abstract void updateHand(Card newCard);
+	//abstract void accusation();
+	
 	
 	//Constructor
 	public Player (String playerName, String playerID) {
@@ -72,6 +74,7 @@ public abstract class Player {
 		}
 	}
 
+	
 	//Getters
 	public List<Card> getHand() {
 		return hand;

@@ -53,7 +53,7 @@ public class Board {
 	}
 	//End	Singleton Pattern
 	
-	
+	//TODO
 	//Start Set&Load ConfigFiles block
 	public void setConfigFiles(String layoutInput, String setupInput) {
 			this.layoutConfigFile = "data/" + layoutInput;
@@ -70,6 +70,7 @@ public class Board {
 			//TODO
 	}
 	//End 	Set&Load ConfigFiles block
+	
 	
 	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
@@ -200,9 +201,7 @@ public class Board {
 	}
 	
 	private void doorChecker (BoardCell checkDoor) {
-		if (checkDoor.isDoorway()) {
-			roomFinder(checkDoor);
-		}
+		if (checkDoor.isDoorway()) { roomFinder(checkDoor); }
 	}
 	
 	private void roomFinder(BoardCell cellDoor) {
@@ -236,7 +235,7 @@ public class Board {
 		}
 	}
 	
-	void secretPassageCheck(BoardCell checkCellForSP) {
+	private void secretPassageCheck(BoardCell checkCellForSP) {
 		if (checkCellForSP.isSecretPassage()) {
 			linkSecretPassage(checkCellForSP);			
 		}
@@ -301,7 +300,8 @@ public class Board {
 		return this.targets;
 	}
 	//End	Pathing Algorithm Block
-		
+	
+	
 	//Start getCell & smartGetCell
 	public BoardCell getCell (int y, int x) {
 		return gameGrid[x][y];
@@ -336,14 +336,18 @@ public class Board {
 		}
 	}
 
-	private void dealCard(int i, List<Card> Deck) {
-		players.get(i).updateHand(Deck.get(i++));
-		if (i < 7) { dealCard(i, Deck); }
+	/* 
+	 * 
+	 */
+	private void dealCard(int count, List<Card> Deck) {
+		players.get(count).updateHand(Deck.get(count++));
+		if (count < 7) { dealCard(count, Deck); }
 		Deck.remove(0);	
 	}
 
-	/* shuffleindividualDecks() 	~ Returns: HashSet<Card>
+	/* comineAllDecks() ~ Dependencies:	Calls:
 	 * Purpose: 
+	 *	TODO
 	 */
 	private List<Card> combineAllDecks() {
 		ArrayList<Vector<Card>> individualDecks = new ArrayList<Vector<Card>>();
@@ -355,10 +359,9 @@ public class Board {
 			Collections.shuffle(eachDeck);
 		}
 		return generateSolution(individualDecks);
-		//TODO
 	}
 	
-	/* generateSolution() 			~ Returns: ArrayList<Vector<Card>> 
+	/* generateSolution() ~ Dependencies: Calls: 
 	 * Purpose: This method will establish the winning combination of cards.
 	 * 			After doing so, it removes them from the List, and returns
 	 * 			a modified List of cards.
@@ -414,6 +417,30 @@ public class Board {
 	}
 	//End	Player Block	
 	
+	//Begin Actions
+	/* accusation() ~ Dependencies: <Solution> theSolution ~ Calls: theSolution.getters;
+	 * Purpose: This method will use 3 Card names, and check for the
+	 * 			winning accusation. Returns boolean.
+	 */
+	@SuppressWarnings("unused")
+	public boolean accusation(String accusedPerson, String accusedRoom, String accusedWeapon) {
+		if (theSolution.getGoalPerson().getCardName() == accusedPerson &&
+			theSolution.getGoalRoom().getCardName()	== accusedRoom	&&
+			theSolution.getGoalWeapon().getCardName() == accusedWeapon )
+		{ return true; } else { return false; }
+	}
+	
+	
+	/* handleSuggestion() ~ Dependencies: <Vector> players ~ Calls: players.getters; 
+	 * 
+	 */
+	public void handleSuggestion(String suggestedPerson, String suggestedRoom, String suggestedWeapon) {
+		
+	}
+	
+	
+	//End	Actions
+	
 	
 	//Generic Getters
 	public int getNumRows() {
@@ -447,13 +474,11 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return getCell(i,j).getAdjList();
 	}
-
 	
 	public List<Player> getPlayers() {
 		return players;
 	}
 
-	
 	public List<Card> getDeck() {
 		return deck;
 	}
@@ -465,7 +490,20 @@ public class Board {
 			return true;
 		}
 	}
+
 	
+	public void setLayoutConfigFile(String layoutConfigFile) {
+		this.layoutConfigFile = layoutConfigFile;
+	}
+
 	
+	public void setSetupConfigFile(String setupConfigFile) {
+		this.setupConfigFile = setupConfigFile;
+	}
+
+	
+	public List<Card> getTheSolution() {
+		return theSolution.getSolution();
+	}
 	
 }

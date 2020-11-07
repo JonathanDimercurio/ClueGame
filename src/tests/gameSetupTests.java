@@ -38,7 +38,6 @@ public class gameSetupTests {
 	* Here we will test that. We also test to ensure that no duplicate players
 	* Are added to the list of players in the game.
 	*/
-	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	void checkPlayers() {
 		List<Player> setTest1Players = board.getPlayers();
@@ -85,7 +84,7 @@ public class gameSetupTests {
 	 */
 	@Test
 	void checkForSolution() {
-		List<Player> 	testPlayerList = board.getPlayers();
+//		List<Player> 	testPlayerList = board.getPlayers();
 		
 		//Checking for the solution
 		assertTrue(board.checkForSolution());
@@ -95,7 +94,7 @@ public class gameSetupTests {
 	@Test
 	void checkPlayerHands() {	
 		List<Player> 	testPlayerList = board.getPlayers();
-		List<Card>		testDeck3		= board.getDeck();
+//		List<Card>		testDeck3		= board.getDeck();
 		
 
 		//Check if each player has a hand dealt 
@@ -118,6 +117,5 @@ public class gameSetupTests {
 		}
 		assertEquals(testingList1.size(), testingList2.size());
 	}
-	
 
 }
