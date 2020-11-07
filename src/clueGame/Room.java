@@ -2,6 +2,8 @@ package clueGame;
 
 public class Room {
 	private String name;
+	private String type;
+	
 	private char key;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
@@ -11,7 +13,7 @@ public class Room {
 		if (!inputStrArray[0].contains("Room") && !inputStrArray[0].contains("Space")) {
 				throw new BadConfigFormatException("Setup File contains improper formated data, please check.       ");
 		}
-		new String(inputStrArray[0]);
+		this.type = inputStrArray[0];
 		this.name = inputStrArray[1];
 		this.key = inputStrArray[2].charAt(0);
 	}
@@ -34,6 +36,14 @@ public class Room {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getRoomName() {
+		return name;
+	}
+
+	public String getType() {
+		return this.type;
 	}
 
 	public BoardCell getCenterCell() {

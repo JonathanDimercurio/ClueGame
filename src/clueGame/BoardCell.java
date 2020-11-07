@@ -199,6 +199,9 @@ public class BoardCell {
 		return intial;
 	}
 
+	public boolean ifRoomCenter() {
+		return roomCenter;
+	}
 	
 	public BoardCell getThis() {
 		return this;

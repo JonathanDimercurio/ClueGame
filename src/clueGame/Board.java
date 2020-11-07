@@ -20,17 +20,20 @@ public class Board {
 	private int numColumns = 0;
 	private int mapIndex = 0;	
 	private BoardCell[][] gameGrid;
-	private Solution theSolution;
+	private static Solution theSolution;
 	
 	private String layoutConfigFile;
 	private String setupConfigFile;
+	
+	//Static Data Structures
+	
 	
 	//Data Structures
 	private Map<Character, Room> 	roomMap = new HashMap<>();
 	private ArrayList<String> 		setupF 	= new ArrayList<>();
 	private ArrayList<String> 		layoutF = new ArrayList<>();
-	private List<Card> 				deck 	= new Vector<>();
-	private List<Player>			players = new Vector<>();
+	private static List<Card>		deck 	= new Vector<>();
+	private static List<Player>		players = new Vector<>();
 	private Set<BoardCell> 			targets;
 	private Set<BoardCell> 			visited;
 		
@@ -53,7 +56,6 @@ public class Board {
 	}
 	//End	Singleton Pattern
 	
-	
 	//Start Set&Load ConfigFiles block
 	public void setConfigFiles(String layoutInput, String setupInput) {
 			this.layoutConfigFile = "data/" + layoutInput;
@@ -70,6 +72,7 @@ public class Board {
 			//TODO
 	}
 	//End 	Set&Load ConfigFiles block
+	
 	
 	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
@@ -200,9 +203,7 @@ public class Board {
 	}
 	
 	private void doorChecker (BoardCell checkDoor) {
-		if (checkDoor.isDoorway()) {
-			roomFinder(checkDoor);
-		}
+		if (checkDoor.isDoorway()) { roomFinder(checkDoor); }
 	}
 	
 	private void roomFinder(BoardCell cellDoor) {
@@ -236,7 +237,7 @@ public class Board {
 		}
 	}
 	
-	void secretPassageCheck(BoardCell checkCellForSP) {
+	private void secretPassageCheck(BoardCell checkCellForSP) {
 		if (checkCellForSP.isSecretPassage()) {
 			linkSecretPassage(checkCellForSP);			
 		}
@@ -301,7 +302,8 @@ public class Board {
 		return this.targets;
 	}
 	//End	Pathing Algorithm Block
-		
+	
+	
 	//Start getCell & smartGetCell
 	public BoardCell getCell (int y, int x) {
 		return gameGrid[x][y];
@@ -319,7 +321,7 @@ public class Board {
 		spliter = addCardType.split(", ");
 		if (!spliter[0].equals("Space")) {
 			Card tempCard = new Card(spliter[0],spliter[1],spliter[2]);
-			this.deck.add(tempCard);
+			Board.deck.add(tempCard);
 		}
 	}
 		
@@ -336,14 +338,18 @@ public class Board {
 		}
 	}
 
-	private void dealCard(int i, List<Card> Deck) {
-		players.get(i).updateHand(Deck.get(i++));
-		if (i < 7) { dealCard(i, Deck); }
+	/* 
+	 * 
+	 */
+	private void dealCard(int count, List<Card> Deck) {
+		players.get(count).updateHand(Deck.get(count++));
+		if (count < 7) { dealCard(count, Deck); }
 		Deck.remove(0);	
 	}
 
-	/* shuffleindividualDecks() 	~ Returns: HashSet<Card>
+	/* comineAllDecks() ~ Dependencies:	Calls:
 	 * Purpose: 
+	 *	TODO
 	 */
 	private List<Card> combineAllDecks() {
 		ArrayList<Vector<Card>> individualDecks = new ArrayList<Vector<Card>>();
@@ -355,17 +361,15 @@ public class Board {
 			Collections.shuffle(eachDeck);
 		}
 		return generateSolution(individualDecks);
-		//TODO
 	}
 	
-	/* generateSolution() 			~ Returns: ArrayList<Vector<Card>> 
+	/* generateSolution() ~ Dependencies: Calls: 
 	 * Purpose: This method will establish the winning combination of cards.
 	 * 			After doing so, it removes them from the List, and returns
 	 * 			a modified List of cards.
 	 */
-	@SuppressWarnings("unlikely-arg-type")
 	private List<Card> generateSolution(ArrayList<Vector<Card>> allDecks) {
-		this.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
+		Board.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
 		for (int i = 0; i<3; i++) { allDecks.get(i).remove(0); }
 		return shuffleDecksTogether(allDecks);
 	}
@@ -414,6 +418,27 @@ public class Board {
 	}
 	//End	Player Block	
 	
+	//Begin Actions
+
+	/* createSuggestionList() ~ Dependencies: ~ Calls:
+	 * 
+	 */
+	public List<Card> makeSuggestion(List<Card> suggestionList) {
+		List<Card> suggestionReplies = new Vector<Card>();
+		for (Player eachPlayer: Board.players) {
+			suggestionReplies.add(eachPlayer.checkSuggestion(suggestionList));
+		}
+		return suggestionReplies;
+	}
+	
+	/* handleSuggestion() ~ Dependencies: <Player> players ~ Calls: players.getters; 
+	 * Purpose:
+	 */
+	public void handleSuggestion(List<Card> suggestList) {
+//		
+	}
+	//End	Actions
+	
 	
 	//Generic Getters
 	public int getNumRows() {
@@ -447,25 +472,38 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return getCell(i,j).getAdjList();
 	}
-
 	
-	public List<Player> getPlayers() {
+	public static List<Player> getPlayers() {
 		return players;
 	}
 
-	
 	public List<Card> getDeck() {
 		return deck;
 	}
 
 	public boolean checkForSolution() {
-		if (this.theSolution == null) {
+		if (Board.theSolution == null) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
+	public void setLayoutConfigFile(String layoutConfigFile) {
+		this.layoutConfigFile = layoutConfigFile;
+	}
+
 	
+	public void setSetupConfigFile(String setupConfigFile) {
+		this.setupConfigFile = setupConfigFile;
+	}
+
+	public static void setSolution(Solution inputSolution) {
+		Board.theSolution = inputSolution;
+	}
+	
+	public List<Card> getTheSolution() {
+		return theSolution.getTheSolution();
+	}
 	
 }
