@@ -17,6 +17,8 @@ public abstract class Player {
 	private String color;
 	private String position;
 
+	public static List<Player>		players = new Vector<>();
+	
 	//abstract updateHane method
 	abstract void updateHand(Card newCard);
 	//abstract void accusation();
@@ -26,6 +28,8 @@ public abstract class Player {
 	public Player (String playerName, String playerID) {
 		this.name = new String(playerName);
 		setStartLocationAndColor(playerID);
+		Player.players.add(this);
+		
 	}
 	
 	/* setStartLocation(String)
@@ -105,12 +109,6 @@ public abstract class Player {
 		return cards.get(0).getCardName();
 	}
 	
-	
-	//Getters
-	public List<Card> getHand() {
-		return hand;
-	}
-
 	public String getName() {
 		return name;
 	}

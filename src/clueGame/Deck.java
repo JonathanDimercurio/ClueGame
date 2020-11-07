@@ -10,6 +10,10 @@
 //	//Local Data Structures
 //	private List<Card> deck = new Vector<>();
 //	
+////	public Deck(List<Cards> inputCards) {
+////		
+////	}
+////	
 //	private void constructDecksByCardType(String addCardType) {
 //		String[] spliter = new String[4];
 //		spliter = addCardType.split(", ");
@@ -27,7 +31,7 @@
 //	}
 //
 //	private void dealCard(int i, List<Card> Deck) {
-//		players.get(i).updateHand(Deck.get(i++));
+//		Board.getPlayers().get(i).updateHand(Deck.get(i++));
 //		if (i < 7) { dealCard(i, Deck); }
 //		Deck.remove(0);	
 //	}
@@ -55,7 +59,7 @@
 //	 */
 //	@SuppressWarnings("unlikely-arg-type")
 //	private List<Card> generateSolution(ArrayList<Vector<Card>> allDecks) {
-//		this.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
+//		 Board.setSolution( new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0)));
 //		for (int i = 0; i<3; i++) { allDecks.get(i).remove(0); }
 //		return shuffleDecksTogether(allDecks);
 //	}

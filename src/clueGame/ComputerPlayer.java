@@ -6,20 +6,35 @@
  */
 package clueGame;
 
-public class ComputerPlayer extends Player {
+import java.util.List;
 
+public class ComputerPlayer extends Player {
+	Guess guessLogic;
+	
 	public ComputerPlayer(String playerName, String playerPositon) {
 		super(playerName, playerPositon);
 	}
 	
 	void updateHand(Card newCard) {
 		super.addCardToHand(newCard);
+		this.guessLogic.compPlayersHand(newCard);
 	}
 
+	
+	
+	
+	//Getters
+
+	public List<Card> getSuggestion() {
+		return this.guessLogic.generateGuess();
+	}
+	
+	public void handleSuggestionReply() {
+		//TODO
+	}
+	
 	@Override
 	public String toString() {
 		return "\nComputer Payer\n" + super.toString();
 	}
-	
-	
 }	

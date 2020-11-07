@@ -20,17 +20,22 @@ public class Board {
 	private int numColumns = 0;
 	private int mapIndex = 0;	
 	private BoardCell[][] gameGrid;
-	private Solution theSolution;
+	private static Solution theSolution;
 	
 	private String layoutConfigFile;
 	private String setupConfigFile;
+	
+	//Static Data Structures
+	
 	
 	//Data Structures
 	private Map<Character, Room> 	roomMap = new HashMap<>();
 	private ArrayList<String> 		setupF 	= new ArrayList<>();
 	private ArrayList<String> 		layoutF = new ArrayList<>();
-	private List<Card> 				deck 	= new Vector<>();
-	private List<Player>			players = new Vector<>();
+	private static List<Card>		deck 	= new Vector<>();
+	
+	//TODO might move this field to Player
+	private static List<Player>		players = new Vector<>();
 	private Set<BoardCell> 			targets;
 	private Set<BoardCell> 			visited;
 		
@@ -429,13 +434,16 @@ public class Board {
 			theSolution.getGoalWeapon().getCardName() == accusedWeapon )
 		{ return true; } else { return false; }
 	}
-	
 
 	/* createSuggestionList() ~ Dependencies: ~ Calls:
 	 * 
 	 */
-	public void makeSuggestion(List<Card> suggestionList) {
-		
+	public List<String> makeSuggestion(List<Card> suggestionList) {
+		List<String> suggestionReplies = new Vector<String>();
+		for (Player eachPlayer: this.players) {
+			suggestionReplies.add(eachPlayer.checkSuggestion(suggestionList));
+		}
+		return suggestionReplies;
 	}
 	
 	/* handleSuggestion() ~ Dependencies: <Player> players ~ Calls: players.getters; 
@@ -480,11 +488,11 @@ public class Board {
 		return getCell(i,j).getAdjList();
 	}
 	
-	public List<Player> getPlayers() {
+	public static List<Player> getPlayers() {
 		return players;
 	}
 
-	public List<Card> getDeck() {
+	public static List<Card> getDeck() {
 		return deck;
 	}
 
@@ -495,7 +503,6 @@ public class Board {
 			return true;
 		}
 	}
-
 	
 	public void setLayoutConfigFile(String layoutConfigFile) {
 		this.layoutConfigFile = layoutConfigFile;
@@ -506,6 +513,9 @@ public class Board {
 		this.setupConfigFile = setupConfigFile;
 	}
 
+	public static void setSolution(Solution inputSolution) {
+		Board.theSolution = inputSolution;
+	}
 	
 	public List<Card> getTheSolution() {
 		return theSolution.getSolution();
