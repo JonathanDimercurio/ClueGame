@@ -9,33 +9,27 @@
 package clueGame;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 public class Guess {
-	private List<Card> unguessedPeople;
-	private List<Card> unguessedRooms;
-	private List<Card> unguessedWeapons;
-	private List<Card> givenCards;
-	private Set<Card> possibleSolution = new HashSet<Card>();
+	private List<Card> unguessedPeople 	= new Vector<Card>();
+	private List<Card> unguessedRooms 	= new Vector<Card>();
+	private List<Card> unguessedWeapons = new Vector<Card>();
+	private List<Card> givenCards 		= new Vector<Card>();
+	private List<Card> possibleSolution = new Vector<Card>();
 		
 	public Guess() {
-		unguessedPeople = new Vector<Card>();
 		this.unguessedPeople.addAll(Card.getTotalPeople());
-		unguessedRooms = new Vector<Card>();
 		this.unguessedRooms.addAll(Card.getTotalRooms());
-		unguessedWeapons = new Vector<Card>();
 		this.unguessedWeapons.addAll(Card.getTotalWeapons());
-		givenCards = new Vector<Card>();
 		possibleSolution.addAll(unguessedPeople);
 		possibleSolution.addAll(unguessedRooms);
 		possibleSolution.addAll(unguessedWeapons);
 	}
 	
 	//Heart of the guessing logic
-	public List<Card> generateGuess(String roomName) {
+	public List<Card> generateGuess(String roomName) {		
 		possibleSolutionRecycler();
 		List<Card> guessing = new Vector<Card>();		
 		guessing.add(chooseGuessByType(this.unguessedPeople));
@@ -46,29 +40,37 @@ public class Guess {
 	}
 	
 	private void possibleSolutionRecycler() {
-		for (Card addingCARD: this.possibleSolution) {
-			findDeck(addingCARD).add(addingCARD);
-			possibleSolution.remove(addingCARD);
+		if(this.possibleSolution != null) {
+			for (Card addingCARD: this.possibleSolution) {
+				List<Card> checkingDeck = findDeck(addingCARD);
+				checkingDeck.add(addingCARD);
+			}
 		}
+		this.possibleSolution.removeAll(this.unguessedPeople);
+		this.possibleSolution.removeAll(this.unguessedRooms);
+		this.possibleSolution.removeAll(this.unguessedWeapons);
 	}
 	
 	private void adjustUnguessedLists(List<Card> guessing) {
 		for (Card removeCARD: guessing) {
-			findDeck(removeCARD).remove(removeCARD);
+			if(removeCARD != null) {
+				findDeck(removeCARD).remove(removeCARD);
+			}
 		}
 	}
 
 	private List<Card> findDeck(Card decklessCARD) {
 		if (decklessCARD.getCardtype() == CardType.PERSON)	{ return this.unguessedPeople; }
-		if (decklessCARD.getCardtype() == CardType.ROOM)		{ return this.unguessedRooms; }
+		if (decklessCARD.getCardtype() == CardType.ROOM)	{ return this.unguessedRooms; }
 		if (decklessCARD.getCardtype() == CardType.WEAPON)	{ return this.unguessedWeapons; }
 		return null;
 	}
 
 	//Choosing a card from the decks by Type, returning a guess
 	private Card findRoomCardByName(String playerRoom) {
+		
 		for (Card findRoom: unguessedRooms) {
-			if (playerRoom == findRoom.getCardName()) {
+			if (findRoom.getCardName().contentEquals(playerRoom)) {
 				return findRoom;
 			}
 		}
@@ -79,31 +81,23 @@ public class Guess {
 		Collections.shuffle(deckType);
 			return deckType.get(0);
 	}
-
-	private boolean checkSolutionList(Card checkForCard) {
-		if(this.possibleSolution.contains(checkForCard)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
-	//TODO might have to change this name
-	//Add ComputerPlayer hand to guessed cards as the hand is dealt.
-	
-	public void compPlayersHand(Card cardDeckToplayer) {
-		switch (cardDeckToplayer.getCardtype()) {
+	public void compPlayersHand(Card givenCard) {
+		switch (givenCard.getCardtype()) {
 			case PERSON:
-				this.unguessedPeople.remove(cardDeckToplayer);
-				this.givenCards.add(cardDeckToplayer);
+				this.unguessedPeople.remove(givenCard);
+				this.possibleSolution.remove(givenCard);
+				this.givenCards.add(givenCard);
 				break;
 			case ROOM:
-				this.unguessedRooms.remove(cardDeckToplayer);
-				this.givenCards.add(cardDeckToplayer);
+				this.unguessedRooms.remove(givenCard);
+				this.possibleSolution.remove(givenCard);
+				this.givenCards.add(givenCard);
 				break;
 			case WEAPON:
-				this.unguessedWeapons.remove(cardDeckToplayer);
-				this.givenCards.add(cardDeckToplayer);
+				this.unguessedWeapons.remove(givenCard);
+				this.possibleSolution.remove(givenCard);
+				this.givenCards.add(givenCard);
 				break;
 			default:
 				break;	
@@ -111,6 +105,18 @@ public class Guess {
 	}
 	
  	public void addPossibleSolution(List<Card> addingSolutions) {
- 		this.possibleSolution.addAll((Set) addingSolutions);
+ 		this.possibleSolution.addAll(addingSolutions);
+ 	}
+
+ 	public List<Card> possibleSolutionGetter() {
+ 		return this.possibleSolution;
+ 	}
+
+ 	public boolean checkUnguessedByNameRooms(String checkRoom) {
+ 		if (unguessedRooms.contains(findRoomCardByName(checkRoom))) {
+ 			return true;
+ 		} else {
+ 			return false;
+ 		}
  	}
 }

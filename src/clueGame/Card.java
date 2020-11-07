@@ -26,6 +26,12 @@ public class Card {
 	private CardType cardtype = CardType.NONE;
 	static private Map<String, Card> totalDeck = new HashMap<>();
 
+	public Card(Card thisCard) {
+		this.cardName = thisCard.cardName;
+		this.cardtype = thisCard.cardtype;
+		this.cardSymbol = thisCard.cardSymbol;
+	}
+	
 	//Constructor
 	public Card(String cardType, String cardID, String cardSym) {
 		this.cardName = new String(cardID);
@@ -39,7 +45,7 @@ public class Card {
 	 * 			If an incorrect card type attempts to enter
 	 * 			the deck, an exception is created.
 	 */
-	private void checkType(String checkType) {
+	 void checkType(String checkType) {
 		switch (checkType) {
 			case "Person":
 				this.cardtype = CardType.PERSON;

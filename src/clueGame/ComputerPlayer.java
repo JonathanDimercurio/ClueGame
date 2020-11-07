@@ -7,15 +7,20 @@
 package clueGame;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.Vector;
 
 public class ComputerPlayer extends Player {
+	public static Set<ComputerPlayer> computerPlayerList = new HashSet<ComputerPlayer>();
+	
 	Guess guessLogic = new Guess();
 	
 	public ComputerPlayer(String playerName, String playerPositon) {
 		super(playerName, playerPositon);
+		computerPlayerList.add(this);
 	}
 	
 	void updateHand(Card newCard) {
@@ -24,14 +29,15 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void makeSuggestion() {
-			String roomName = super.getCellPosition().getMyRoomType().getRoomName();
-			List<Card> suggestion = guessLogic.generateGuess(roomName);
-			if(super.generateSuggestionReply(suggestion) != null) {
-				this.guessLogic.addPossibleSolution(analyzeSuggestionReply(super.generateSuggestionReply(suggestion), suggestion));
-			} else {
-				this.guessLogic.addPossibleSolution(suggestion);
-			}
-			
+			if (super.getCellPosition().ifRoomCenter()) {
+				String roomName = super.getCellPosition().getMyRoomType().getRoomName();
+				List<Card> suggestion = guessLogic.generateGuess(roomName);
+				if(super.generateSuggestionReply(suggestion) != null) {
+					this.guessLogic.addPossibleSolution(analyzeSuggestionReply(super.generateSuggestionReply(suggestion), suggestion));
+				} else {
+					this.guessLogic.addPossibleSolution(suggestion);
+				}			
+			}			
 	}
 		
 	public List<Card> analyzeSuggestionReply(List<Card> suggestionResult, List<Card> playersSuggestion) {
@@ -45,28 +51,42 @@ public class ComputerPlayer extends Player {
 			return playersSuggestion;
 		}
 	
-	@Override
-	public String toString() {
-		return "\nComputer Payer\n" + super.toString();
-	}
-
 	public void move() {
 		Random Rolled = new Random();
 		int diceRoll = Rolled.nextInt(10) + 2;
-		super.updateCellPosition(moveMe(diceRoll));
+		Board.getInstance().calcTargets(super.getCellPosition(), diceRoll);
+		super.updateCellPosition(moveMe(Board.getInstance().getTargets()));
 	}
 	
-	private BoardCell moveMe(int DiceRoll) {
-		Board.getInstance().calcTargets(super.getCellPosition(), DiceRoll);
+	private BoardCell moveMe(Set<BoardCell> availTargets) {
 		List<BoardCell> availSpaces = new Vector<BoardCell>();
-		for(BoardCell move:Board.getInstance().getTargets()) {
-			if (move.isRoomCenter()) {
-				return move;
-			} else {
-				availSpaces.add(move);
+		availSpaces.addAll(availTargets);
+		for(BoardCell move: availTargets) {
+				if (simplePathFinder(move)) {
+					return move;
+				} else {
+					availSpaces.add(move);
+				}
 			}
-		}
 		Collections.shuffle(availSpaces);
 		return availSpaces.get(0);
 	}
+	
+	private boolean simplePathFinder(BoardCell resolveThisCell) {
+		for (Card checkIfVisited: this.guessPossibleSolutionGetter()) {
+			if(checkIfVisited.getCardName().contains(resolveThisCell.getMyRoomType().getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public BoardCell getCurrentCell() {
+		return super.getCellPosition();
+	}
+	
+	public List<Card> guessPossibleSolutionGetter() {
+		return this.guessLogic.possibleSolutionGetter();
+	} 
+
 }	

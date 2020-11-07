@@ -17,14 +17,11 @@ public abstract class Player {
 	private String color;
 	private int keyPosition;
 
-
 	public static List<Player>		players = new Vector<>();
 	
 	//abstract updateHane method
 	abstract void updateHand(Card newCard);
 	//abstract void accusation();
-	
-	
 	//Constructor
 	public Player (String playerName, String playerID) {
 		this.name = new String(playerName);
@@ -48,7 +45,7 @@ public abstract class Player {
 			case "NM":
 				this.color = new String("RED");
 //				this.position = new String("18,0");
-				this.keyPosition = 486;
+				this.keyPosition = 18;
 				break;
 				
 			case "AR":
@@ -59,8 +56,8 @@ public abstract class Player {
 				
 			case "CJ":
 				this.color = new String("BLACK");
-//				this.position = new String("7,2");
-				this.keyPosition = 60;
+//				this.position = new String("12,1");
+				this.keyPosition = 39;
 				break;
 				
 			case "SC":
@@ -77,8 +74,8 @@ public abstract class Player {
 				
 			case "SB":
 				this.color = new String("YELLOW");
-//				this.position = new String("3,12");
-				this.keyPosition = 312;
+//				this.position = new String("25,12");
+				this.keyPosition = 349;
 				break;
 				
 			default:
@@ -97,22 +94,31 @@ public abstract class Player {
 	/* checkSugggestion() ~ Dependencies: ~ Calls:
 	 *  TODO: not very good. revisit when GUI is complete.
 	 */
-	public String checkSuggestion(List<Card> suggestedCards) {
+	@SuppressWarnings("unused")
+	public Card checkSuggestion(List<Card> suggestedCards) {
 		List<Card> replyList = new Vector<Card>();
 		for (Card findCard: suggestedCards) {
 			if (this.hand.contains(findCard)) {
 				replyList.add(findCard);
 			}
 		}
-		return chooseReply(replyList);
+		if (replyList != null) {
+			return chooseReply(replyList);
+		}
+		return null;
+		
 	}
 	
 	/* chooseReply() ~ Dependencies: none ~ Calls: none
 	 * Purpose:	
 	 */
-	private String chooseReply(List<Card> cards) {
+	private Card chooseReply(List<Card> cards) {
+		cards.remove(null);
 		Collections.shuffle(cards);
-		return cards.get(0).getCardName();
+		if (!cards.isEmpty()) {
+			return cards.get(0);
+		}
+		return null;
 	}
 	
 	public List<Card> getHand() {
@@ -127,7 +133,7 @@ public abstract class Player {
 		return color;
 	}
 
-	public BoardCell getCellPosition() {
+	protected BoardCell getCellPosition() {
 		return BoardCell.mapGameBoardData.get(keyPosition);
 	}
 
@@ -139,22 +145,6 @@ public abstract class Player {
 		this.keyPosition = moveMeHere.getKey();
 	}
 
-	
-//	@Override
-//	public String toString() {
-//		return "Player: " + name + ""
-//				+ "\nIn Hand:\n" + handToString() 
-//				+ "Color: " + color 
-//				+ "\nPosition: (" + position + ")\n";
-//	}
-//	
-//	private String handToString() {
-//		String tempString = new String();
-//		for (Card tempCard: hand) {
-//			tempString = tempString.concat("\tCard Name[" + tempCard.getCardName() + " - " + tempCard.getCardtype() + " - " +tempCard.getCardSymbol() + "]\n");
-//		}
-//		return tempString;
-//	}
 
 
 }

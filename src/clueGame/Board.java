@@ -423,23 +423,12 @@ public class Board {
 	//End	Player Block	
 	
 	//Begin Actions
-	/* accusation() ~ Dependencies: <Solution> theSolution ~ Calls: theSolution.getters;
-	 * Purpose: This method will use 3 Card names, and check for the
-	 * 			winning accusation. Returns boolean.
-	 */
-	@SuppressWarnings("unused")
-	public boolean accusation(String accusedPerson, String accusedRoom, String accusedWeapon) {
-		if (theSolution.getGoalPerson().getCardName() == accusedPerson &&
-			theSolution.getGoalRoom().getCardName()	== accusedRoom	&&
-			theSolution.getGoalWeapon().getCardName() == accusedWeapon )
-		{ return true; } else { return false; }
-	}
 
 	/* createSuggestionList() ~ Dependencies: ~ Calls:
 	 * 
 	 */
-	public List<String> makeSuggestion(List<Card> suggestionList) {
-		List<String> suggestionReplies = new Vector<String>();
+	public List<Card> makeSuggestion(List<Card> suggestionList) {
+		List<Card> suggestionReplies = new Vector<Card>();
 		for (Player eachPlayer: this.players) {
 			suggestionReplies.add(eachPlayer.checkSuggestion(suggestionList));
 		}
@@ -517,7 +506,7 @@ public class Board {
 		Board.theSolution = inputSolution;
 	}
 	
-	public List<Card> getTheSolution() {
+	public Solution getTheSolution() {
 		return theSolution.getSolution();
 	}
 	

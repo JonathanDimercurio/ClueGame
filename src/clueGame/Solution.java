@@ -38,8 +38,22 @@ public class Solution {
 		return goalWeapon;
 	}
 
-	public List<Card> getSolution() {
-		return solution;
+	public Solution getSolution() {
+		return this;
 	}
+	
+	//Begin Actions
+	/* accusation() ~ 
+	 * Purpose: This method will use 3 Card names, and check for the
+	 * 			winning accusation. Returns boolean.
+	 */
+	@SuppressWarnings("unused")
+	public boolean accusation(Card accusedPerson, Card accusedRoom, Card accusedWeapon) {
+		if (this.getGoalPerson() == accusedPerson &&
+			this.getGoalRoom()== accusedRoom	&&
+			this.getGoalWeapon()== accusedWeapon )
+		{ return true; } else { return false; }
+	}
+
 	
 }
