@@ -2,10 +2,7 @@ package tests;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -56,28 +53,22 @@ public class GameSolutionTest {
 	
 	
 	@Test
-	void disprovingSuggestionTests() {
-		
-		
-		
+	void handleSuggestionTests() {
 		//Generate a ComputerPlayer list for testing
 		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();
 		testingPlayerList.addAll(ComputerPlayer.computerPlayerList);
 		
-		//Move all computer players into rooms
+		//Move all computer players into rooms, and test
 		for (ComputerPlayer movePlayer: testingPlayerList) {
 			while(!movePlayer.getCurrentCell().ifRoomCenter()) {
 				movePlayer.move();
 			}
+			assertTrue(movePlayer.getCurrentCell().isRoomCenter());
 		}
 		
-		//Testing if all computer players have moved to a room
-		for (ComputerPlayer testMyCell: testingPlayerList) {
-			assertTrue(testMyCell.getCurrentCell().isRoomCenter());
-		}
-		
+		//
 		//Testing if the room the computerPlayer has moved to is
-		//a room they have visited before
+		//a room they have visited before.
 		int i = 0;
 		for (ComputerPlayer testIfMyRoomHasBeenVisited: testingPlayerList) {
 			for(Card compareToThisCard:testIfMyRoomHasBeenVisited.guessPossibleSolutionGetter()) {
@@ -88,10 +79,64 @@ public class GameSolutionTest {
 		}
 		assertEquals(testingPlayerList.size(), i);
 		
-		testingPlayerList.get(0).makeSuggestion();
+		//
+		//Now that all the ComputerPlayers are in valid rooms,
+		//We will ensure the suggestion methods are function properly
 		
-		assert true;
+		//First we'll pass a Suggestion no one can disprove
+		List<Card> testReplyList 		= new Vector<Card>();
+		List<Card> testSuggestionList	= new Vector<Card>();
+		
+		//First tested Player
+		testSuggestionList.addAll(board.getTheSolution());
+		if (testingPlayerList.get(0).testSuggestion(testSuggestionList) != null) {
+			testReplyList.addAll(testingPlayerList.get(0).testSuggestion(testSuggestionList));
+		}
+		assertTrue(testReplyList.size() == 0);
+		
+		//Testing another player
+		testReplyList = testingPlayerList.get(3).testSuggestion(testSuggestionList);
+		assertTrue(testReplyList.size() == 0);
+		
+		
+		//
+		//Testing a suggestion only the accuser can refute
+		testSuggestionList.removeAll(testSuggestionList);
+		testSuggestionList = testingPlayerList.get(2).getHand();
+		if(testingPlayerList.get(2).testSuggestion(testSuggestionList) != null) {
+			testReplyList.addAll(testingPlayerList.get(2).testSuggestion(testSuggestionList));
+		}
+		assertTrue(testReplyList.size() == 0);
+		//All other requirements are tested within the bounds of the above tests.
 	}
+	
+	@Test
+	void disproveSuggestionTests() {
+		//Generate a ComputerPlayer list for testing
+		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();
+		testingPlayerList.addAll(ComputerPlayer.computerPlayerList);
+	
+		//Acquire some Lists for experimental purpose
+		List<Card> testReplyList 		= new Vector<Card>();
+		List<Card> testSuggestionList	= new Vector<Card>();
+	
+		//Get cards we know are in player2, player3 and player4's hand
+		testSuggestionList.add(testingPlayerList.get(1).getHand().get(0));
+		testSuggestionList.add(testingPlayerList.get(2).getHand().get(1));
+		testSuggestionList.add(testingPlayerList.get(3).getHand().get(2));
+		
+		//Call our testSuggestionMethod with these specific cards
+		if((testingPlayerList.get(0).testSuggestion(testSuggestionList)) != null) {
+			testReplyList.addAll(testingPlayerList.get(0).testSuggestion(testSuggestionList));
+		}
+		assertEquals(testReplyList.size(), 3);
+		assertTrue(testReplyList.contains(testingPlayerList.get(1).getHand().get(0)));
+		assertTrue(testReplyList.contains(testingPlayerList.get(2).getHand().get(1)));
+		assertTrue(testReplyList.contains(testingPlayerList.get(3).getHand().get(2)));
+		
+		
+	}
+	
 	
 	
 }

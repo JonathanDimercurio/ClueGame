@@ -42,6 +42,10 @@ public class Solution {
 		return this;
 	}
 	
+	public List<Card> getTheSolution() {
+		return this.solution;
+	}
+	
 	//Begin Actions
 	/* accusation() ~ 
 	 * Purpose: This method will use 3 Card names, and check for the

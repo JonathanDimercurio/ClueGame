@@ -84,11 +84,17 @@ public abstract class Player {
 		}
 	}
 
-	protected List<Card> generateSuggestionReply(List<Card> suggestion) {
-		for (Player checkingThisPlayer: players) {
-			checkingThisPlayer.checkSuggestion(suggestion);
+	protected List<Card> generateSuggestionReply(List<Card> suggestion, ComputerPlayer accuser) {
+		List<Card> handledReply = new Vector<Card>();
+		List<ComputerPlayer> playersChecking = new Vector<ComputerPlayer>();
+		playersChecking.addAll(ComputerPlayer.computerPlayerList);
+		playersChecking.remove(accuser);
+		for (ComputerPlayer checkingThisPlayer: playersChecking) {
+			if(checkingThisPlayer.checkSuggestion(suggestion) != null) {
+				handledReply.add(checkingThisPlayer.checkSuggestion(suggestion));
+			}
 		}
-		return null;
+		return handledReply;
 	}
 	
 	/* checkSugggestion() ~ Dependencies: ~ Calls:

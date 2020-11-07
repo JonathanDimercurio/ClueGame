@@ -33,8 +33,6 @@ public class Board {
 	private ArrayList<String> 		setupF 	= new ArrayList<>();
 	private ArrayList<String> 		layoutF = new ArrayList<>();
 	private static List<Card>		deck 	= new Vector<>();
-	
-	//TODO might move this field to Player
 	private static List<Player>		players = new Vector<>();
 	private Set<BoardCell> 			targets;
 	private Set<BoardCell> 			visited;
@@ -58,7 +56,6 @@ public class Board {
 	}
 	//End	Singleton Pattern
 	
-	//TODO
 	//Start Set&Load ConfigFiles block
 	public void setConfigFiles(String layoutInput, String setupInput) {
 			this.layoutConfigFile = "data/" + layoutInput;
@@ -324,7 +321,7 @@ public class Board {
 		spliter = addCardType.split(", ");
 		if (!spliter[0].equals("Space")) {
 			Card tempCard = new Card(spliter[0],spliter[1],spliter[2]);
-			this.deck.add(tempCard);
+			Board.deck.add(tempCard);
 		}
 	}
 		
@@ -371,9 +368,8 @@ public class Board {
 	 * 			After doing so, it removes them from the List, and returns
 	 * 			a modified List of cards.
 	 */
-	@SuppressWarnings("unlikely-arg-type")
 	private List<Card> generateSolution(ArrayList<Vector<Card>> allDecks) {
-		this.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
+		Board.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
 		for (int i = 0; i<3; i++) { allDecks.get(i).remove(0); }
 		return shuffleDecksTogether(allDecks);
 	}
@@ -429,7 +425,7 @@ public class Board {
 	 */
 	public List<Card> makeSuggestion(List<Card> suggestionList) {
 		List<Card> suggestionReplies = new Vector<Card>();
-		for (Player eachPlayer: this.players) {
+		for (Player eachPlayer: Board.players) {
 			suggestionReplies.add(eachPlayer.checkSuggestion(suggestionList));
 		}
 		return suggestionReplies;
@@ -486,7 +482,7 @@ public class Board {
 	}
 
 	public boolean checkForSolution() {
-		if (this.theSolution == null) {
+		if (Board.theSolution == null) {
 			return false;
 		} else {
 			return true;
@@ -506,8 +502,8 @@ public class Board {
 		Board.theSolution = inputSolution;
 	}
 	
-	public Solution getTheSolution() {
-		return theSolution.getSolution();
+	public List<Card> getTheSolution() {
+		return theSolution.getTheSolution();
 	}
 	
 }

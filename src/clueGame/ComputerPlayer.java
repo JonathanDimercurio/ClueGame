@@ -32,8 +32,8 @@ public class ComputerPlayer extends Player {
 			if (super.getCellPosition().ifRoomCenter()) {
 				String roomName = super.getCellPosition().getMyRoomType().getRoomName();
 				List<Card> suggestion = guessLogic.generateGuess(roomName);
-				if(super.generateSuggestionReply(suggestion) != null) {
-					this.guessLogic.addPossibleSolution(analyzeSuggestionReply(super.generateSuggestionReply(suggestion), suggestion));
+				if(super.generateSuggestionReply(suggestion, this) != null) {
+					this.guessLogic.addPossibleSolution(analyzeSuggestionReply(super.generateSuggestionReply(suggestion, this), suggestion));
 				} else {
 					this.guessLogic.addPossibleSolution(suggestion);
 				}			
@@ -89,4 +89,16 @@ public class ComputerPlayer extends Player {
 		return this.guessLogic.possibleSolutionGetter();
 	} 
 
+	//Methods specifically used for testing
+	//Instead of using guessLogic to generate a suggestion, we want to manly
+	//Assign the guess, so we'll use this method for that.
+	public List<Card> testSuggestion(List<Card> suggestion) {		
+		List<Card> reply = new Vector<Card>();
+		if (super.generateSuggestionReply(suggestion, this) != null) {
+			reply.addAll(super.generateSuggestionReply(suggestion, this));
+			return reply;
+		}
+		return null;
+	}
+	
 }	
