@@ -430,15 +430,20 @@ public class Board {
 		{ return true; } else { return false; }
 	}
 	
-	
-	/* handleSuggestion() ~ Dependencies: <Vector> players ~ Calls: players.getters; 
+
+	/* createSuggestionList() ~ Dependencies: ~ Calls:
 	 * 
 	 */
-	public void handleSuggestion(String suggestedPerson, String suggestedRoom, String suggestedWeapon) {
+	public void makeSuggestion(List<Card> suggestionList) {
 		
 	}
 	
-	
+	/* handleSuggestion() ~ Dependencies: <Player> players ~ Calls: players.getters; 
+	 * Purpose:
+	 */
+	public void handleSuggestion(List<Card> suggestList) {
+//		
+	}
 	//End	Actions
 	
 	

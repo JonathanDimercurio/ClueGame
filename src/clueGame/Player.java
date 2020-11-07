@@ -5,6 +5,7 @@
  */
 package clueGame;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -74,6 +75,36 @@ public abstract class Player {
 		}
 	}
 
+	
+	public List<Card> suggestionList(Card suggestedPerson, Card suggestedRoom, Card suggestedWeapon) {
+		List<Card> suggestionList = new Vector<Card>();
+		suggestionList.add(suggestedPerson);
+		suggestionList.add(suggestedRoom);
+		suggestionList.add(suggestedWeapon);
+		return suggestionList;
+	}
+	
+	/* checkSugggestion() ~ Dependencies: ~ Calls:
+	 *  TODO: not very good. revisit when GUI is complete.
+	 */
+	public String checkSuggestion(List<Card> suggestedCards) {
+		List<Card> replyList = new Vector<Card>();
+		for (Card findCard: suggestedCards) {
+			if (this.hand.contains(findCard)) {
+				replyList.add(findCard);
+			}
+		}
+		return chooseReply(replyList);
+	}
+	
+	/* chooseReply() ~ Dependencies: none ~ Calls: none
+	 * Purpose:	
+	 */
+	private String chooseReply(List<Card> cards) {
+		Collections.shuffle(cards);
+		return cards.get(0).getCardName();
+	}
+	
 	
 	//Getters
 	public List<Card> getHand() {
