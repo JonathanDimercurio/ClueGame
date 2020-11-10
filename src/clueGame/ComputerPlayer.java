@@ -18,8 +18,8 @@ public class ComputerPlayer extends Player {
 	
 	Guess guessLogic = new Guess();
 	
-	public ComputerPlayer(String playerName, String playerPositon) {
-		super(playerName, playerPositon);
+	public ComputerPlayer(String playerName, String playerID) {
+		super(playerName, playerID);
 		computerPlayerList.add(this);
 	}
 	
