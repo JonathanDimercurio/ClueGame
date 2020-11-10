@@ -4,6 +4,9 @@
  */
 package clueGame;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class HumanPlayer extends Player {
 
 	/* ####Player Choice####
@@ -12,6 +15,7 @@ public class HumanPlayer extends Player {
 	 * coding the choice.
 	 */
 	static final String choice = new String("NP");
+	
 	
 	public HumanPlayer(String playerName, String playerPositon) {
 		super(playerName, playerPositon);

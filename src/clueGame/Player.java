@@ -5,6 +5,7 @@
  */
 package clueGame;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -14,9 +15,10 @@ public abstract class Player {
 	//Data structures and fields
 	private List<Card> hand = new Vector<>();
 	private String name;
-	private String color;
+	private Color color;
 	private int keyPosition;
-
+	private int currentPlayersTurn = 0;
+	private int diceRoll;
 	public static List<Player>		players = new Vector<>();
 	
 	//abstract updateHane method
@@ -37,43 +39,43 @@ public abstract class Player {
 	private void setStartLocationAndColor(String playerid) {
 		switch (playerid) {
 			case "NP":
-				this.color = new String("BLUE");
+				this.color = Color.BLUE;
 //				this.position = new String("2,1");
 				this.keyPosition = 29;
 				break;
 				
 			case "NM":
-				this.color = new String("RED");
+				this.color = Color.RED;
 //				this.position = new String("18,0");
 				this.keyPosition = 18;
 				break;
 				
 			case "AR":
-				this.color = new String("GREEN");
+				this.color = Color.GREEN;
 //				this.position = new String("25,6");
 				this.keyPosition = 187;
 				break;
 				
 			case "CJ":
-				this.color = new String("BLACK");
+				this.color = Color.BLACK;
 //				this.position = new String("12,1");
 				this.keyPosition = 39;
 				break;
 				
 			case "SC":
-				this.color = new String("ORANGE");
+				this.color = Color.ORANGE;
 //				this.position = new String("21,21");
 				this.keyPosition = 588;
 				break;
 				
 			case "DJ":
-				this.color = new String("PURPLE");
+				this.color = Color.PINK;
 //				this.position = new String("7,21");
 				this.keyPosition = 574;
 				break;
 				
 			case "SB":
-				this.color = new String("YELLOW");
+				this.color = Color.YELLOW;
 //				this.position = new String("25,12");
 				this.keyPosition = 349;
 				break;
@@ -84,7 +86,7 @@ public abstract class Player {
 		}
 	}
 
-	protected List<Card> generateSuggestionReply(List<Card> suggestion, ComputerPlayer accuser) {
+	public List<Card> generateSuggestionReply(List<Card> suggestion, ComputerPlayer accuser) {
 		List<Card> handledReply = new Vector<Card>();
 		List<ComputerPlayer> playersChecking = new Vector<ComputerPlayer>();
 		playersChecking.addAll(ComputerPlayer.computerPlayerList);
@@ -135,8 +137,8 @@ public abstract class Player {
 		return name;
 	}
 
-	public String getColor() {
-		return color;
+	public Color getColor() {
+		return this.color;
 	}
 
 	protected BoardCell getCellPosition() {
@@ -155,4 +157,9 @@ public abstract class Player {
 		this.hand.removeAll(hand);
 	}
 
+	public static Player getHumanPlayer() {
+		List hPlayer = Player.players;
+		hPlayer.removeAll(ComputerPlayer.computerPlayerList);
+		return (Player) hPlayer.get(0);
+	}
 }

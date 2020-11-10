@@ -23,9 +23,9 @@ public class Guess {
 		this.unguessedPeople.addAll(Card.getTotalPeople());
 		this.unguessedRooms.addAll(Card.getTotalRooms());
 		this.unguessedWeapons.addAll(Card.getTotalWeapons());
-		possibleSolution.addAll(unguessedPeople);
-		possibleSolution.addAll(unguessedRooms);
-		possibleSolution.addAll(unguessedWeapons);
+//		possibleSolution.addAll(unguessedPeople);
+//		possibleSolution.addAll(unguessedRooms);
+//		possibleSolution.addAll(unguessedWeapons);
 	}
 	
 	//Heart of the guessing logic

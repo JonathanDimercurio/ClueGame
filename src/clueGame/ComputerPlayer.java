@@ -14,9 +14,12 @@ import java.util.Set;
 import java.util.Vector;
 
 public class ComputerPlayer extends Player {
-	public static Set<ComputerPlayer> computerPlayerList = new HashSet<ComputerPlayer>();
+	public static List<ComputerPlayer> computerPlayerList = new Vector<ComputerPlayer>();
 	
-	Guess guessLogic = new Guess();
+	public Guess guessLogic = new Guess();
+	
+	List<Card> suggestion 	= new Vector<Card>();
+	List<Card> replys		= new Vector<Card>();
 	
 	public ComputerPlayer(String playerName, String playerID) {
 		super(playerName, playerID);
@@ -31,9 +34,9 @@ public class ComputerPlayer extends Player {
 	public void makeSuggestion() {
 			if (super.getCellPosition().ifRoomCenter()) {
 				String roomName = super.getCellPosition().getMyRoomType().getRoomName();
-				List<Card> suggestion = guessLogic.generateGuess(roomName);
-				List<Card> replys	  = super.generateSuggestionReply(suggestion, this);
-				replys				  = analyzeSuggestionReply(replys, suggestion);
+				this.suggestion = guessLogic.generateGuess(roomName);
+				this.replys	  = super.generateSuggestionReply(suggestion, this);
+				this.replys	  = analyzeSuggestionReply(replys, suggestion);
 				this.guessLogic.addPossibleSolution(replys);			
 			}			
 	}
@@ -72,6 +75,7 @@ public class ComputerPlayer extends Player {
 		return availSpaces.get(0);
 	}
 	
+	//TODO also junk
 	private boolean simplePathFinder(BoardCell resolveThisCell) {
 		for (Card checkIfVisited: this.guessPossibleSolutionGetter()) {
 			if(checkIfVisited.getCardName().contains(resolveThisCell.getMyRoomType().getName())) {
@@ -103,6 +107,14 @@ public class ComputerPlayer extends Player {
 	
 	public void emptyHand() {
 		super.emptyHand();
+	}
+
+	public List<Card> getSuggestion() {
+		return suggestion;
+	}
+
+	public List<Card> getReplys() {
+		return replys;
 	}
 	
 }	

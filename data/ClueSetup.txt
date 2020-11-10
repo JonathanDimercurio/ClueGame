@@ -20,7 +20,7 @@ Person, Ariel, AR
 Person, Captain Jack Sparrow, CJ
 Person, Sandy Cheeks, SC
 Person, Davy Jones, DJ
-Person, Sponge BoB, SB
+Person, Sponge Bob, SB
 //Weapon List
 Weapon, Giant water-gun, WG
 Weapon, Salt overdose, SO
