@@ -57,7 +57,7 @@ public abstract class Player {
 				break;
 				
 			case "CJ":
-				this.color = Color.BLACK;
+				this.color = Color.GRAY;
 //				this.position = new String("12,1");
 				this.keyPosition = 39;
 				break;

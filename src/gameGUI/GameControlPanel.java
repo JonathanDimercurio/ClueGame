@@ -44,8 +44,11 @@ public class GameControlPanel extends JPanel implements UIgetters{
 		JPanel totalGuessPanel = new JPanel();
 		JPanel guessPanel = new JPanel();
 		JPanel replyPanel = new JPanel();
+		//totalGuessPanel.setPreferredSize(new Dimension(600, 10)); //dimension of guess panel
 		guessPanel.setLayout(new GridLayout(3, 0));
+		//guessPanel.setPreferredSize(new Dimension(200, 70));
 		replyPanel.setLayout(new GridLayout(3, 0));
+		//replyPanel.setPreferredSize(new Dimension(200, 70));
 		if (ComputerPlayer.computerPlayerList.contains(currentPlayer)) {
 			List<Card> AIGuesses = UIgetters.genAIGuess("Beach", currentPlayer);
 			JLabel firstGuess = new JLabel(AIGuesses.get(0).getCardName());
@@ -63,8 +66,9 @@ public class GameControlPanel extends JPanel implements UIgetters{
 				}
 			}
 			replyPanel.setBorder(new TitledBorder ("Replies"));
-			totalGuessPanel.add(guessPanel);
-			totalGuessPanel.add(replyPanel);
+			totalGuessPanel.add(guessPanel, BorderLayout.WEST);
+			totalGuessPanel.add(replyPanel, BorderLayout.EAST);
+			//replyPanel.setPreferredSize(new Dimension(150, 40));
 			return totalGuessPanel;
 		} else {
 			JComboBox<String> People, Rooms, Weapons;
@@ -99,16 +103,18 @@ public class GameControlPanel extends JPanel implements UIgetters{
 	private JPanel createNamePanel() {
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(2, 2));
-		JLabel nameLabel = new JLabel("Player Name");
+		String playerNameString = "Player Name:  " + currentPlayer.getName();
+		JLabel nameLabel = new JLabel(playerNameString);
 		namePanel.add(nameLabel);
+		//namePanel.setPreferredSize(new Dimension(200, 50)); //size of name panel
 		JLabel currentPlayerName = new JLabel(currentPlayer.getName());
+		//currentPlayerName.setPreferredSize(new Dimension(170, 7)); //size of player name area
 		Random Rolled = new Random();
 		int diceRoll = Rolled.nextInt(10) + 2; //TODO This is junk and the color shit
-		String sRoll = "Roll: " + Integer.toString(diceRoll);
+		String sRoll = "Roll:  " + Integer.toString(diceRoll);
 		JLabel roll = new JLabel(sRoll);
+		roll.setBackground(currentPlayer.getColor());
 		namePanel.add(roll);
-		currentPlayerName.setBackground(currentPlayer.getColor());
-		namePanel.add(currentPlayerName);
 		namePanel.setBorder(new TitledBorder ("Whose turn is it?"));
 		return namePanel;
 	}
