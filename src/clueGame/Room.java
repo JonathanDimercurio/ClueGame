@@ -1,21 +1,25 @@
 package clueGame;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Room {
+	public static Map<Character, Room> roomMap = new HashMap<>();
+	
 	private String name;
 	private String type;
-	
 	private char key;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
-		
-	public Room (String addRoom) throws BadConfigFormatException{
-		String[] inputStrArray = addRoom.split(", ");
-		if (!inputStrArray[0].contains("Room") && !inputStrArray[0].contains("Space")) {
-				throw new BadConfigFormatException("Setup File contains improper formated data, please check.       ");
-		}
-		this.type = inputStrArray[0];
-		this.name = inputStrArray[1];
-		this.key = inputStrArray[2].charAt(0);
+	
+	
+	
+	public Room (String[] addRoom) {
+		if(addRoom[0].contains("Room"))
+		this.type = addRoom[0];
+		this.name = addRoom[1];
+		this.key = addRoom[2].charAt(0);
+		Room.roomMap.put(this.key, this);
 	}
 	
 	public char getKey() {

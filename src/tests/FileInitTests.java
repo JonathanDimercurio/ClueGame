@@ -10,12 +10,7 @@
  */
 package tests;
 import static org.junit.Assert.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Set;
-import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,21 +34,6 @@ public class FileInitTests {
 		board.initialize();
 	}
 	
-	//Testing the output for SetupConfigFile
-	@Test
-	public void testLineTheory() throws BadConfigFormatException, IOException {
-		File layoutInput = new File(board.getSetupConfigFile());
-		BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput));
-		try {
-			while( scanIt.readLine() != null) {
-				Stream<String> lines = scanIt.lines();  
-				lines.forEach(System.out::println);
-				
-			} 
-		} finally {
-				scanIt.close();
-			}
-	}
 
 	//These are the rooms our team developed in ClueSetup
 	//New Test #1

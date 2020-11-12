@@ -5,32 +5,44 @@
 package clueGame;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class HumanPlayer extends Player {
+public class HumanPlayer extends Player implements PlayerActions {
+	private Set<Card> seenSet = new HashSet<Card>();
 
-	/* ####Player Choice####
-	 * For future builds when the user is prompted for the option to
-	 * choose the person they wish to play. Until then we are hard
-	 * coding the choice.
-	 */
-	static final String choice = new String("NP");
-	
-	
-	public HumanPlayer(String playerName, String playerPositon) {
-		super(playerName, playerPositon);
+	public HumanPlayer(String playerName, String playerID) {
+		super(playerName, playerID);
 	}
 	
-	void updateHand(Card newCard) {
+	public void updateHand(Card newCard) {
 		super.addCardToHand(newCard);
-	}
-
-	public static String getChoice() {
-		return choice;
+		this.seenSet.add(newCard);
 	}
 	
+	
+	public
+
 	@Override
-	public String toString() {
-		return "\nHuman Player\n" + super.toString();
+	public void makeSuggestion() {
+		
+		
+	}
+
+	@Override
+	public Card chooseReply(List<Card> cards) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Card findReply(List<Card> suggestedCardList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Card> getSeenList() {
+		return this.seenSet;
 	}
 }	

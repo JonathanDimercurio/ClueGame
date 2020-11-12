@@ -7,10 +7,6 @@
  */
 
 package clueGame;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class Board {
@@ -24,16 +20,8 @@ public class Board {
 	
 	private String layoutConfigFile;
 	private String setupConfigFile;
+	private ClueFileIO ClueFiles;
 	
-	//Static Data Structures
-	
-	
-	//Data Structures
-	private Map<Character, Room> 	roomMap = new HashMap<>();
-	private ArrayList<String> 		setupF 	= new ArrayList<>();
-	private ArrayList<String> 		layoutF = new ArrayList<>();
-	private static List<Card>		deck 	= new Vector<>();
-	private static List<Player>		players = new Vector<>();
 	private Set<BoardCell> 			targets;
 	private Set<BoardCell> 			visited;
 		
@@ -44,10 +32,16 @@ public class Board {
 	}
 	
 	public void initialize() {
-		try {
-			this.loadConfigFiles();
+		try{ 
+		this.ClueFiles = new ClueFileIO(layoutConfigFile, setupConfigFile);
+		GameControl.initRooms();
+		setBoardFields();
+		cellCreator();
+		generateGrid();
+		generateAdjacencyList();
+		GameControl.gameAssetInit();
 		} catch (BadConfigFormatException e) {
-			
+			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
 		}
 	}
 	
@@ -56,104 +50,37 @@ public class Board {
 	}
 	//End	Singleton Pattern
 	
-	//Start Set&Load ConfigFiles block
+	//Required for 360 tests.
 	public void setConfigFiles(String layoutInput, String setupInput) {
-			this.layoutConfigFile = "data/" + layoutInput;
-			this.setupConfigFile =  "data/" + setupInput;
+			String layoutFile = new String("data/" + layoutInput);
+			String setupFile = new String("data/" + setupInput);
+			this.ClueFiles.setConfigFiles(layoutFile, setupFile);
 	}
-	
-	public void loadConfigFiles() throws BadConfigFormatException {
-			loadSetupConfig();
-			loadLayoutConfig();
-			generateGrid();
-			generateAdjacencyList();
-			assignPlayers();
-			deal();
-			//TODO
-	}
-	//End 	Set&Load ConfigFiles block
-	
-	
-	//Start	SetupFile Init&Check block
 	public void loadSetupConfig() throws BadConfigFormatException {
-		File layoutInput = new File(setupConfigFile);
-		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){
-			while( scanIt.ready()) {
-				String line = scanIt.readLine();
-				this.setupF.add(line);		
-			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		setupF.remove(null);
-		initGameAssets(setupF);
+		ClueFiles.loadSetupConfig();
 	}
-	
-	//perhaps check formatting here and direct strings to correct places0o
-	
-	/* initGameAssets(ArrayList<String>)
-	 * Purpose:	initSetupConfig takes an ArrayList of Strings, a line from the
-	 * 			SetupConfig file, line by line, then checks for commenting inside the file.
-	 * 			Finally it passes the string to constructDeck, then adds rooms objects to 
-	 * 			roomMap. 
-	 */
-	public void initGameAssets(ArrayList<String> checkSetup) throws BadConfigFormatException{
-		for (String temp1: checkSetup) {
-			if (!temp1.startsWith("//")) {
-				constructDecksByCardType(temp1);
-				if (temp1.startsWith("Room") || temp1.startsWith("Space")) {
-					Room addRoom = new Room(temp1);
-					roomMap.put(addRoom.getKey(), addRoom);
-				}				
-			}
-		}
-	}
-	//End 	SetupFile Init&Check block
-	
-	
-	//Start LayoutFile Init&Check block
 	public void loadLayoutConfig() throws BadConfigFormatException {
-		File layoutInput = new File(layoutConfigFile);
-		try(BufferedReader scanIt = new BufferedReader(new FileReader(layoutInput))){	
-			while( scanIt.ready()) {
-				String line = scanIt.readLine();
-				this.layoutF.add(line);		
-			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		layoutF.remove(null);
-		checkFormatLayout(layoutF);
+		ClueFiles.loadLayoutConfig();
 	}
+	//Required for 360 tests.
 	
-	private void checkFormatLayout(ArrayList<String> checkLayoutFullTable) throws BadConfigFormatException {
-		numRows = checkLayoutFullTable.size();
-		this.mapIndex = 0;
-		String[] temp1 = checkLayoutFullTable.get(0).split(",");
-		this.numColumns = temp1.length;
+	
+	private void setBoardFields() {
+		this.numRows = ClueFileIO.getFormattedLayoutFile().get(0).length;
+		this.numColumns = ClueFileIO.getFormattedLayoutFile().size();
 		this.gameGrid = new BoardCell[this.numColumns][this.numRows];
-		for (String layoutRows: checkLayoutFullTable) {
-			String[] boardCellArray = layoutRows.split(",");
-			if (this.numColumns != boardCellArray.length) { throw new BadConfigFormatException("Columns are not in correct format, please check layoutConfigFile.     "); }
-			for (String boardCellArrayIndex : boardCellArray) {
-					cellValidator(boardCellArrayIndex);
-			}
-		}
 	}
 
-	private void cellValidator(String gbCell) throws BadConfigFormatException {
-		char validateCell = gbCell.charAt(0);
-		checkForRoom(validateCell);
-		genMapGameBoardData(gbCell, validateCell);
+	private void cellCreator() {
+		ArrayList<String[]> formattedLayoutFile = new ArrayList<String[]>();
+		formattedLayoutFile.addAll(ClueFileIO.getFormattedLayoutFile());
+		for (String[] tempString: formattedLayoutFile) {
+			for(String tinyTempString: tempString) {
+				char validateCell = tinyTempString.charAt(0);
+				genMapGameBoardData(tinyTempString, validateCell);
+			}
+		}
 	}
-	
-	public void checkForRoom(char c) throws BadConfigFormatException {
-		if (!roomMap.containsKey(c)){
-			throw new BadConfigFormatException ("Room is not valid, please check " + this.getSetupConfigFile() + "      ");		
-		} 
-	}
-	//End 	LayoutFile Init&Check block
-	
 		
 	//Start	Grid&Adj block
 	private void genMapGameBoardData(String gbCell, char validatedCell) {
@@ -244,9 +171,9 @@ public class Board {
 	}
 	
 	private void linkSecretPassage(BoardCell cellWithSP) {
-			roomMap.get(cellWithSP.getIntial())
+			Room.roomMap.get(cellWithSP.getIntial())
 			.getCenterCell()
-			.addToAdjList(roomMap.get(cellWithSP.getSecretPassage())
+			.addToAdjList(Room.roomMap.get(cellWithSP.getSecretPassage())
 			.getCenterCell());
 	}
 	
@@ -315,131 +242,7 @@ public class Board {
 	//End 	getCell & smartGetCell	
 	
 	
-	//Start Deck methods
-	private void constructDecksByCardType(String addCardType) {
-		String[] spliter = new String[4];
-		spliter = addCardType.split(", ");
-		if (!spliter[0].equals("Space")) {
-			Card tempCard = new Card(spliter[0],spliter[1],spliter[2]);
-			Board.deck.add(tempCard);
-		}
-	}
 		
-	private void deal() {
-		List<Card> theDeck = new Vector<Card>();
-		theDeck.addAll(combineAllDecks());
-		dealDeck(theDeck);
-	}
-	
-	private void dealDeck(List<Card> dealingDeck) {
-		while(!dealingDeck.isEmpty()) {
-			int i = 0;
-			dealCard(i, dealingDeck);
-		}
-	}
-
-	/* 
-	 * 
-	 */
-	private void dealCard(int count, List<Card> Deck) {
-		players.get(count).updateHand(Deck.get(count++));
-		if (count < 7) { dealCard(count, Deck); }
-		Deck.remove(0);	
-	}
-
-	/* comineAllDecks() ~ Dependencies:	Calls:
-	 * Purpose: 
-	 *	TODO
-	 */
-	private List<Card> combineAllDecks() {
-		ArrayList<Vector<Card>> individualDecks = new ArrayList<Vector<Card>>();
-		individualDecks.add(new Vector<Card>(Card.getTotalRooms()));
-		individualDecks.add(new Vector<Card>(Card.getTotalPeople()));
-		individualDecks.add(new Vector<Card>(Card.getTotalWeapons()));
-	
-		for (Vector<Card> eachDeck: individualDecks) {
-			Collections.shuffle(eachDeck);
-		}
-		return generateSolution(individualDecks);
-	}
-	
-	/* generateSolution() ~ Dependencies: Calls: 
-	 * Purpose: This method will establish the winning combination of cards.
-	 * 			After doing so, it removes them from the List, and returns
-	 * 			a modified List of cards.
-	 */
-	private List<Card> generateSolution(ArrayList<Vector<Card>> allDecks) {
-		Board.theSolution = new Solution(allDecks.get(0).get(0), allDecks.get(1).get(0), allDecks.get(2).get(0));
-		for (int i = 0; i<3; i++) { allDecks.get(i).remove(0); }
-		return shuffleDecksTogether(allDecks);
-	}
-	
-	/* shuffleDeck()
-	 * Purpose:	Here we shuffle all of the elements of individualDecks together
-	 * 			after having removed the member variables that make up solution.
-	 * 			We return a HashSet of cards to be deal to players.
-	 */
-	private List<Card> shuffleDecksTogether(ArrayList<Vector<Card>> decksByType) {
-		List<Card> combinedDeck = new Vector<Card>();
-		for (Vector<Card> tempDeck: decksByType) {
-				combinedDeck.addAll(tempDeck);
-			}
-		Collections.shuffle(combinedDeck);
-		return combinedDeck;
-	}
-	//End Deck methods
-	
-	
-	//Begin	Player Block
-	/* assignPlayers()
-	 * Purpose:	This method takes the total of people
-	 */
-	private void assignPlayers() {
-		 ArrayList<Card> undealtPeople = new ArrayList<Card>(Card.getTotalPeople());
-		 for (Card tempCard: undealtPeople) {
-			 if (checkForHumanPlayer(tempCard)) {
-				 players.add(new HumanPlayer(tempCard.getCardName(), tempCard.getCardSymbol()));
-			 } else {
-				 players.add(new ComputerPlayer(tempCard.getCardName(), tempCard.getCardSymbol()));
-			 }
-		 }
-	}
-
-	/* checkForHumanPlayer()
-	 * Purpose:	Checks for HumanPlayer.choice so we can determine
-	 * 			which person the human player wants to be.
-	 */
-	private boolean checkForHumanPlayer(Card checkCard) {
-		if (checkCard.getCardSymbol().contains(HumanPlayer.getChoice())) {
-			return true;
-		 } else {
-			 return false;
-		 }
-	}
-	//End	Player Block	
-	
-	//Begin Actions
-
-	/* createSuggestionList() ~ Dependencies: ~ Calls:
-	 * 
-	 */
-	public List<Card> makeSuggestion(List<Card> suggestionList) {
-		List<Card> suggestionReplies = new Vector<Card>();
-		for (Player eachPlayer: Board.players) {
-			suggestionReplies.add(eachPlayer.checkSuggestion(suggestionList));
-		}
-		return suggestionReplies;
-	}
-	
-	/* handleSuggestion() ~ Dependencies: <Player> players ~ Calls: players.getters; 
-	 * Purpose:
-	 */
-	public void handleSuggestion(List<Card> suggestList) {
-//		
-	}
-	//End	Actions
-	
-	
 	//Generic Getters
 	public int getNumRows() {
 		return numRows;
@@ -450,23 +253,15 @@ public class Board {
 	}
 	
 	public Map<Character, Room> getRoomMap() {
-		return roomMap;
+		return Room.roomMap;
 	}
 	
 	public Room getRoom(BoardCell c) {
 		return c.getMyRoomType();
 	}
 		
-	public String getLayoutConfigFile() {
-		return layoutConfigFile;
-	}
-
-	public String getSetupConfigFile() {
-		return setupConfigFile;
-	}
-
 	public Room getRoom(char c) {
-		return roomMap.get(c);
+		return Room.roomMap.get(c);
 	}
 
 	public Set<BoardCell> getAdjList(int i, int j) {
@@ -474,11 +269,13 @@ public class Board {
 	}
 	
 	public static List<Player> getPlayers() {
-		return players;
+		return Player.players;
 	}
 
 	public List<Card> getDeck() {
-		return deck;
+		List<Card> tempDeck = new Vector<Card>();
+		tempDeck.addAll(Deck.getCompleteDeck());
+		return tempDeck;
 	}
 
 	public boolean checkForSolution() {
@@ -489,21 +286,10 @@ public class Board {
 		}
 	}
 	
-	public void setLayoutConfigFile(String layoutConfigFile) {
-		this.layoutConfigFile = layoutConfigFile;
-	}
-
-	
-	public void setSetupConfigFile(String setupConfigFile) {
-		this.setupConfigFile = setupConfigFile;
-	}
-
 	public static void setSolution(Solution inputSolution) {
 		Board.theSolution = inputSolution;
 	}
 	
-	public List<Card> getTheSolution() {
-		return theSolution.getTheSolution();
-	}
+
 	
 }

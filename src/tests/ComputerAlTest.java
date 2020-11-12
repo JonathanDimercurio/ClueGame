@@ -29,10 +29,11 @@ public class ComputerAlTest {
 	//
 	@Test
 	public void testSuggestedRoomMatchesCurrentLocartion() {
-		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();
-		testingPlayerList.addAll(ComputerPlayer.computerPlayerList);
+		List<Player> testingPlayerList = new Vector<Player>();
+		testingPlayerList.addAll(Player.players);
 		List<Card> testSuggestionList	= new Vector<Card>();
 
+		
 		//Move all computer players into rooms, and test
 		for (ComputerPlayer movePlayer: testingPlayerList) {
 			while(!movePlayer.getCurrentCell().ifRoomCenter()) {
@@ -48,7 +49,7 @@ public class ComputerAlTest {
 		List<Card> testReplyList13 		= new Vector<Card>();
 		Set<Card>	checkSet			= new HashSet<Card>();
 		ComputerPlayer testPlayer1 = testingPlayerList.get(5);
-		testPlayer1.makeSuggestion();
+		testPlayer1.
 		testReplyList11.addAll(testPlayer1.guessPossibleSolutionGetter());
 		testPlayer1.makeSuggestion();
 		testReplyList12.addAll(testPlayer1.guessPossibleSolutionGetter());

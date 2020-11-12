@@ -5,14 +5,8 @@ import java.util.List;
 
 import clueGame.*;
 
-public interface UIgetters {
-	
-	
-	public static Player getCurrentPlayer(int indexPlayer) {
-		int i = indexPlayer % Player.players.size();
-		return Player.players.get(i);
-	}
-	
+public class GetUI {
+
 	public static List<Card> genAIGuess(String currentRoom, Player currentPlayer) {
 		ComputerPlayer currentComputerPlayer = null;
 		for (ComputerPlayer checkPlayer: ComputerPlayer.computerPlayerList) {

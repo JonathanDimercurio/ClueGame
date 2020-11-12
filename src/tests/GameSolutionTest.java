@@ -30,13 +30,14 @@ public class GameSolutionTest {
 		//First lets get a deck
 		List<Card> testDeck1 = board.getDeck();
 		
+		
 		//Next lets get a few cards
 		Card testCard1 = new Card(testDeck1.get(0));
 		Card testCard2 = new Card(testDeck1.get(11));
 		Card testCard3 = new Card(testDeck1.get(20));
 		
 		//Test assertTrue a correct accusation
-		Solution testGoal = new Solution(testCard1, testCard2, testCard3);
+		Solution testGoal = Solution.initSolution(testCard1, testCard2, testCard3); 
 		assertTrue(testGoal.accusation(testCard1, testCard2, testCard3));
 		
 		//Incorrect solution cards

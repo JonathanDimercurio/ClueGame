@@ -9,55 +9,59 @@ package clueGame;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
 
-public class ComputerPlayer extends Player {
-	public static List<ComputerPlayer> computerPlayerList = new Vector<ComputerPlayer>();
-	
-	public Guess guessLogic = new Guess();
-	
-	List<Card> suggestion 	= new Vector<Card>();
-	List<Card> replys		= new Vector<Card>();
+public class ComputerPlayer extends Player implements PlayerActions{
+	private GuessAI guessLogic = new GuessAI();
 	
 	public ComputerPlayer(String playerName, String playerID) {
 		super(playerName, playerID);
-		computerPlayerList.add(this);
 	}
 	
-	void updateHand(Card newCard) {
-		super.addCardToHand(newCard);
-		this.guessLogic.compPlayersHand(newCard);
-	}
-	
+	/* makeSuggestion() ~ Returns a List<Cards> as a guess.
+	 * 
+	 */
+	@Override
 	public void makeSuggestion() {
-			if (super.getCellPosition().ifRoomCenter()) {
-				String roomName = super.getCellPosition().getMyRoomType().getRoomName();
-				this.suggestion = guessLogic.generateGuess(roomName);
-				this.replys	  = super.generateSuggestionReply(suggestion, this);
-				this.replys	  = analyzeSuggestionReply(replys, suggestion);
-				this.guessLogic.addPossibleSolution(replys);			
-			}			
+		Guess CPUGuess = guessLogic.generateGuess(getCurrentCell().getMyRoomType().getName());
+		resolveReplies(PlayerActions.generateReplies(CPUGuess.getGuess(), this));	
 	}
-		
-	public List<Card> analyzeSuggestionReply(List<Card> suggestionResult, List<Card> playersSuggestion) {
-			List<Card> removeMe = new Vector<Card>();
-			for (Card removeCard: suggestionResult) {
-				for(Card comparingCard: playersSuggestion) {
-					if(removeCard.getCardName() == comparingCard.getCardName()) {
-						removeMe.add(removeCard);
-					}
-				}
-			}
-			playersSuggestion.removeAll(removeMe);
-			return playersSuggestion;
+	
+	/* resolveReplies() ~ Takes an arbitrary long list of Cards
+	 * and adds them to the seen list for the specific player.
+	 */
+	private void resolveReplies(List<Card> seenCards) {
+		guessLogic.addListToSeen(seenCards);
+	}
+	
+	/* finReplyIfInHand() ~ Can find more then one reply card within
+	 * a ComputerPlayer's Hand. It will arbitrarily return a random Card
+	 * if more then one can be a reply.
+	 */
+	public Card findReply(List<Card> suggestedCardList) {
+		List<Card> possibleReplies = new Vector<Card>();
+		for (Card checkThisCard: suggestedCardList) {
+			if (this.getHand().contains(checkThisCard)) { possibleReplies.add(checkThisCard); }
+		} return chooseReply(possibleReplies);
+	}
+	
+	/* chooseReply() ~ takes a List and randomly chooses
+	 * an element of the list to return.
+	 */
+	@Override
+	public Card chooseReply(List<Card> cards)  {
+		cards.remove(null);
+		Collections.shuffle(cards);
+		if (!cards.isEmpty()) {
+			return cards.get(0);
 		}
+		return null;
+	}
 	
 	public void move() {
-		Random Rolled = new Random();
-		int diceRoll = Rolled.nextInt(10) + 2;
-		Board.getInstance().calcTargets(super.getCellPosition(), diceRoll);
+		int diceRolled = PlayerActions.rollDice();
+		Board.getInstance().calcTargets(super.getCellPosition(), diceRolled);
 		super.updateCellPosition(moveMe(Board.getInstance().getTargets()));
 	}
 	
@@ -75,46 +79,26 @@ public class ComputerPlayer extends Player {
 		return availSpaces.get(0);
 	}
 	
-	//TODO also junk
 	private boolean simplePathFinder(BoardCell resolveThisCell) {
-		for (Card checkIfVisited: this.guessPossibleSolutionGetter()) {
-			if(checkIfVisited.getCardName().contains(resolveThisCell.getMyRoomType().getName())) {
-				return true;
-			}
-		}
-		return false;
+		return guessLogic.checkUnguessedRoomsByName(resolveThisCell.getMyRoomType().getName());
 	}
 
 	public BoardCell getCurrentCell() {
 		return super.getCellPosition();
 	}
 	
-	public List<Card> guessPossibleSolutionGetter() {
-		return this.guessLogic.possibleSolutionGetter();
-	} 
-
-	//Methods specifically used for testing
-	//Instead of using guessLogic to generate a suggestion, we want to manly
-	//Assign the guess, so we'll use this method for that.
-	public List<Card> testSuggestion(List<Card> suggestion) {		
-		List<Card> reply = new Vector<Card>();
-		if (super.generateSuggestionReply(suggestion, this) != null) {
-			reply.addAll(super.generateSuggestionReply(suggestion, this));
-			return reply;
-		}
-		return null;
-	}
 	
-	public void emptyHand() {
-		super.emptyHand();
+	public void updateHand(Card newCard) {
+		super.addCardToHand(newCard);
 	}
 
-	public List<Card> getSuggestion() {
-		return suggestion;
-	}
-
-	public List<Card> getReplys() {
-		return replys;
-	}
 	
+	@Override
+	public Set<Card> getSeenList() {
+		Set<Card> seenSet = new HashSet<Card>();
+		seenSet.addAll(guessLogic.getSeenCards());
+		return seenSet;
+	}
+
+
 }	

@@ -1,5 +1,5 @@
 /* Solution
- * Purpose: 	This class will contain the solution to the game.
+ * Purpose: 		This class will contain the solution to the game.
  * Dependencies:	Card class.
  * 
  * @author Jonathan Dimercurio
@@ -8,55 +8,37 @@
 
 package clueGame;
 
-import java.util.List;
-import java.util.Vector;
-
 public class Solution {
-	private Card goalPerson;
-	private Card goalRoom;
-	private Card goalWeapon;
-	private List<Card> solution = new Vector<Card>();
+	private static Card goalPerson;
+	private static Card goalRoom;
+	private static Card goalWeapon;
+
+	//Begin Singleton
+	private static Solution TheSolution;
 	
-	public Solution(Card thePerson, Card theRoom, Card theWeapon) {
-		this.goalPerson = thePerson;
-		this.goalRoom	= theRoom;
-		this.goalWeapon	= theWeapon;
-		solution.add(thePerson);
-		solution.add(theWeapon);
-		solution.add(theRoom);
-	}
-	
-	public Card getGoalPerson() {
-		return goalPerson;
-	}
-
-	public Card getGoalRoom() {
-		return goalRoom;
-	}
-
-	public Card getGoalWeapon() {
-		return goalWeapon;
-	}
-
-	public Solution getSolution() {
-		return this;
+	private Solution(Card thePerson, Card theRoom, Card theWeapon) {
+		Solution.goalPerson = thePerson;
+		Solution.goalRoom = theRoom;
+		Solution.goalWeapon = theWeapon;
 	}
 	
-	public List<Card> getTheSolution() {
-		return this.solution;
+	public static Solution initSolution(Card thePerson, Card theRoom, Card theWeapon) {
+		if (!(Solution.TheSolution == null)) {
+			Solution.TheSolution = new Solution(thePerson, theRoom, theWeapon);
+			return TheSolution;
+		} return Solution.TheSolution;
+	}
+	//End Singleton
+	
+	//Generic getters
+	public static Card getGoalPerson() {
+		return Solution.goalPerson;
+	}
+	public static Card getGoalRoom() {
+		return Solution.goalRoom;
+	}
+	public static Card getGoalWeapon() {
+		return Solution.goalWeapon;
 	}
 	
-	//Begin Actions
-	/* accusation() ~ 
-	 * Purpose: This method will use 3 Card names, and check for the
-	 * 			winning accusation. Returns boolean.
-	 */
-	@SuppressWarnings("unused")
-	public boolean accusation(Card accusedPerson, Card accusedRoom, Card accusedWeapon) {
-		if (this.getGoalPerson() == accusedPerson &&
-			this.getGoalRoom()== accusedRoom	&&
-			this.getGoalWeapon()== accusedWeapon )
-		{ return true; } else { return false; }
-	}
-
 }
