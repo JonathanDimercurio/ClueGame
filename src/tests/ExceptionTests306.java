@@ -42,7 +42,7 @@ public class ExceptionTests306 {
 	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 		Board board = Board.getInstance();
 		board.setConfigFiles("ClueLayout306.csv", "ClueSetupBadFormat306.txt");
-		//board.loadSetupConfig();
+		board.loadSetupConfig();
 		board.loadLayoutConfig();
 	}
 }

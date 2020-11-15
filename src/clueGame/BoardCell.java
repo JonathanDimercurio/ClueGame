@@ -210,4 +210,11 @@ public class BoardCell {
 	public boolean isSecretPassage() {
 		return isSecretPassage;
 	}
+
+	public static void clearCellValues() {
+		BoardCell.mapGameBoardData.clear();
+		BoardCell.roomCenters.clear();
+		BoardCell.roomDoors.clear();
+		BoardCell.gameBoardData.clear();
+	}
 }

@@ -20,8 +20,6 @@ import clueGame.BoardCell;
 
 public class FileInitTests {
 	
-	
-	public static final int LEGEND_SIZE = 13;
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 27;
 
@@ -57,7 +55,6 @@ public class FileInitTests {
 	public void testBoardDimensions() {
 		assertEquals(NUM_ROWS, board.getNumRows());
 		assertEquals(NUM_COLUMNS, board.getNumColumns());
-		assertEquals(LEGEND_SIZE,(int) board.getRoomMap().size() );
 	}
 
 	//Testing the total number of cells generated

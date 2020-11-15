@@ -48,6 +48,7 @@ public class ClueFileIO {
 	 */
 	public void loadSetupConfig() throws BadConfigFormatException {
 		this.choice = true;
+		if(!ClueFileIO.formattedSetupFile.isEmpty()) {ClueFileIO.formattedSetupFile.removeAll(formattedSetupFile);}
 		ClueFileIO.formattedSetupFile.addAll(configFileMule(ClueFileIO.setupInputFile));
 	}
 		
@@ -56,6 +57,7 @@ public class ClueFileIO {
 	 */
 	public void loadLayoutConfig() throws BadConfigFormatException { 
 		this.choice = false;
+		if(!ClueFileIO.formattedLayoutFile.isEmpty()) {ClueFileIO.formattedLayoutFile.removeAll(formattedLayoutFile);}
 		ClueFileIO.formattedLayoutFile.addAll(configFileMule(ClueFileIO.layoutInputFile));
 		badRoomChecker();
 	}

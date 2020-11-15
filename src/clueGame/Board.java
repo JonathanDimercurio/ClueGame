@@ -12,9 +12,9 @@ import java.util.*;
 public class Board implements GameControl{
 	
 	//Member variables	
-	private int numRows = 0;
-	private int numColumns = 0;
-	private int mapIndex = 0;	
+	private int numRows;
+	private int numColumns;
+	private int mapIndex;	
 	private BoardCell[][] gameGrid;
 	private static Solution theSolution;
 	
@@ -29,15 +29,20 @@ public class Board implements GameControl{
 	}
 	
 	public void initialize() {
+		resetBoardValues();
 		try{ 
 		this.theFiles.loadLayoutConfig();
+		} catch (BadConfigFormatException e) {
+			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
+		}
+		try{ 
 		this.theFiles.loadSetupConfig();
 		} catch (BadConfigFormatException e) {
 			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
 		}
 		
-		
 		new Room(ClueFileIO.getFormattedSetupFile());
+		
 		
 		setBoardFields();
 		cellCreator();
@@ -46,6 +51,16 @@ public class Board implements GameControl{
 
 	}
 	
+	private void resetBoardValues() {
+		numRows = 0;
+		numColumns = 0;
+		mapIndex = 0;
+		if(targets != null) { targets.clear(); }
+		if(visited != null) { visited.clear(); }
+		BoardCell.clearCellValues();
+		if(Room.roomMap != null) { Room.roomMap.clear(); }
+	}
+
 	public static Board getInstance() {
         return theInstance;
 	}

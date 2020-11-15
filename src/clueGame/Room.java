@@ -3,7 +3,6 @@ package clueGame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Room {
 	public static Map<Character, Room> roomMap = new HashMap<>();
@@ -31,6 +30,7 @@ public class Room {
 	
 	//TODO review this thought for a constructor
 	public Room (ArrayList<String[]> addRoom) {
+		
 		for(int index = 0; index < addRoom.size(); index++) {
 		
 			if((addRoom.get(index)[0].contains("Room")||(addRoom.get(index)[0].contains("Space")) && !(Room.roomMap.keySet().contains(addRoom.get(index)[2].charAt(0))))) {
