@@ -17,12 +17,10 @@ public class GuessAI implements GlossaryActions {
 	
 	private Map<String, Card> unSeenCards = new HashMap<String, Card>();
 	
-	//TODO
 	public GuessAI() {
 		GlossaryActions.allKnownCardsSet()
-				.forEach(card -> unSeenCards.computeIfAbsent(
-						card.getCardName(), k -> unSeenCards.put(k,card)
-	));}
+				.forEach(card -> unSeenCards.put(card.getCardName(),card));
+		}
 	
 	public Guess generateGuess(String roomName) {
 		Card roomGuess = new Card(GlossaryActions.findCardByName(roomName));
@@ -49,16 +47,16 @@ public class GuessAI implements GlossaryActions {
  	}
 
 	public void addListToSeen(List<Card> seenCards) {
-		for(Card tCardList: seenCards) {
-			unSeenCards.remove(tCardList.getCardName());
-		}	
+			for(Card removeThisCard: seenCards) {
+				this.unSeenCards.remove(removeThisCard.getCardName());
+			}
 	}
 	
 	public boolean checkIfSeen(Card checkThisCard) {
 		return (!unSeenCards.containsKey(checkThisCard.getCardName()));
 	}
 	
-	public boolean checkIfseenByString(String checkThisString) {
+	public boolean checkIfSeenByString(String checkThisString) {
 		return (!unSeenCards.containsKey(checkThisString));
 	}
 }

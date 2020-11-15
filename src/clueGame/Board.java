@@ -42,8 +42,6 @@ public class Board implements GameControl{
 		}
 		
 		new Room(ClueFileIO.getFormattedSetupFile());
-		
-		
 		setBoardFields();
 		cellCreator();
 		generateGrid();

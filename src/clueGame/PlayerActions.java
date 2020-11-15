@@ -2,12 +2,10 @@ package clueGame;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.Vector;
 
 public interface PlayerActions {
 
-	public abstract Set<Card> getSeenSet();
+	public abstract List<Card> getSeenSet();
 
 
 	/* chooseReply() ~ Dependencies: none ~ Calls: none
@@ -31,21 +29,4 @@ public interface PlayerActions {
 		int diceRoll = Rolled.nextInt(10) + 2;
 		return diceRoll;
 	}
-
-	/* generateReplies ~ 
-	 * 
-	 */
-	public static List<Card> generateReplies(Set<Card> set,Player currentPlayer) {
-		List<Player> tempPlayerList = new Vector<Player>();
-		tempPlayerList.addAll(Player.players);
-		tempPlayerList.remove(currentPlayer);
-		
-		List<Card> playerReplies = new Vector<Card>();
-		for (Player checkThisPlayer: tempPlayerList) {
-			playerReplies.add(checkThisPlayer.findReply(set));
-		} return playerReplies;
-		
-	}
-
-
 }

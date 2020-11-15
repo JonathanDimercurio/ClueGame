@@ -6,59 +6,56 @@ import java.util.Vector;
 
 public class CardGlossary {
 
-	private static Map<String, Card> knownCardsByName = new HashMap<String, Card>();
-	private static Map<CardType, Vector<Card>> knownCardsByType = new HashMap<CardType, Vector<Card>>();
-	private static Map<String, Card> knownCardsBySymbol = new HashMap<String, Card>();
+	private Map<String, Card> knownCardsByName = new HashMap<String, Card>();
+	private Map<CardType, Vector<Card>> knownCardsByType = new HashMap<CardType, Vector<Card>>();
+	private Map<String, Card> knownCardsBySymbol = new HashMap<String, Card>();
 	
-	
-	private static CardGlossary cardLib = new CardGlossary();
+	static CardGlossary theGlossary = new CardGlossary();
 	
 	private CardGlossary() {
 	}	
 	
+	public static CardGlossary getGlossary() {
+		return theGlossary;
+	}
+	
 	public void newKnownCard(Card newCard) {
-		if(!CardGlossary.knownCardsByName.values().contains(newCard)) {
-			CardGlossary.addNewKnownCardToNameMap(newCard);
-			CardGlossary.addNewKnownCardToSymbolMap(newCard);
-			CardGlossary.addNewKnownCardToTypeMap(newCard);
+		if(!knownCardsByName.values().contains(newCard)) {
+			addNewKnownCardToNameMap(newCard);
+			addNewKnownCardToSymbolMap(newCard);
+			addNewKnownCardToTypeMap(newCard);
 		}
 	}
 	
 	//************* adders
-	private static void addNewKnownCardToNameMap(Card newCard) {
-		CardGlossary.knownCardsByName.put(newCard.getCardName(), newCard);
+	public void addNewKnownCardToNameMap(Card newCard) {
+		knownCardsByName.put(newCard.getCardName(), newCard);
 	}
 
-	private static void addNewKnownCardToSymbolMap(Card newCard) {
-		CardGlossary.knownCardsBySymbol.put(newCard.getCardSymbol(), newCard);
+	public void addNewKnownCardToSymbolMap(Card newCard) {
+		knownCardsBySymbol.put(newCard.getCardSymbol(), newCard);
 
 	}
 
-	public static void addNewKnownCardToTypeMap(Card newCard) {
-		if(!CardGlossary.knownCardsByType.containsKey(newCard.getCardtype())) {
+	public void addNewKnownCardToTypeMap(Card newCard) {
+		if(!knownCardsByType.containsKey(newCard.getCardtype())) {
 			Vector<Card> tempVec = new Vector<>();
 			tempVec.add(newCard);
-			CardGlossary.knownCardsByType.put(newCard.getCardtype(), tempVec);
+			knownCardsByType.put(newCard.getCardtype(), tempVec);
 		}
 	}
 
 	//************* Below are basic getters/setters
-	public static CardGlossary getGlossary() {
-		return CardGlossary.cardLib;
-	}
 
-
-	public static Map<String, Card> getKnownCards_NAME_HASHMAP() {
-		return CardGlossary.knownCardsByName;
+	public Map<String, Card> getKnownCards_NAME_HASHMAP() {
+		return knownCardsByName;
 	}
 	
-	
-
-	public static Map<CardType, Vector<Card>> getKnownCardsByType_CARDTYPE_HASHMAP() {
-		return CardGlossary.knownCardsByType;
+	public Map<CardType, Vector<Card>> getKnownCardsByType_CARDTYPE_HASHMAP() {
+		return knownCardsByType;
 	}
 	
-	public static Map<String, Card> getKnownCards_CARDSYMBOL_HASHMAP(){
-		return CardGlossary.knownCardsBySymbol;
+	public Map<String, Card> getKnownCards_CARDSYMBOL_HASHMAP(){
+		return knownCardsBySymbol;
 	}
 }

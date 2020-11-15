@@ -20,10 +20,7 @@ public class HumanPlayer extends Player implements PlayerActions {
 		this.seenSet.add(newCard);
 	}
 
-	@Override
-	public void makeSuggestion() {
-			
-	}
+
 
 	@Override
 	public Card chooseReply(List<Card> cards) {
@@ -32,13 +29,24 @@ public class HumanPlayer extends Player implements PlayerActions {
 	}
 
 	@Override
-	public Card findReply(Set<Card> suggestedCardList) {
+	public List<Card> getSeenSet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Card> getSeenSet() {
-		return this.seenSet;
+	public Guess makeSuggestion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public void updateKnownList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 }	

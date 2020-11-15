@@ -22,11 +22,12 @@ public class Solution {
 		Solution.goalWeapon = theWeapon;
 	}
 	
-	public static Solution initSolution(Card thePerson, Card theRoom, Card theWeapon) {
-		if (!(Solution.TheSolution == null)) {
-			Solution.TheSolution = new Solution(thePerson, theRoom, theWeapon);
-			return TheSolution;
-		} return Solution.TheSolution;
+	public static Solution getSolution() {
+		return Solution.TheSolution;
+	}
+	
+	public static void initSolution(Card thePerson, Card theRoom, Card theWeapon) {
+			TheSolution = new Solution(thePerson, theRoom, theWeapon);
 	}
 	//End Singleton
 	

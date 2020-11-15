@@ -1,148 +1,150 @@
-//package tests;
-//import static org.junit.Assert.*;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//
-//import java.util.List;
-//import java.util.Vector;
-//
-//import org.junit.jupiter.api.BeforeAll;
-//import org.junit.jupiter.api.Test;
-//import clueGame.*;
-//
-//public class GameSolutionTest {
-//	static Board board;
-//	
-//	//We'll need these for all the following tests.
-//	@BeforeAll
-//	public static void setUp() {
-//		// Board is singleton, get the only instance
-//		board = Board.getInstance();
-//		// set the file names to use my config files
-//		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
-//		// Initialize will load config files 
-//		board.initialize();
-//	}
-//	
-//	
+package tests;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+import java.util.Vector;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import clueGame.*;
+
+public class GameSolutionTest {
+	static Board board;
+	
+	//We'll need these for all the following tests.
+	@BeforeAll
+	public static void setUp() {
+		// Board is singleton, get the only instance
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		
+		// Initialize will load config files 
+		board.initialize();
+	}
+
+	@Test
+	void solutionChecker() {
+		
+		//First lets get a deck
+		Deck testDeck1 = new Deck(ClueFileIO.getFormattedSetupFile());
+		
+		//Next lets get a few cards
+		Card testCard1 = new Card(testDeck1.getDeck().get(0));
+		Card testCard2 = new Card(testDeck1.getDeck().get(11));
+		Card testCard3 = new Card(testDeck1.getDeck().get(20));
+		
+		//Test assertTrue a correct accusation
+		Solution.initSolution(testCard1, testCard2, testCard3); 
+		assertTrue(PlayerActions.accusation(testCard1, testCard2, testCard3));
+		
+		//Incorrect solution cards
+		Card incorrectPerson = testDeck1.getDeck().get(21);
+		Card incorrectRoom	= testDeck1.getDeck().get(12);
+		Card incorrectWeapon = testDeck1.getDeck().get(19);
+		
+		//Test an incorrect accusations
+		assertFalse(PlayerActions.accusation(incorrectPerson, testCard2, testCard3));
+		assertFalse(PlayerActions.accusation(testCard1, incorrectRoom, testCard3));
+		assertFalse(PlayerActions.accusation(testCard1, testCard2, incorrectWeapon));
+		
+	}
+	
 //	@Test
-//	void solutionChecker() {
-//		
-//		//First lets get a deck
-//		List<Card> testDeck1 = board.getDeck();
-//		
-//		
-//		//Next lets get a few cards
-//		Card testCard1 = new Card(testDeck1.get(0));
-//		Card testCard2 = new Card(testDeck1.get(11));
-//		Card testCard3 = new Card(testDeck1.get(20));
-//		
-//		//Test assertTrue a correct accusation
-//		Solution testGoal = Solution.initSolution(testCard1, testCard2, testCard3); 
-//		assertTrue(testGoal.accusation(testCard1, testCard2, testCard3));
-//		
-//		//Incorrect solution cards
-//		Card incorrectPerson = testDeck1.get(21);
-//		Card incorrectRoom	= testDeck1.get(12);
-//		Card incorrectWeapon = testDeck1.get(19);
-//		
-//		//Test an incorrect accusations
-//		assertFalse(testGoal.accusation(incorrectPerson, testCard2, testCard3));
-//		assertFalse(testGoal.accusation(testCard1, incorrectRoom, testCard3));
-//		assertFalse(testGoal.accusation(testCard1, testCard2, incorrectWeapon));
-//		
-//	}
-//	
-//	
-//	@Test
-//	void handleSuggestionTests() {
-//		//Generate a ComputerPlayer list for testing
-//		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();
-//		testingPlayerList.addAll(ComputerPlayer.computerPlayerList);
-//		
-//		//Move all computer players into rooms, and test
-//		for (ComputerPlayer movePlayer: testingPlayerList) {
-//			while(!movePlayer.getCurrentCell().ifRoomCenter()) {
-//				movePlayer.move();
-//			}
-//			assertTrue(movePlayer.getCurrentCell().isRoomCenter());
-//		}
-//		
-//		//
-//		//Testing if the room the computerPlayer has moved to is
-//		//a room they have visited before.
-//		int i = 0;
-//		for (ComputerPlayer testIfMyRoomHasBeenVisited: testingPlayerList) {
-//			for(Card compareToThisCard:testIfMyRoomHasBeenVisited.guessPossibleSolutionGetter()) {
-//				if(testIfMyRoomHasBeenVisited.getCurrentCell().getMyRoomType().getRoomName().contains(compareToThisCard.getCardName())) {
-//					i += 1;
-//				}
-//			}
-//		}
-//		assertEquals(testingPlayerList.size(), i);
-//		
-//		//
-//		//Now that all the ComputerPlayers are in valid rooms,
-//		//We will ensure the suggestion methods are function properly
-//		
-//		//First we'll pass a Suggestion no one can disprove
-//		List<Card> testReplyList 		= new Vector<Card>();
-//		List<Card> testSuggestionList	= new Vector<Card>();
-//		
-//		//First tested Player
-//		testSuggestionList.addAll(board.getTheSolution());
-//		if (testingPlayerList.get(0).testSuggestion(testSuggestionList) != null) {
-//			testReplyList.addAll(testingPlayerList.get(0).testSuggestion(testSuggestionList));
-//		}
-//		assertTrue(testReplyList.size() == 0);
-//		
-//		//Testing another player
-//		testReplyList = testingPlayerList.get(3).testSuggestion(testSuggestionList);
-//		assertTrue(testReplyList.size() == 0);
-//		
-//		
-//		//
-//		//Testing a suggestion only the accuser can refute
-//		testSuggestionList.removeAll(testSuggestionList);
-//		testSuggestionList = testingPlayerList.get(2).getHand();
-//		if(testingPlayerList.get(2).testSuggestion(testSuggestionList) != null) {
-//			testReplyList.addAll(testingPlayerList.get(2).testSuggestion(testSuggestionList));
-//		}
-//		assertTrue(testReplyList.size() == 0);
-//		//All other requirements are tested within the bounds of the above tests.
-//	}
-//	
-//	@Test
-//	void disproveSuggestionTests() {
-//		//Generate a ComputerPlayer list for testing
-//		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();
-//		testingPlayerList.addAll(ComputerPlayer.computerPlayerList);
-//	
-//		//Acquire some Lists for experimental purpose
-//		List<Card> testReplyList 		= new Vector<Card>();
-//		List<Card> testSuggestionList	= new Vector<Card>();
-//	
-//		//Get cards we know are in player2, player3 and player4's hand
-//		testSuggestionList.add(testingPlayerList.get(1).getHand().get(0));
-//		testSuggestionList.add(testingPlayerList.get(2).getHand().get(1));
-//		testSuggestionList.add(testingPlayerList.get(3).getHand().get(2));
-//		
-//		//Call our testSuggestionMethod with these specific cards
-//		if((testingPlayerList.get(0).testSuggestion(testSuggestionList)) != null) {
-//			testReplyList.addAll(testingPlayerList.get(0).testSuggestion(testSuggestionList));
-//		}
-//		//Each Player is returning 1 card from their hand as an answer
-//		assertEquals(testReplyList.size(), 3);
-//		assertTrue(testReplyList.contains(testingPlayerList.get(1).getHand().get(0)));
-//		assertTrue(testReplyList.contains(testingPlayerList.get(2).getHand().get(1)));
-//		assertTrue(testReplyList.contains(testingPlayerList.get(3).getHand().get(2)));
-//		
-//		//Ensure, without a doubt that a player will only return 1 card as a reply
-//		List<Card> testReplyList2 = new Vector<Card>();
-//		List<Card> testSolList2 = new Vector<Card>();
-//		testSolList2.addAll(testingPlayerList.get(3).getHand());
-//		testReplyList2.addAll(testingPlayerList.get(0).testSuggestion(testSolList2));
-//		assertEquals(testReplyList2.size(), 1);
-//		}
-//	
-//	
-//}
+	void insureDealingIsUpdatingSeenList() {
+		
+		Deck testDeck1 = new Deck(ClueFileIO.getFormattedSetupFile());
+		Deck testDeck2 = new Deck(ClueFileIO.getFormattedSetupFile());
+		GlossaryActions.createGlossaryFromDeck(testDeck1);
+		testDeck1 = DeckActions.createSeperateTypeDecks(testDeck1, CardType.PERSON);
+		List<ComputerPlayer> testingPlayerList = new Vector<>();
+		for (Card playerCards: testDeck1.getDeck()) {
+			testingPlayerList.add(new ComputerPlayer(playerCards));
+		}
+		ComputerPlayer testPlayer1 = testingPlayerList.get(0);
+		ComputerPlayer testPlayer2 = testingPlayerList.get(3);
+		ComputerPlayer testPlayer3 = testingPlayerList.get(5);
+		//Generate a ComputerPlayer list for testing
+
+		DeckActions.dealDeck(testDeck2, testingPlayerList.stream().collect(Collectors.toList()));
+
+		
+		assertTrue(testPlayer1.guessLogic.checkIfSeen(testPlayer1.getHand().get(1)));
+		assertFalse(testPlayer1.guessLogic.checkIfSeen(testPlayer2.getHand().get(1)));
+		assertFalse(testPlayer1.guessLogic.checkIfSeen(testPlayer2.getHand().get(2)));
+		testPlayer1.updateHand(testPlayer2.getHand().get(1));
+		assertTrue(testPlayer1.guessLogic.checkIfSeen(testPlayer2.getHand().get(1)));
+		testPlayer1.guessLogic.addListToSeen(testPlayer3.getHand());
+		assertTrue(testPlayer1.guessLogic.checkIfSeen(testPlayer3.getHand().get(1)));
+		assertTrue(testPlayer1.guessLogic.checkIfSeen(testPlayer3.getHand().get(2)));
+		
+		}
+			
+	//Test a computer making a suggestion, and receiving a reply form another computer player
+	//testPlayer1 is moved into a room before making a suggestion
+	@Test
+	void testingReplyBoolean() {
+		Deck testDeck1 = new Deck(ClueFileIO.getFormattedSetupFile());
+		Deck testDeck2 = new Deck(ClueFileIO.getFormattedSetupFile());
+		GlossaryActions.createGlossaryFromDeck(testDeck1);
+		testDeck1 = DeckActions.createSeperateTypeDecks(testDeck1, CardType.PERSON);
+		List<ComputerPlayer> testingPlayerList = new Vector<>();
+
+		testingPlayerList.add(new ComputerPlayer(testDeck1.getDeck().get(0)));
+		testingPlayerList.add(new ComputerPlayer(testDeck1.getDeck().get(2)));
+		
+		
+		DeckActions.dealDeck(testDeck2, testingPlayerList.stream().collect(Collectors.toList()));
+		
+		ComputerPlayer testPlayer1 = testingPlayerList.get(0);
+		testPlayer1.moveMeToCell((Room.roomMap.get('N').getCenterCell()));
+		
+		Guess p1Guess = new Guess(testPlayer1.makeSuggestion());
+		List<Card> replyList = new Vector<Card>();
+		for(ComputerPlayer checkReply: testingPlayerList) {
+			if(checkReply.checkForReply(p1Guess)) {
+			replyList.add(new Card(checkReply.generateReply(p1Guess)));
+		}}
+		
+		testPlayer1.resolveReplies(replyList);
+		
+		assertEquals(replyList.size(), 1);
+		
+	}
+	
+	@Test
+	void disproveSuggestionTests() {
+		//Generate a ComputerPlayer list for testing
+		Deck testDeck1 = new Deck(ClueFileIO.getFormattedSetupFile());
+		Deck testDeck2 = new Deck(ClueFileIO.getFormattedSetupFile());
+		GlossaryActions.createGlossaryFromDeck(testDeck1);
+		testDeck1 = DeckActions.createSeperateTypeDecks(testDeck1, CardType.PERSON);
+		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();	
+		
+		
+		ComputerPlayer testPlayer1 = new ComputerPlayer(testDeck1.getDeck().get(0));
+		ComputerPlayer testPlayer2 = new ComputerPlayer(testDeck1.getDeck().get(1));
+		ComputerPlayer testPlayer3 = new ComputerPlayer(testDeck1.getDeck().get(2));
+		
+		testingPlayerList.add(testPlayer1);
+		testingPlayerList.add(testPlayer2);
+		testingPlayerList.add(testPlayer3);
+			
+		DeckActions.dealDeck(testDeck2, testingPlayerList.stream().collect(Collectors.toList()));
+		testPlayer1.moveMeToCell((Room.roomMap.get('N').getCenterCell()));
+		
+		//Call our testSuggestionMethod with these specific cards
+		Guess p1Guess = new Guess(testPlayer1.makeSuggestion());
+		
+		//Each Player is returning 1 card from their hand as an answer
+		List<Card> testReplyList = new Vector<Card>();
+		for(ComputerPlayer checkReply: testingPlayerList) {
+			if(checkReply.checkForReply(p1Guess)) {
+				testReplyList.add(new Card(checkReply.generateReply(p1Guess)));
+		}}
+		
+		assertEquals(testReplyList.size(), 1);
+		}
+	
+}

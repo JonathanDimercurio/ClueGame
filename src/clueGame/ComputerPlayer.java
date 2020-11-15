@@ -6,61 +6,61 @@
  */
 package clueGame;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.stream.Collectors;
 
 public class ComputerPlayer extends Player implements PlayerActions{
-	private GuessAI guessLogic = new GuessAI();
+	public GuessAI guessLogic = new GuessAI();
 	
 	public ComputerPlayer(Card makeCompPlayerByCard) {
 		super(makeCompPlayerByCard);
+	}
+	
+	public ComputerPlayer(Deck deckOfComputerPlayers) {
+		super(deckOfComputerPlayers);
 	}
 	
 	/* makeSuggestion() ~ Returns a List<Cards> as a guess.
 	 * 
 	 */
 	@Override
-	public void makeSuggestion() {
+	public Guess makeSuggestion() {
 		Guess CPUGuess = guessLogic.generateGuess(getCurrentCell().getMyRoomType().getName());
-		this.resolveReplies(PlayerActions.generateReplies(CPUGuess.getGuess(), this));	
+		return CPUGuess;	
 	}
 	
 	/* resolveReplies() ~ Takes an arbitrary long list of Cards
 	 * and adds them to the seen list for the specific player.
 	 */
-	private void resolveReplies(List<Card> seenCards) {
+	public void resolveReplies(List<Card> seenCards) {
 		guessLogic.addListToSeen(seenCards);
 	}
 	
-	/* finReplyIfInHand() ~ Can find more then one reply card within
-	 * a ComputerPlayer's Hand. It will arbitrarily return a random Card
-	 * if more then one can be a reply.
-	 */
-	public Card findReply(Set<Card> suggestedCardList) {
-		List<Card> possibleReplies = new Vector<Card>();
-		for (Card checkThisCard: suggestedCardList) {
-			if (this.getHand().contains(checkThisCard)) { possibleReplies.add(checkThisCard); }
-		} return chooseReply(possibleReplies);
+
+	
+	//Check Before getting replies
+	public boolean checkForReply (Guess guess) {
+		for(Card checkCard: guess.getGuess()) {	 
+			return this.getHand().stream().anyMatch(card -> checkCard.compareTo(card));
+		} return false;
 	}
 	
-	/* chooseReply() ~ takes a List and randomly chooses
-	 * an element of the list to return.
-	 */
-	@Override
-	public Card chooseReply(List<Card> cards)  {
-		cards.remove(null);
-		Collections.shuffle(cards);
-		if (!cards.isEmpty()) {
-			return cards.get(0);
-		}
-		return null;
+	//This is where replys come from
+	public Card generateReply(Guess guess) {
+		List<Card> replyCard = new Vector<Card>();
+		
+		for(Card checkCard: guess.getGuess()) {
+			for(Card myCard: this.getHand()) {
+				if(myCard.compareTo(checkCard)) {
+					replyCard.add(new Card(myCard));
+		}}}
+		Collections.shuffle(replyCard);
+		return replyCard.get(0);
 	}
-	
+
+	//Automatically generates a dice roll
 	public void move() {
 		int diceRolled = PlayerActions.rollDice();
 		Board.getInstance().calcTargets(super.getCellPosition(), diceRolled);
@@ -82,23 +82,36 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	}
 	
 	private boolean simplePathFinder(BoardCell resolveThisCell) {
-		return guessLogic.checkIfseenByString(resolveThisCell.getMyRoomType().getName());
+		return guessLogic.checkIfSeenByString(resolveThisCell.getMyRoomType().getName());
 	}
 
 	public BoardCell getCurrentCell() {
 		return super.getCellPosition();
 	}
 	
+	public void moveMeToCell(BoardCell moveHere) {
+		super.updateCellPosition(moveHere);
+	}
 	
 	public void updateHand(Card newCard) {
 		super.addCardToHand(newCard);
 	}
 
 	@Override
-	public Set<Card> getSeenSet() {
-		Set<Card> tempList = guessLogic.createSeenCardList().stream().collect(Collectors.toSet());
-		return tempList;
+	public List<Card> getSeenSet() {		
+		return guessLogic.createSeenCardList();
 	}
 
+	@Override
+	public Card chooseReply(List<Card> cards) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public void updateKnownList() {
+		this.guessLogic.addListToSeen(this.getHand());
+	}
 
 }	

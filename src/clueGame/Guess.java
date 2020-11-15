@@ -6,11 +6,14 @@ import java.util.Set;
 public class Guess {
 	private Set<Card> guess = new HashSet<Card>();
 	
+	public Guess(Guess newGuess) {
+		this.guess = newGuess.getGuess();
+	}
+	
 	public Guess(Card ... theGuess) {
 		for (Card tempC: theGuess) {
 			guess.add(tempC);
 		}
-			
 	}
 
 	public Set<Card> getGuess() {

@@ -24,31 +24,47 @@ public interface DeckActions {
 	 * Purpose: 
 	 */
 	public static List<Card> deckCloner (Deck inputDeck) {
-		List<Card> dealersDeck = new Vector<Card>();
-		dealersDeck.addAll(inputDeck.getDeck());
-		return dealersDeck;
+		List<Card> newDeck = new Vector<Card>();
+		newDeck.addAll(inputDeck.getDeck());
+		return newDeck;
 	}
 
 	/* dealDeck() ~ takes a new copy of Deck.completeDeck
 	 * and deals a card to every player until the deck is empty.
 	 * This will result in 3 cards in every players hand.
 	 */
-	public static void dealDeck(Deck dealingDeck, List<Player> dealToPlayers) {
-		Collections.shuffle((List<?>) dealingDeck.getDeck());
-		while(!dealingDeck.getDeck().isEmpty()) {
-			int i = 0;
-			dealCard(i, dealingDeck, dealToPlayers);
+	public static void dealDeck(Deck fullDeck, List<Player> dealToPlayers) {
+		List<Card> dealingDeck = deckCloner(fullDeck);
+		int remainingCards = 0;
+		
+		Card ranPERSONCard = createSeperateTypeDecks(fullDeck, CardType.PERSON).getDeck().stream().findAny().get();
+		fullDeck.getDeck().remove(ranPERSONCard);
+		Card ranROOMCard = createSeperateTypeDecks(fullDeck, CardType.ROOM).getDeck().stream().findAny().get();
+		fullDeck.getDeck().remove(ranROOMCard);
+		Card ranWEAPONCard = createSeperateTypeDecks(fullDeck, CardType.WEAPON).getDeck().stream().findAny().get();
+		fullDeck.getDeck().remove(ranWEAPONCard);
+		
+		Solution.initSolution(ranPERSONCard, ranROOMCard, ranWEAPONCard);
+				
+		//Deal remainder cards if any first. Update dealingDeck.
+		Collections.shuffle(dealingDeck);
+		if(dealingDeck.size() % dealToPlayers.size() != 0) {
+			remainingCards = dealingDeck.size() % dealToPlayers.size();
+			for ( int index = remainingCards ; index > 0; index--) {
+				dealToPlayers.get(index).updateHand(dealingDeck.get(index));
+				dealingDeck.remove(index);
+			}
 		}
+		while(!dealingDeck.isEmpty()) {
+			for (Player player: dealToPlayers) {
+				player.updateHand(dealingDeck.get(0));
+				dealingDeck.remove(0);
+			}
+		}
+		
+		for (Player CPUplayer: dealToPlayers) {
+			CPUplayer.updateKnownList();
+		}
+		
 	}
-	
-	/* dealCard() ~ Recursive solution to deal out
-	 * cards to every player. Mainly for practice
-	 * working with recursion.
-	 */
-	private static void dealCard(int indexer, Deck dealingDeck, List<Player> dealToPlayers) {
-		dealToPlayers.get(indexer).updateHand(dealingDeck.getDeck().get(indexer++));
-		if (indexer < 7) { dealCard(indexer, dealingDeck, dealToPlayers); }
-		dealingDeck.getDeck().remove(0);
-	}
-
 }

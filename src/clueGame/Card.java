@@ -10,7 +10,7 @@ package clueGame;
 
 import java.util.List;
 
-public class Card {
+public class Card{
 
 	//Data Structures and member fields
 	private String cardName;
@@ -31,7 +31,7 @@ public class Card {
 		this.cardtype = CardType.findCardTypeByString(newCardType);
 	}
 
-	//ArrayConstructor //TODO concern about type
+	//ArrayConstructor
 	public Card(List<String> newCardByArray) {
 		this.cardtype = CardType.findCardTypeByString(newCardByArray.get(0));
 		this.cardName = new String(newCardByArray.get(1));
@@ -63,5 +63,16 @@ public class Card {
 	public Card getThis() {
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		return cardName;
+	}
+
+	public boolean compareTo(Card card) {
+		if (this.cardName.contentEquals(card.cardName)) return true;
+		else return false;
+	}
+	
 	
 }
