@@ -1,4 +1,4 @@
-package clueGame;
+		package clueGame;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,18 +9,27 @@ import java.util.*;
 public class ClueFileIO {
 
 	boolean choice;
-	private File layoutInputFile;
-	private File setupInputFile;
+	private static File layoutInputFile;
+	private static File setupInputFile;
 	
 	private static ArrayList<String[]> formattedSetupFile = new ArrayList<String[]>();
 	private static ArrayList<String[]> formattedLayoutFile = new ArrayList<String[]>();
 	
 	
+	private static ClueFileIO theGameFiles = new ClueFileIO();
+	
+	private ClueFileIO() {
+	}
+	
+	public static ClueFileIO getTheGameFiles() {
+		return ClueFileIO.theGameFiles;
+	}
 	
 	public ClueFileIO(String layoutInputFile, String setupInputFile) throws BadConfigFormatException {
 		setConfigFiles(layoutInputFile, setupInputFile);
 		loadSetupConfig();
 		loadLayoutConfig();
+		
 	}
 	
 	/* setConfigFiles() ~ required **********
@@ -28,8 +37,8 @@ public class ClueFileIO {
 	 * board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
 	 */ 
 	public void setConfigFiles(String layoutInput, String setupInput) {
-		if (layoutInputFile == null ) { layoutInputFile = new File(pathCorrector(layoutInput)); }
-		if (setupInputFile == null ) { setupInputFile = new File(pathCorrector(setupInput)); }
+		 ClueFileIO.layoutInputFile = new File("data/", layoutInput); 
+		  ClueFileIO.setupInputFile = new File("data/", setupInput); 
 	}
 	
 	/* loadSetupConfig() ~ required **********
@@ -39,7 +48,7 @@ public class ClueFileIO {
 	 */
 	public void loadSetupConfig() throws BadConfigFormatException {
 		this.choice = true;
-		ClueFileIO.formattedSetupFile.addAll(configFileMule(this.setupInputFile));
+		ClueFileIO.formattedSetupFile.addAll(configFileMule(ClueFileIO.setupInputFile));
 	}
 		
 	/* loadLayoutConfig() ~ required ***********
@@ -47,7 +56,7 @@ public class ClueFileIO {
 	 */
 	public void loadLayoutConfig() throws BadConfigFormatException { 
 		this.choice = false;
-		ClueFileIO.formattedLayoutFile.addAll(configFileMule(this.layoutInputFile));
+		ClueFileIO.formattedLayoutFile.addAll(configFileMule(ClueFileIO.layoutInputFile));
 		badRoomChecker();
 	}
 	
@@ -101,9 +110,11 @@ public class ClueFileIO {
 				if(choice) { checkSetupString(line); }
 				else	{ checkLayoutString(line); }
 			}
+		scanIt.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+
 		outputList.remove(null);
 		return outputList;
 	}
@@ -134,19 +145,11 @@ public class ClueFileIO {
 				unknownCharKeys.add(checkMe.charAt(0));
 			}
 		}
-		if(!knownCharKeys.containsAll(unknownCharKeys)) {
+		for (char checkChar : unknownCharKeys ) {
+			if (!knownCharKeys.contains(checkChar)) {
 			throw new BadConfigFormatException("ClueLayout.csv contains improper room data, please check.       ");
-		}
+		} }
 	}
-	
-	/* pathCorrector(...)
-	 * Simply takes the file name and appends it with the
-	 * data directory.
-	 */
-	private String pathCorrector(String inputFile) {
-		return "data/" + inputFile;
-	}
-
 	
 	//Generic Getters
 	public static ArrayList<String[]> getFormattedSetupFile() {

@@ -46,4 +46,3 @@ public class ExceptionTests306 {
 		board.loadLayoutConfig();
 	}
 }
-		

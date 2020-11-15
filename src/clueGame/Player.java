@@ -6,7 +6,10 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 public abstract class Player {
@@ -16,19 +19,28 @@ public abstract class Player {
 	private Color color;
 	private int keyPosition;
 	
-	public static List<Player>		players = new Vector<>();
+	public static Set<Player> players = new HashSet<>();
 	
-	public Player (String playerName, String playerID) {
-		this.name = new String(playerName);
-		setStartLocationAndColor(playerID);
+	public Player(Card addPlayerFromCard) {
+		this.name = new String(addPlayerFromCard.getCardName());
+		setStartLocationAndColor(addPlayerFromCard.getCardSymbol());
 		Player.players.add(this);
+	}
+	
+	public Player(Deck constructFromDeck) {
 		
 	}
-
-	public abstract void updateHand(Card newCard);
-	public abstract Card findReply(List<Card> suggestedCardList);
-	public abstract void makeSuggestion();
 	
+	public void constructPlayerList_HUM_COMP(Card humanPlayer, List<Card> cpuPlayers) {
+		new HumanPlayer(humanPlayer);
+		 for(Card checkCard: cpuPlayers) {
+				 new ComputerPlayer(checkCard); 
+		 }
+	}
+	
+	public abstract void updateHand(Card newCard);
+	public abstract Card findReply(Set<Card> set);
+	public abstract void makeSuggestion();
 	
 	/* setStartLocation(String)
 	 * Purpose:	Using playerID, we use a switch statement to set

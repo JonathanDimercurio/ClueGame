@@ -1,7 +1,9 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Room {
 	public static Map<Character, Room> roomMap = new HashMap<>();
@@ -12,14 +14,32 @@ public class Room {
 	private BoardCell centerCell;
 	private BoardCell labelCell;
 	
-	
-	
-	public Room (String[] addRoom) {
-		if(addRoom[0].contains("Room"))
-		this.type = addRoom[0];
-		this.name = addRoom[1];
-		this.key = addRoom[2].charAt(0);
+	public Room(Room newRoom) {
+		this.name = newRoom.getName();
+		this.type = newRoom.getType();
+		this.key = newRoom.getKey();
 		Room.roomMap.put(this.key, this);
+
+	}
+	
+	public Room(String type, String name, String key) {
+		this.name = name;
+		this.type = type;
+		this.key = key.charAt(0);
+		Room.roomMap.put(this.key, this);
+	}
+	
+	//TODO review this thought for a constructor
+	public Room (ArrayList<String[]> addRoom) {
+		for(int index = 0; index < addRoom.size(); index++) {
+		
+			if((addRoom.get(index)[0].contains("Room")||(addRoom.get(index)[0].contains("Space")) && !(Room.roomMap.keySet().contains(addRoom.get(index)[2].charAt(0))))) {
+				this.type = addRoom.get(index)[0];
+				this.name = addRoom.get(index)[1];
+				this.key = addRoom.get(index)[2].charAt(0);
+				new Room(this);
+			}
+		}
 	}
 	
 	public char getKey() {

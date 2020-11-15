@@ -7,8 +7,14 @@ import java.util.Vector;
 
 public interface PlayerActions {
 
-	public abstract Set<Card> getSeenList();
-	
+	public abstract Set<Card> getSeenSet();
+
+
+	/* chooseReply() ~ Dependencies: none ~ Calls: none
+	 * Purpose:	
+	 */
+ 	public abstract Card chooseReply(List<Card> cards);
+
 	/* accusation() ~ 
 	 * Purpose: This method will use 3 Card names, and check for the
 	 * 			winning accusation. Returns boolean.
@@ -29,21 +35,17 @@ public interface PlayerActions {
 	/* generateReplies ~ 
 	 * 
 	 */
-	public static List<Card> generateReplies(List<Card> suggestedCardList,Player currentPlayer) {
+	public static List<Card> generateReplies(Set<Card> set,Player currentPlayer) {
 		List<Player> tempPlayerList = new Vector<Player>();
 		tempPlayerList.addAll(Player.players);
 		tempPlayerList.remove(currentPlayer);
 		
 		List<Card> playerReplies = new Vector<Card>();
 		for (Player checkThisPlayer: tempPlayerList) {
-			playerReplies.add(checkThisPlayer.findReply(suggestedCardList));
+			playerReplies.add(checkThisPlayer.findReply(set));
 		} return playerReplies;
 		
 	}
 
-	/* chooseReply() ~ Dependencies: none ~ Calls: none
-	 * Purpose:	
-	 */
- 	public abstract Card chooseReply(List<Card> cards);
 
 }

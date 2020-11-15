@@ -1,6 +1,5 @@
-/* Solution
- * Purpose: 	This class will contain the solution to the game.
- * Dependencies:	Card class.
+/* GuessAI
+ * Purpose:
  * 
  * @author Jonathan Dimercurio
  * @author Senya Stein
@@ -8,56 +7,58 @@
 
 package clueGame;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class GuessAI implements GameControl{
-	private List<Card> unseenPeople = new Vector<Card>();
-	private List<Card> unseenRooms 	= new Vector<Card>();
-	private List<Card> unseenWeapons = new Vector<Card>();
-	private List<Card> seenCards = new Vector<Card>();
+public class GuessAI implements GlossaryActions {
 	
+	private Map<String, Card> unSeenCards = new HashMap<String, Card>();
+	
+	//TODO
 	public GuessAI() {
-		this.unseenPeople.addAll(Deck.getTotalPeopleDeck());
-		this.unseenRooms.addAll(Deck.getTotalRoomDeck());
-		this.unseenWeapons.addAll(Deck.getTotalWeaponDeck());
-	}
+		GlossaryActions.allKnownCardsSet()
+				.forEach(card -> unSeenCards.computeIfAbsent(
+						card.getCardName(), k -> unSeenCards.put(k,card)
+	));}
 	
-	//Heart of the guessing logic
 	public Guess generateGuess(String roomName) {
-		Card gPerson = chooseGuessByType(this.unseenPeople);
-		Card gRoom = GameControl.findCardByName(roomName);
-		Card gWeapon = chooseGuessByType(this.unseenWeapons);
-		Guess compGuess = new Guess(gPerson, gRoom, gWeapon);
-		return compGuess;
+		Card roomGuess = new Card(GlossaryActions.findCardByName(roomName));
+		Card personGuess = new Card(genCardByType(CardType.PERSON).get());
+		Card weaponGuess = new Card(genCardByType(CardType.WEAPON).get());	
+		Guess theGuess = new Guess(roomGuess,personGuess,weaponGuess);
+		return theGuess;
 	}
 	
-	public void addListToSeen(List<Card> newSeenCards) {
-		this.seenCards.addAll(newSeenCards);
-		this.unseenPeople.removeAll(newSeenCards);
-		this.unseenRooms.removeAll(newSeenCards);
-		this.unseenWeapons.removeAll(newSeenCards);
+	private Optional<Card> genCardByType(CardType findType) {
+		return unSeenCards.values().stream()
+				.filter(card -> card.getCardtype().equals(findType))
+						.findAny();
 	}
 	
-	private Card chooseGuessByType(List<Card> deckType) {
-		Collections.shuffle(deckType);
-			return deckType.get(0);
+	public List<Card> createSeenCardList() {
+		 return GlossaryActions.allKnownCardsSet().stream()
+				 .filter(card -> unSeenCards.values().contains(card))
+				 .collect(Collectors.toList());
 	}
+ 
+ 	public List<Card> getUnSeenCards() {
+ 		return this.unSeenCards.values().stream().collect(Collectors.toList());
+ 	}
 
- 	public boolean checkUnguessedRoomsByName(String checkRoom) {
- 		if(this.unseenRooms != null) {
- 			for (Card eachUnseenRoomCard: this.unseenRooms) {
- 				if(eachUnseenRoomCard.getCardName().contentEquals(checkRoom)) {
- 					return true;
- 				}
- 			}
- 			return false;
- 		}
- 		return true;
- 	}
- 	
- 	public List<Card> getSeenCards() {
- 		return this.seenCards;
- 	}
+	public void addListToSeen(List<Card> seenCards) {
+		for(Card tCardList: seenCards) {
+			unSeenCards.remove(tCardList.getCardName());
+		}	
+	}
+	
+	public boolean checkIfSeen(Card checkThisCard) {
+		return (!unSeenCards.containsKey(checkThisCard.getCardName()));
+	}
+	
+	public boolean checkIfseenByString(String checkThisString) {
+		return (!unSeenCards.containsKey(checkThisString));
+	}
 }

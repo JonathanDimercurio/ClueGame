@@ -6,17 +6,19 @@
  */
 package clueGame;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 public class ComputerPlayer extends Player implements PlayerActions{
 	private GuessAI guessLogic = new GuessAI();
 	
-	public ComputerPlayer(String playerName, String playerID) {
-		super(playerName, playerID);
+	public ComputerPlayer(Card makeCompPlayerByCard) {
+		super(makeCompPlayerByCard);
 	}
 	
 	/* makeSuggestion() ~ Returns a List<Cards> as a guess.
@@ -25,7 +27,7 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	@Override
 	public void makeSuggestion() {
 		Guess CPUGuess = guessLogic.generateGuess(getCurrentCell().getMyRoomType().getName());
-		resolveReplies(PlayerActions.generateReplies(CPUGuess.getGuess(), this));	
+		this.resolveReplies(PlayerActions.generateReplies(CPUGuess.getGuess(), this));	
 	}
 	
 	/* resolveReplies() ~ Takes an arbitrary long list of Cards
@@ -39,7 +41,7 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	 * a ComputerPlayer's Hand. It will arbitrarily return a random Card
 	 * if more then one can be a reply.
 	 */
-	public Card findReply(List<Card> suggestedCardList) {
+	public Card findReply(Set<Card> suggestedCardList) {
 		List<Card> possibleReplies = new Vector<Card>();
 		for (Card checkThisCard: suggestedCardList) {
 			if (this.getHand().contains(checkThisCard)) { possibleReplies.add(checkThisCard); }
@@ -80,7 +82,7 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	}
 	
 	private boolean simplePathFinder(BoardCell resolveThisCell) {
-		return guessLogic.checkUnguessedRoomsByName(resolveThisCell.getMyRoomType().getName());
+		return guessLogic.checkIfseenByString(resolveThisCell.getMyRoomType().getName());
 	}
 
 	public BoardCell getCurrentCell() {
@@ -92,12 +94,10 @@ public class ComputerPlayer extends Player implements PlayerActions{
 		super.addCardToHand(newCard);
 	}
 
-	
 	@Override
-	public Set<Card> getSeenList() {
-		Set<Card> seenSet = new HashSet<Card>();
-		seenSet.addAll(guessLogic.getSeenCards());
-		return seenSet;
+	public Set<Card> getSeenSet() {
+		Set<Card> tempList = guessLogic.createSeenCardList().stream().collect(Collectors.toSet());
+		return tempList;
 	}
 
 

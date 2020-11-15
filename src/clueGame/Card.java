@@ -8,28 +8,35 @@
  */
 package clueGame;
 
-public class Card implements GameControl{
+import java.util.List;
+
+public class Card {
 
 	//Data Structures and member fields
 	private String cardName;
 	private String cardSymbol;
 	private CardType cardtype = CardType.NONE;
 
-
 	//Card copier???
-	public Card(Card thisCard) {
-		this.cardName = thisCard.cardName;
-		this.cardtype = thisCard.cardtype;
-		this.cardSymbol = thisCard.cardSymbol;
+	public Card(Card copyCard) {
+		this.cardName = copyCard.cardName;
+		this.cardtype = copyCard.cardtype;
+		this.cardSymbol = copyCard.cardSymbol;
 	}
 	
-	//Constructor
+	//Dumb String Constructor
 	public Card(String newCardType, String newCardName, String newCardSymbol) {
 		this.cardName = new String(newCardName);
 		this.cardSymbol = new String(newCardSymbol);
-		this.cardtype = GameControl.findCardTypeByString(newCardType);
+		this.cardtype = CardType.findCardTypeByString(newCardType);
 	}
-	
+
+	//ArrayConstructor //TODO concern about type
+	public Card(List<String> newCardByArray) {
+		this.cardtype = CardType.findCardTypeByString(newCardByArray.get(0));
+		this.cardName = new String(newCardByArray.get(1));
+		this.cardSymbol = new String(newCardByArray.get(2));
+	}
 
 	/*equals(...)
 	 * Purpose: The object compares a parameter Card type
@@ -44,7 +51,6 @@ public class Card implements GameControl{
 	}
 
 	//Getters
-
 	public String getCardName() {
 		return cardName;
 	}
@@ -53,6 +59,9 @@ public class Card implements GameControl{
 	}
 	public CardType getCardtype() {
 		return cardtype;
+	}
+	public Card getThis() {
+		return this;
 	}
 	
 }

@@ -1,30 +1,19 @@
 package clueGame;
 
-import java.util.List;
-import java.util.Vector;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Guess {
-	private List<Card> guess = new Vector<Card>();
+	private Set<Card> guess = new HashSet<Card>();
 	
-	public Guess(Card theGuessedPerson, Card theGuessedRoom, Card theGuessWeapon) {
-		guess.add(theGuessedPerson);
-		guess.add(theGuessedRoom);
-		guess.add(theGuessWeapon);
+	public Guess(Card ... theGuess) {
+		for (Card tempC: theGuess) {
+			guess.add(tempC);
+		}
+			
 	}
 
-	public List<Card> getGuess() {
+	public Set<Card> getGuess() {
 		return this.guess;
-	}
-	
- 	public Card getGuessPerson() {
-		return guess.get(0);
-	}
-
-	public Card getGuessRoom() {
-		return guess.get(1);
-	}
-
-	public Card getGuessWeapon() {
-		return guess.get(2);
 	}
 }

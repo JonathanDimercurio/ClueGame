@@ -11,22 +11,18 @@ import java.util.Set;
 public class HumanPlayer extends Player implements PlayerActions {
 	private Set<Card> seenSet = new HashSet<Card>();
 
-	public HumanPlayer(String playerName, String playerID) {
-		super(playerName, playerID);
+	public HumanPlayer(Card humPlayerFromCard) {
+		super(humPlayerFromCard);
 	}
 	
 	public void updateHand(Card newCard) {
 		super.addCardToHand(newCard);
 		this.seenSet.add(newCard);
 	}
-	
-	
-	public
 
 	@Override
 	public void makeSuggestion() {
-		
-		
+			
 	}
 
 	@Override
@@ -36,13 +32,13 @@ public class HumanPlayer extends Player implements PlayerActions {
 	}
 
 	@Override
-	public Card findReply(List<Card> suggestedCardList) {
+	public Card findReply(Set<Card> suggestedCardList) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Card> getSeenList() {
+	public Set<Card> getSeenSet() {
 		return this.seenSet;
 	}
 }	

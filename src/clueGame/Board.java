@@ -9,7 +9,7 @@
 package clueGame;
 import java.util.*;
 
-public class Board {
+public class Board implements GameControl{
 	
 	//Member variables	
 	private int numRows = 0;
@@ -18,31 +18,32 @@ public class Board {
 	private BoardCell[][] gameGrid;
 	private static Solution theSolution;
 	
-	private String layoutConfigFile;
-	private String setupConfigFile;
-	private ClueFileIO ClueFiles;
-	
 	private Set<BoardCell> 			targets;
 	private Set<BoardCell> 			visited;
 		
 	//Start	Singleton Pattern
 	private static Board theInstance = new Board();
+	private ClueFileIO theFiles = ClueFileIO.getTheGameFiles();
 	
 	private Board() {
 	}
 	
 	public void initialize() {
 		try{ 
-		this.ClueFiles = new ClueFileIO(layoutConfigFile, setupConfigFile);
-		GameControl.initRooms();
+		this.theFiles.loadLayoutConfig();
+		this.theFiles.loadSetupConfig();
+		} catch (BadConfigFormatException e) {
+			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
+		}
+		
+		
+		new Room(ClueFileIO.getFormattedSetupFile());
+		
 		setBoardFields();
 		cellCreator();
 		generateGrid();
 		generateAdjacencyList();
-		GameControl.gameAssetInit();
-		} catch (BadConfigFormatException e) {
-			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
-		}
+
 	}
 	
 	public static Board getInstance() {
@@ -52,22 +53,21 @@ public class Board {
 	
 	//Required for 360 tests.
 	public void setConfigFiles(String layoutInput, String setupInput) {
-			String layoutFile = new String("data/" + layoutInput);
-			String setupFile = new String("data/" + setupInput);
-			this.ClueFiles.setConfigFiles(layoutFile, setupFile);
+		theFiles.setConfigFiles(layoutInput, setupInput);
 	}
 	public void loadSetupConfig() throws BadConfigFormatException {
-		ClueFiles.loadSetupConfig();
+		theFiles.loadSetupConfig();
 	}
+	
 	public void loadLayoutConfig() throws BadConfigFormatException {
-		ClueFiles.loadLayoutConfig();
+		theFiles.loadLayoutConfig();
 	}
 	//Required for 360 tests.
 	
 	
 	private void setBoardFields() {
-		this.numRows = ClueFileIO.getFormattedLayoutFile().get(0).length;
-		this.numColumns = ClueFileIO.getFormattedLayoutFile().size();
+		this.numRows = ClueFileIO.getFormattedLayoutFile().size();
+		this.numColumns = ClueFileIO.getFormattedLayoutFile().get(0).length;
 		this.gameGrid = new BoardCell[this.numColumns][this.numRows];
 	}
 
@@ -242,7 +242,6 @@ public class Board {
 	//End 	getCell & smartGetCell	
 	
 	
-		
 	//Generic Getters
 	public int getNumRows() {
 		return numRows;
@@ -266,16 +265,6 @@ public class Board {
 
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return getCell(i,j).getAdjList();
-	}
-	
-	public static List<Player> getPlayers() {
-		return Player.players;
-	}
-
-	public List<Card> getDeck() {
-		List<Card> tempDeck = new Vector<Card>();
-		tempDeck.addAll(Deck.getCompleteDeck());
-		return tempDeck;
 	}
 
 	public boolean checkForSolution() {

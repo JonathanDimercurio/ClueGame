@@ -32,8 +32,8 @@ public class ClueFileIOtest {
 		ClueFileIO test3 = new ClueFileIO("ClueLayout.csv", "ClueSetup.txt");
 		ArrayList<String[]> testList1 = new ArrayList<String[]>();
 		ArrayList<String[]> testList2 = new ArrayList<String[]>();
-		testList1.addAll(test3.getFormattedConfigFile());
-		testList2.addAll(test3.getFormattedSetupFile());
+		testList1.addAll(ClueFileIO.getFormattedLayoutFile());
+		testList2.addAll(ClueFileIO.getFormattedSetupFile());
 	}
 
 }

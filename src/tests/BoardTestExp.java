@@ -63,13 +63,7 @@ class BoardTestExp {
 		Assert.assertTrue(targets.contains(tBoard.getCell(1,2)));
 		Assert.assertTrue(targets.contains(tBoard.getCell(0,3)));
 		Assert.assertTrue(targets.contains(tBoard.getCell(1,0)));
-		
-		for (TestBoardCellV2 temp : tBoard.getTargets()) {
-			System.out.println(temp.toString());
-			}
-		System.out.println("----------dice roll of 3-----------");
-		System.out.println("-----------------------------------");
-		
+				
 	}
 	
 	//targetsMixed test for a complex situation where there may be a cell that 
@@ -88,11 +82,6 @@ class BoardTestExp {
 		Assert.assertTrue(targets.contains(tBoard.getCell(2,2)));
 		Assert.assertTrue(targets.contains(tBoard.getCell(3,3)));
 		
-		for (TestBoardCellV2 temp : targets) {
-			System.out.println(temp.toString());
-			}
-		System.out.println("----------dice roll of 3-----------");
-		System.out.println("-----------------------------------");
 	}
 
 	//targetsWalkable test for a complex situation where there may be a cell that 
@@ -108,11 +97,6 @@ class BoardTestExp {
 		Set<TestBoardCellV2> targets = tBoard.getTargets();
 		Assert.assertEquals(0, targets.size());
 
-		for (TestBoardCellV2 temp : targets) {
-			System.out.println(temp.toString());
-			}
-		System.out.println("----------dice roll of 3-----------");
-		System.out.println("-----------------------------------");
 	}
 
 }
