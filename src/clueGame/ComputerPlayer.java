@@ -12,7 +12,9 @@ import java.util.Set;
 import java.util.Vector;
 
 public class ComputerPlayer extends Player implements PlayerActions{
+	public final char pType = 'C';
 	public GuessAI guessLogic = new GuessAI();
+	
 	
 	public ComputerPlayer(Card makeCompPlayerByCard) {
 		super(makeCompPlayerByCard);
@@ -112,6 +114,11 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	@Override
 	public void updateKnownList() {
 		this.guessLogic.addListToSeen(this.getHand());
+	}
+
+	@Override
+	public char getPType() {
+		return this.pType;
 	}
 
 }	

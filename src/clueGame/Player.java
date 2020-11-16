@@ -31,6 +31,7 @@ public abstract class Player {
 	public abstract void updateHand(Card newCard);
 	public abstract Guess makeSuggestion();
 	public abstract void updateKnownList();
+	public abstract char getPType();
 	
 	/* setStartLocation(String)
 	 * Purpose:	Using playerID, we use a switch statement to set

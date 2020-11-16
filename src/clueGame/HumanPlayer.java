@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public class HumanPlayer extends Player implements PlayerActions {
+	public final char pType = 'H';
 	private Set<Card> seenSet = new HashSet<Card>();
 
 	public HumanPlayer(Card humPlayerFromCard) {
@@ -44,6 +45,11 @@ public class HumanPlayer extends Player implements PlayerActions {
 	public void updateKnownList() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public char getPType() {
+		return this.pType;
 	}
 
 
