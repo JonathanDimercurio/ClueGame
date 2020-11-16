@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import clueGame.BadConfigFormatException;
-import clueGame.Board;
 import clueGame.ClueFileIO;
 
 public class ClueFileIOtest {
@@ -30,6 +29,7 @@ public class ClueFileIOtest {
 	@Test
 	public void testLists() throws BadConfigFormatException {
 		ClueFileIO test3 = new ClueFileIO("ClueLayout.csv", "ClueSetup.txt");
+		test3.setConfigFiles("ClueLayoutBadRoom306.csv", "ClueSetup306.txt");
 		ArrayList<String[]> testList1 = new ArrayList<String[]>();
 		ArrayList<String[]> testList2 = new ArrayList<String[]>();
 		testList1.addAll(ClueFileIO.getFormattedLayoutFile());
