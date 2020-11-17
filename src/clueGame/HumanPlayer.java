@@ -24,7 +24,7 @@ public class HumanPlayer extends Player implements PlayerActions {
 
 	@Override
 	public Card chooseReply(List<Card> cards) {
-		return humanChooseReplyUI();
+		return null;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class HumanPlayer extends Player implements PlayerActions {
 
 	@Override
 	public Guess makeSuggestion() {
-		return UIActions();
+		return null;
 	}
 
 	@Override
