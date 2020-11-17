@@ -6,100 +6,129 @@ package userInterface;
  */
  
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+import clueGame.Player;
  
-@SuppressWarnings("serial")
-public class GBPlayerControlPanel extends Container{
-    final static boolean shouldFill = true;
+
+public class GBPlayerControlPanel {
+	
+    final static boolean shouldFill = false;
     final static boolean shouldWeightX = true;
-    final static boolean RIGHT_TO_LEFT = false;
+    private static JButton button;
+    private static ImageIcon bIcon;
+    private static JLabel label;
+    
+    public static JPanel gbPlayerControlPanel = new JPanel();
     
     public GBPlayerControlPanel() {
-    	createAndShowGUI();
+    	
     }
  
     public static void addComponentsToPane(Container pane) {
-        if (RIGHT_TO_LEFT) {
-            pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        }
- 
-        JButton button;
-    pane.setLayout(new GridBagLayout());
-    GridBagConstraints cGCB = new GridBagConstraints();
-    if (shouldFill) {
-    //natural height, maximum width
-    cGCB.fill = GridBagConstraints.HORIZONTAL;
     }
  
-    button = new JButton("Button 1");
-    if (shouldWeightX) {
-    cGCB.weightx = 0.5;
-    }
-    cGCB.fill = GridBagConstraints.HORIZONTAL;
-    cGCB.gridx = 0;
-    cGCB.gridy = 0;
-    pane.add(button, cGCB);
-    button = new JButton("Button 2");
-    cGCB.fill = GridBagConstraints.HORIZONTAL;
-    cGCB.weightx = 0.5;
-    cGCB.gridx = 1;
-    cGCB.gridy = 0;
-    pane.add(button, cGCB);
- 
-    button = new JButton("Button 3");
-    cGCB.fill = GridBagConstraints.HORIZONTAL;
-    cGCB.weightx = 0.5;
-    cGCB.gridx = 2;
-    cGCB.gridy = 0;
-    pane.add(button, cGCB);
- 
-    button = new JButton("Long-Named Button 4");
-    cGCB.fill = GridBagConstraints.HORIZONTAL;
-    cGCB.ipady = 30;      //make this component tall
-    cGCB.weightx = 0.0;
-    cGCB.gridwidth = 3;
-    cGCB.gridx = 0;
-    cGCB.gridy = 1;
-    pane.add(button, cGCB);
- 
-    button = new JButton("5");
-    cGCB.fill = GridBagConstraints.HORIZONTAL;
-    cGCB.ipady = 0;       //reset to default
-    cGCB.weighty = 1.0;   //request any extra vertical space
-    cGCB.anchor = GridBagConstraints.PAGE_END; //bottom of space
-    cGCB.insets = new Insets(10,0,0,0);  //top padding
-    cGCB.gridx = 1;       //aligned with button 2
-    cGCB.gridwidth = 2;   //2 columns wide
-    cGCB.gridy = 2;       //third row
-    pane.add(button, cGCB);
-    }
- 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("GridBagLayoutDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public static JPanel createAndShowGUI() {
+    	gbPlayerControlPanel.setPreferredSize(new Dimension(300, 100));
+    	gbPlayerControlPanel.setBorder(UICommands.getPBorder(UICommands.currentPlayer()));
+    	gbPlayerControlPanel.setLayout(new GridBagLayout());
+		GridBagConstraints cGCB = new GridBagConstraints();
+		
+		bIcon = new ImageIcon("resources/sBut01.png");
+		button = new JButton(bIcon);
+		buttonActions.modButtons(button);
+		cGCB.fill = GridBagConstraints.NONE;
+//		cGCB.weightx = 1;
+		cGCB.gridx = 3;
+		cGCB.gridwidth = 2;   //2 columns wide
+		cGCB.gridy = 0;
+			
+	    button.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	        	 buttonActions.bSound1();
+	        	 button.setVisible(false);}});
+	    gbPlayerControlPanel.add(button, cGCB);
+		   
+		    
+		bIcon = new ImageIcon("resources/sBut01.png");
+		button = new JButton(bIcon);
+		buttonActions.modButtons(button);
+		cGCB.fill = GridBagConstraints.NONE;
+//		    cGCB.weightx = 1;
+		cGCB.gridx = 3;
+		cGCB.gridwidth = 2;   //2 columns wide
+		cGCB.gridy = 0;
+		button.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			buttonActions.bSound1();
+			button.setVisible(false);}});
+		gbPlayerControlPanel.add(button, cGCB);
+		 
+		bIcon = new ImageIcon("resources/rBut01.png");
+		button = new JButton(bIcon);
+		buttonActions.modButtons(button);
+		cGCB.fill = GridBagConstraints.NONE;
+//		    cGCB.weightx = 1;
+		cGCB.gridx = 6;
+		cGCB.gridwidth = 2;   //2 columns wide
+		cGCB.gridy = 0;
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonActions.bSound1();
+				button.setVisible(false);}});
+		gbPlayerControlPanel.add(button, cGCB);
+//		 
+		    
+		label = new JLabel(UICommands.currentPlayer().getName(), JLabel.LEFT);
+		cGCB.anchor = GridBagConstraints.CENTER;
+		cGCB.fill = GridBagConstraints.WEST;
+//		    cGCB.weighty = -2.0; 
+//		    cGCB.weightx = -1.0;
+		cGCB.gridwidth = 20;
+		cGCB.gridx = 6;
+		cGCB.gridy = 1;
+		gbPlayerControlPanel.add(label, cGCB);
+		 
+		    
+		bIcon = new ImageIcon("resources/nBut01.png");
+		button = new JButton(bIcon);
+		buttonActions.modButtons(button);
+		cGCB.fill = GridBagConstraints.NONE;
+		cGCB.ipady = 0;       //reset to default
+//		    cGCB.weighty = 1.0;   //request any extra vertical space
+		cGCB.anchor = GridBagConstraints.SOUTHWEST; //bottom of space
+		cGCB.insets = new Insets(10,0,0,0);  //top padding
+		cGCB.gridx = 0;       //aligned with button 2
+		cGCB.gridwidth = 10;   //2 columns wide
+		cGCB.gridy = 1;       //third row
+			button.addActionListener(new ActionListener() {
+		    	public void actionPerformed(ActionEvent e) {
+		        	 buttonActions.bSound1();
+		        	 button.setVisible(false);}});
+		gbPlayerControlPanel.add(button, cGCB);
+		
+		
+
  
         //Set up the content pane.
-        addComponentsToPane(frame.getContentPane());
+        addComponentsToPane(gbPlayerControlPanel.getRootPane());
  
         //Display the window.
-        frame.pack();
-        frame.setVisible(true);
+        gbPlayerControlPanel.setVisible(true);
+		return gbPlayerControlPanel;
     }
- 
-    public static void main(String[] args) {
+    
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
 }
-

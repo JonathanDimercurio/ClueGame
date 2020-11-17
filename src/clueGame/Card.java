@@ -43,7 +43,7 @@ public class Card{
 	 * 			to it's self and returns true if it is the same
 	 */
 	public boolean equals(Card compareCard) {
-		if (this == compareCard) {
+		if (this.getCardName().contains(compareCard.getCardName())) {
 			return true;
 		} else {
 			return false;

@@ -10,23 +10,21 @@ import java.util.Set;
 
 public class HumanPlayer extends Player implements PlayerActions {
 	public final char pType = 'H';
-	private Set<Card> seenSet = new HashSet<Card>();
+	private GuessHuman humanGuessLogic = new GuessHuman();  
+	
 
 	public HumanPlayer(Card humPlayerFromCard) {
 		super(humPlayerFromCard);
 	}
 	
 	public void updateHand(Card newCard) {
-		super.addCardToHand(newCard);
-		this.seenSet.add(newCard);
-	}
+		super.addCardToHand(newCard);}
 
 
 
 	@Override
 	public Card chooseReply(List<Card> cards) {
-		// TODO Auto-generated method stub
-		return null;
+		return humanChooseReplyUI();
 	}
 
 	@Override
@@ -37,15 +35,12 @@ public class HumanPlayer extends Player implements PlayerActions {
 
 	@Override
 	public Guess makeSuggestion() {
-		// TODO Auto-generated method stub
-		return null;
+		return UIActions();
 	}
 
 	@Override
 	public void updateKnownList() {
-		// TODO Auto-generated method stub
-		
-	}
+		humanGuessLogic.addListToSeen(getHand());}
 
 	@Override
 	public char getPType() {

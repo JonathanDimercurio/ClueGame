@@ -17,10 +17,10 @@ public interface PlayerActions {
 	 * Purpose: This method will use 3 Card names, and check for the
 	 * 			winning accusation. Returns boolean.
 	 */
-	public static boolean accusation(Card accusedPerson, Card accusedRoom, Card accusedWeapon) {
-		if (!(Solution.getGoalPerson().getCardName().contentEquals(accusedPerson.getCardName()))) { return false; }
-		if (!(Solution.getGoalRoom().getCardName().contentEquals(accusedRoom.getCardName()))) { return false; }
-		if (!(Solution.getGoalWeapon().getCardName().contentEquals(accusedWeapon.getCardName()))) { return false; }
+	public static boolean accusation(Guess theGuess) {
+		if (!theGuess.getGuess().stream().anyMatch(Card -> Solution.getGoalPerson().equals(Card))) { return false; }
+		if (!theGuess.getGuess().stream().anyMatch(Card -> Solution.getGoalWeapon().equals(Card))) { return false; }
+		if (!theGuess.getGuess().stream().anyMatch(Card -> Solution.getGoalRoom().equals(Card))) { return false; }
 		return true;
 	}
 	
@@ -29,4 +29,5 @@ public interface PlayerActions {
 		int diceRoll = Rolled.nextInt(10) + 2;
 		return diceRoll;
 	}
+
 }

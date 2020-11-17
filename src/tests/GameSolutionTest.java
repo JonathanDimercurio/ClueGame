@@ -37,7 +37,7 @@ public class GameSolutionTest {
 		
 		//Test assertTrue a correct accusation
 		Solution.initSolution(testCard1, testCard2, testCard3); 
-		assertTrue(PlayerActions.accusation(testCard1, testCard2, testCard3));
+		assertTrue(PlayerActions.accusation(new Guess(testCard1, testCard2, testCard3)));
 		
 		//Incorrect solution cards
 		Card incorrectPerson = testDeck1.getDeck().get(21);
@@ -45,9 +45,9 @@ public class GameSolutionTest {
 		Card incorrectWeapon = testDeck1.getDeck().get(19);
 		
 		//Test an incorrect accusations
-		assertFalse(PlayerActions.accusation(incorrectPerson, testCard2, testCard3));
-		assertFalse(PlayerActions.accusation(testCard1, incorrectRoom, testCard3));
-		assertFalse(PlayerActions.accusation(testCard1, testCard2, incorrectWeapon));
+		assertFalse(PlayerActions.accusation(new Guess(incorrectPerson, testCard2, testCard3)));
+		assertFalse(PlayerActions.accusation(new Guess(testCard1, incorrectRoom, testCard3)));
+		assertFalse(PlayerActions.accusation(new Guess(testCard1, testCard2, incorrectWeapon)));
 		
 	}
 	

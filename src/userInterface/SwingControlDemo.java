@@ -15,7 +15,7 @@ public class SwingControlDemo {
    private JLabel headerLabel;
    private JLabel rollLabel;
    private JPanel controlPanel;
-   private UIControl gameData = new UIControl();
+   private UICtrl gameData = new UICtrl();
    private int pIndexer = 0;
    public static boolean startButton = true;
    public static ImageIcon nIcon = new ImageIcon("resources/rBut01.png");
@@ -82,14 +82,14 @@ public class SwingControlDemo {
                  System.err.println(e1.getMessage());
                }
         	 
-        	 if(gameData.currentPlayer(pIndexer).getPType() == 'H') {
-        		 headerLabel.setText("Your turn, " + gameData.currentPlayer(pIndexer).getName() + "!");
+        	 if(UICommands.currentPlayer(pIndexer).getPType() == 'H') {
+        		 headerLabel.setText("Your turn, " + UICommands.currentPlayer(pIndexer).getName() + "!");
         		 rollButton.setEnabled(true);        		 
         		 rollButton.setVisible(true);
         		 sugButton.setVisible(true);
         		 rollLabel.setVisible(false);
         	 } else {
-        		 headerLabel.setText(gameData.currentPlayer(pIndexer).getName());
+        		 headerLabel.setText(UICommands.currentPlayer(pIndexer).getName());
         		 rollButton.setVisible(false);
         		 rollLabel.setVisible(false);
         		 sugButton.setVisible(false);
@@ -119,3 +119,4 @@ public class SwingControlDemo {
       mainFrame.setVisible(true);  
    }
 }
+
