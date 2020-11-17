@@ -2,20 +2,23 @@ package userInterface;
 
 public class UIActions {
 
-	public Card humanChooseReply() {
+	public static Card humanChooseReply() {
 		return null;
 	}
 	
-	public Guess humanMakeSuggestion() {
+	public static Guess humanMakeSuggestion() {
 		return null;
 	}
 	
-	public Guess humanMakeAccusation() {
+	public static Guess humanMakeAccusation() {
+		AccusationUI accuUI = new AccusationUI();
+		Guess theGuess = accuUI.makeAccusation()
+		return  theGuess;
+
 		
-		return
 	}
 	
-	public makeAccusation() {
+	public static makeAccusation() {
 		
 	}
 	
