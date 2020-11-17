@@ -8,19 +8,10 @@ package userInterface;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-
-import clueGame.Player;
  
 
 public class GBPlayerControlPanel {
@@ -44,80 +35,80 @@ public class GBPlayerControlPanel {
     	gbPlayerControlPanel.setPreferredSize(new Dimension(300, 100));
     	gbPlayerControlPanel.setBorder(UICommands.getPBorder(UICommands.currentPlayer()));
     	gbPlayerControlPanel.setLayout(new GridBagLayout());
-		GridBagConstraints cGCB = new GridBagConstraints();
+		GridBagConstraints cGBC = new GridBagConstraints();
 		
 		bIcon = new ImageIcon("resources/sBut01.png");
 		button = new JButton(bIcon);
 		buttonActions.modButtons(button);
-		cGCB.fill = GridBagConstraints.NONE;
+		cGBC.fill = GridBagConstraints.NONE;
 //		cGCB.weightx = 1;
-		cGCB.gridx = 3;
-		cGCB.gridwidth = 2;   //2 columns wide
-		cGCB.gridy = 0;
+		cGBC.gridx = 3;
+		cGBC.gridwidth = 2;   //2 columns wide
+		cGBC.gridy = 0;
 			
 	    button.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	        	 buttonActions.bSound1();
 	        	 button.setVisible(false);}});
-	    gbPlayerControlPanel.add(button, cGCB);
+	    gbPlayerControlPanel.add(button, cGBC);
 		   
 		    
 		bIcon = new ImageIcon("resources/sBut01.png");
 		button = new JButton(bIcon);
 		buttonActions.modButtons(button);
-		cGCB.fill = GridBagConstraints.NONE;
+		cGBC.fill = GridBagConstraints.NONE;
 //		    cGCB.weightx = 1;
-		cGCB.gridx = 3;
-		cGCB.gridwidth = 2;   //2 columns wide
-		cGCB.gridy = 0;
+		cGBC.gridx = 3;
+		cGBC.gridwidth = 2;   //2 columns wide
+		cGBC.gridy = 0;
 		button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			buttonActions.bSound1();
 			button.setVisible(false);}});
-		gbPlayerControlPanel.add(button, cGCB);
+		gbPlayerControlPanel.add(button, cGBC);
 		 
 		bIcon = new ImageIcon("resources/rBut01.png");
 		button = new JButton(bIcon);
 		buttonActions.modButtons(button);
-		cGCB.fill = GridBagConstraints.NONE;
+		cGBC.fill = GridBagConstraints.NONE;
 //		    cGCB.weightx = 1;
-		cGCB.gridx = 6;
-		cGCB.gridwidth = 2;   //2 columns wide
-		cGCB.gridy = 0;
+		cGBC.gridx = 6;
+		cGBC.gridwidth = 2;   //2 columns wide
+		cGBC.gridy = 0;
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonActions.bSound1();
 				button.setVisible(false);}});
-		gbPlayerControlPanel.add(button, cGCB);
+		gbPlayerControlPanel.add(button, cGBC);
 //		 
 		    
 		label = new JLabel(UICommands.currentPlayer().getName(), JLabel.LEFT);
-		cGCB.anchor = GridBagConstraints.CENTER;
-		cGCB.fill = GridBagConstraints.WEST;
+		cGBC.anchor = GridBagConstraints.CENTER;
+		cGBC.fill = GridBagConstraints.WEST;
 //		    cGCB.weighty = -2.0; 
 //		    cGCB.weightx = -1.0;
-		cGCB.gridwidth = 20;
-		cGCB.gridx = 6;
-		cGCB.gridy = 1;
-		gbPlayerControlPanel.add(label, cGCB);
+		cGBC.gridwidth = 20;
+		cGBC.gridx = 6;
+		cGBC.gridy = 1;
+		gbPlayerControlPanel.add(label, cGBC);
 		 
 		    
 		bIcon = new ImageIcon("resources/nBut01.png");
 		button = new JButton(bIcon);
 		buttonActions.modButtons(button);
-		cGCB.fill = GridBagConstraints.NONE;
-		cGCB.ipady = 0;       //reset to default
+		cGBC.fill = GridBagConstraints.NONE;
+		cGBC.ipady = 0;       //reset to default
 //		    cGCB.weighty = 1.0;   //request any extra vertical space
-		cGCB.anchor = GridBagConstraints.SOUTHWEST; //bottom of space
-		cGCB.insets = new Insets(10,0,0,0);  //top padding
-		cGCB.gridx = 0;       //aligned with button 2
-		cGCB.gridwidth = 10;   //2 columns wide
-		cGCB.gridy = 1;       //third row
+		cGBC.anchor = GridBagConstraints.SOUTHWEST; //bottom of space
+		cGBC.insets = new Insets(10,0,0,0);  //top padding
+		cGBC.gridx = 0;       //aligned with button 2
+		cGBC.gridwidth = 10;   //2 columns wide
+		cGBC.gridy = 1;       //third row
 			button.addActionListener(new ActionListener() {
 		    	public void actionPerformed(ActionEvent e) {
 		        	 buttonActions.bSound1();
 		        	 button.setVisible(false);}});
-		gbPlayerControlPanel.add(button, cGCB);
+		gbPlayerControlPanel.add(button, cGBC);
 		
 		
 

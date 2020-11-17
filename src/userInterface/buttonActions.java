@@ -4,12 +4,15 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.stream.Collectors;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
+
+import clueGame.CardType;
 
 public interface buttonActions {
 	
@@ -32,6 +35,7 @@ public interface buttonActions {
 		button.setContentAreaFilled(false);
 		button.setFocusPainted(false);
 		button.setBorder(new EmptyBorder(0,0,0,0));
+
 
 		return button;
 		

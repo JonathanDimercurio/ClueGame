@@ -1,6 +1,7 @@
 package userInterface;
 
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,7 +21,8 @@ public interface UICommands {
 		UICtrl.pIndexer += 1;
 	}
 	
-	public static JButton modBoardCellBlocks(JLabel cellBackground) {
+	public static ArrayList<JLabel> modBoardCellBlocks(int howManyCells) {
+		
 		return null;
 		
 	}

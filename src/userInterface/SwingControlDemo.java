@@ -15,10 +15,14 @@ public class SwingControlDemo {
    private JLabel headerLabel;
    private JLabel rollLabel;
    private JPanel controlPanel;
-   private UICtrl gameData = new UICtrl();
+
    private int pIndexer = 0;
    public static boolean startButton = true;
    public static ImageIcon nIcon = new ImageIcon("resources/rBut01.png");
+   
+   //Logic toggles
+   
+   
    
    public SwingControlDemo(){
       prepareGUI();
@@ -71,6 +75,8 @@ public class SwingControlDemo {
       rollButton.setHorizontalTextPosition(SwingConstants.LEFT);   
       nextButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
+        	 boolean seeButton = false;
+        	 
         	 
              try {
            	  String soundName = "resources/39.wav";    
@@ -82,14 +88,14 @@ public class SwingControlDemo {
                  System.err.println(e1.getMessage());
                }
         	 
-        	 if(UICommands.currentPlayer(pIndexer).getPType() == 'H') {
-        		 headerLabel.setText("Your turn, " + UICommands.currentPlayer(pIndexer).getName() + "!");
+        	 if(UICommands.currentPlayer().getPType() == 'H') {
+        		 headerLabel.setText("Your turn, " + UICommands.currentPlayer().getName() + "!");
         		 rollButton.setEnabled(true);        		 
         		 rollButton.setVisible(true);
         		 sugButton.setVisible(true);
         		 rollLabel.setVisible(false);
         	 } else {
-        		 headerLabel.setText(UICommands.currentPlayer(pIndexer).getName());
+        		 headerLabel.setText(UICommands.currentPlayer().getName());
         		 rollButton.setVisible(false);
         		 rollLabel.setVisible(false);
         		 sugButton.setVisible(false);
