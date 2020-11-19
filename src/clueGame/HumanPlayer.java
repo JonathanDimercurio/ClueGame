@@ -4,13 +4,7 @@
  */
 package clueGame;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import userInterface.UICtrl;
-import userInterface.UISeenCards;
 
 public class HumanPlayer extends Player implements PlayerActions {
 	public final char pType = 'H';
@@ -34,11 +28,7 @@ public class HumanPlayer extends Player implements PlayerActions {
 
 	@Override
 	public List<Card> getSeenSet() {
-		Vector<Card> tempL = new Vector<Card>();
-		UISeenCards.humanSeenCards.values().stream().forEach(cardSet->{
-			tempL.addAll(cardSet);
-		});
-		return tempL;
+		return null;
 	}
 
 	@Override
@@ -49,13 +39,9 @@ public class HumanPlayer extends Player implements PlayerActions {
 	//TODO
 	@Override
 	public void updateKnownList() {
-		initSeenCardsMap();
-		UISeenCards.humanSeenCards.get(this).addAll(this.getHand());
 	}
 	private void initSeenCardsMap() {
-		UICtrl.playerList.forEach(player->{
-			UISeenCards.humanSeenCards.put(player, new Vector<Card>());
-		});		
+	
 	}
 
 	@Override

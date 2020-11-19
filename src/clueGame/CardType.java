@@ -1,7 +1,7 @@
 package clueGame;
 
 public enum CardType {
-	WEAPON, PERSON, ROOM,NONE;
+	WEAPON, PERSON, ROOM, NONE;
 	
 	public static CardType findCardTypeByString(String checkType) {
 		switch (checkType) {

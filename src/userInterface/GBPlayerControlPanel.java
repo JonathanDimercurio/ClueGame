@@ -23,7 +23,8 @@ public class GBPlayerControlPanel {
     private static ImageIcon bIcon;
     private static JLabel label;
     
-    public static JPanel gbPlayerControlPanel = new JPanel();
+    @SuppressWarnings("exports")
+	public static JPanel gbPlayerControlPanel = new JPanel();
     
     public GBPlayerControlPanel() {
     	
