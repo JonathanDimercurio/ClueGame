@@ -1,13 +1,10 @@
 package userInterface;
 
-import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -29,7 +26,11 @@ public class MainFrame {
 	    
 	    
 	    JPanel apControl = AccusationUI.apUI();
-	    mainF.add(AccusationUI.apUI());
+	    GBL.weighty = 1.0;
+	    GBL.gridx = -1;
+	    GBL.fill = GridBagConstraints.WEST;
+	    GBL.anchor = GridBagConstraints.SOUTHEAST;
+	    mainF.add(AccusationUI.apUI(), GBL);
 	
 	}
 	
@@ -38,16 +39,10 @@ public class MainFrame {
 	
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Clue Game");
-        
-        
-        
         frame.setPreferredSize(new Dimension(800,600)); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        //Set up the content pane.
+     
         addAllElements(frame);
- 
-        //Display the window.
         frame.pack();
         frame.setVisible(true);
     }

@@ -28,10 +28,8 @@ public class GBPlayerControlPanel {
     	
     }
  
-    public static void addComponentsToPane(Container pane) {
-    }
- 
-    public static JPanel createAndShowGUI() {
+    @SuppressWarnings("exports")
+	public static JPanel createAndShowGUI() {
     	gbPlayerControlPanel.setPreferredSize(new Dimension(300, 100));
     	gbPlayerControlPanel.setBorder(UICommands.getPBorder(UICommands.currentPlayer()));
     	gbPlayerControlPanel.setLayout(new GridBagLayout());
@@ -113,8 +111,6 @@ public class GBPlayerControlPanel {
 		
 
  
-        //Set up the content pane.
-        addComponentsToPane(gbPlayerControlPanel.getRootPane());
  
         //Display the window.
         gbPlayerControlPanel.setVisible(true);

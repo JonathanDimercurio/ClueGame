@@ -1,7 +1,7 @@
 package userInterface;
 
 import java.awt.Insets;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import clueGame.Card;
 import clueGame.Player;
 
 public interface UICommands {
@@ -21,8 +22,7 @@ public interface UICommands {
 		UICtrl.pIndexer += 1;
 	}
 	
-	public static ArrayList<JLabel> modBoardCellBlocks(int howManyCells) {
-		
+	public static JButton modBoardCellBlocks(JLabel cellBackground) {
 		return null;
 		
 	}
@@ -42,5 +42,11 @@ public interface UICommands {
 	public static Border getBorder(UILocNames loc) {
 		return UICtrl.borderLib.get(loc);
 	}
-	//End 
+	//End
+	
+	public static void updatePlayerSeenList(Player player, Card ... cards) {
+		Arrays.asList(cards).forEach(card->{
+			UICtrl.humanPlayer.seenCards.put(card.getCardName(), card);
+		});
+	}
 }

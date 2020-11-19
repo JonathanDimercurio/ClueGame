@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
@@ -14,6 +15,14 @@ public interface GlossaryActions {
 	
 	public static Card findCardByName(String cardName) {
 		return new Card(cardLib.getKnownCards_NAME_HASHMAP().get(cardName));
+	}
+	
+	public static List<Card> findCardByList(String ... cardName) {
+			Vector<Card> tempC = new Vector<Card>();
+			Arrays.stream(cardName).forEach(String ->{
+				tempC.add(findCardByName(cardName.toString()
+			));});
+			return tempC;
 	}
 	
 	public static Card findCardBySymbol(String cardSymbol) {
@@ -33,4 +42,5 @@ public interface GlossaryActions {
 			cardLib.newKnownCard(newCard);
 		}
 	}
+	
 }

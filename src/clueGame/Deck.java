@@ -2,6 +2,7 @@ package clueGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -31,6 +32,13 @@ public class Deck implements DeckActions, GlossaryActions{
 		}
 	}
 	
+	public Deck(Collection<Card> collectionCards) {
+		collectionCards.forEach(card ->{
+			this.thisDeck.add(card);
+			GlossaryActions.addCard(card);
+		});
+	}
+
 	public List<Card> getDeck() {
 		return this.thisDeck;
 	}

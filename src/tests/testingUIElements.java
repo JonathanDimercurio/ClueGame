@@ -16,7 +16,7 @@ public class testingUIElements {
 	//We'll need these for all the following tests.
 	@BeforeAll
 	public static void setUp() {
-		files = UICtrl.getUI();	
+//		files = UICtrl.getUI();	
 	}
 
 	
