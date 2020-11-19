@@ -7,5 +7,7 @@ module ClueGame {
 	requires junit;
 	requires org.junit.jupiter.api;
 	requires java.desktop;
+	requires jdk.jfr;
+	requires java.base;
 	
 }

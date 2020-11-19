@@ -18,6 +18,7 @@ public class GBPlayerControlPanel {
 	
     final static boolean shouldFill = false;
     final static boolean shouldWeightX = true;
+    
     private static JButton button;
     private static ImageIcon bIcon;
     private static JLabel label;

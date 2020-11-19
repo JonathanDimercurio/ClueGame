@@ -9,10 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import userInterface.UICtrl;
+import userInterface.UISeenCards;
+
 public class HumanPlayer extends Player implements PlayerActions {
 	public final char pType = 'H';
 //	private GuessHuman humanGuessLogic = new GuessHuman();
-	public Map<Player, Vector<Card>> seenCards = new HashMap<Player, Vector<Card>>();
+//	public Map<Player, Vector<Card>> seenCards = new HashMap<Player, Vector<Card>>();
 	
 
 	public HumanPlayer(Card humPlayerFromCard) {
@@ -32,7 +35,7 @@ public class HumanPlayer extends Player implements PlayerActions {
 	@Override
 	public List<Card> getSeenSet() {
 		Vector<Card> tempL = new Vector<Card>();
-		seenCards.values().stream().forEach(cardSet->{
+		UISeenCards.humanSeenCards.values().stream().forEach(cardSet->{
 			tempL.addAll(cardSet);
 		});
 		return tempL;
@@ -43,13 +46,18 @@ public class HumanPlayer extends Player implements PlayerActions {
 		return null;
 	}
 
+	//TODO
 	@Override
 	public void updateKnownList() {
-		this.getHand().forEach(card->{
-			seenCards.put(card.getCardName(), card);
-//			humanGuessLogic.unSeenCards.remove(card.getCardName());
-		});
+		initSeenCardsMap();
+		UISeenCards.humanSeenCards.get(this).addAll(this.getHand());
 	}
+	private void initSeenCardsMap() {
+		UICtrl.playerList.forEach(player->{
+			UISeenCards.humanSeenCards.put(player, new Vector<Card>());
+		});		
+	}
+
 	@Override
 	public char getPType() {
 		return this.pType;

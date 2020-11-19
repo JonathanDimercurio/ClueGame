@@ -45,8 +45,6 @@ public interface UICommands {
 	//End
 	
 	public static void updatePlayerSeenList(Player player, Card ... cards) {
-		Arrays.asList(cards).forEach(card->{
-			UICtrl.humanPlayer.seenCards.put(card.getCardName(), card);
-		});
 	}
+	
 }

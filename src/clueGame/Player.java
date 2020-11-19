@@ -41,7 +41,7 @@ public abstract class Player {
 	private void setStartLocationAndColor(String playerid) {
 		switch (playerid) {
 			case "NP":
-				this.color = Color.BLUE;
+				this.color = Color.getHSBColor(220, 40, 70);
 //				this.position = new String("2,1");
 				this.keyPosition = 29;
 				break;

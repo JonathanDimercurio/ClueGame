@@ -15,4 +15,5 @@ public enum CardType {
 				return CardType.NONE;
 		}
 	}
+	
 }
