@@ -1,0 +1,24 @@
+Code Review 2
+Jonathan Dimercurio and Senya Stein
+Group Beta, Room 2
+
+Notes for First Presenter:
+-Needs to finish GUI funcionality
+-Hasn't addded code for event driven functionality
+-Could use more comments, before each method or loop
+-Vars have vague names (eg i, j, g)
+-Can't get targets to paint correctly
+
+Notes for Our Group:
+-Layer a bunch of JPanels to resolve our board layout issue
+-Function called "create panel" and call itself to create morea panels and layer them
+-Use grid layout not bag layout
+-Set columns = 0, row  = 1 to get easier formatting
+-Good job with alot of classes
+-Do the instructions say all the stuff we put into different classes need to al be in Board?
+
+Notes for Last Presenting Group:
+-Cool added music
+-Pop up windows could use more color to differentiate functions
+-Good commenting
+
