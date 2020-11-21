@@ -1,13 +1,10 @@
 package userInterface;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import javax.swing.JTextArea;
 import javax.swing.border.Border;
-import java.awt.Color;
 import clueGame.*;
 
 public class UICtrl {
@@ -23,17 +20,17 @@ public class UICtrl {
 	public static HumanPlayer humanPlayer;
 	private static UICtrl TheGame = new UICtrl();
 
-    public static void main(String[] args) {
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	
+//    public static void main(String[] args) {
+//
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//            	
 //        		UICtrl.initUI();
-//        		seenUI.populateSeenList();;
-
-            }
-        });	
-    }
+//        		MainFrame.createAndShowGUI();
+//
+//            }
+//        });	
+//    }
 	
 
 	

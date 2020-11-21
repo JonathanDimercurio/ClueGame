@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,8 +23,6 @@ public class MainFrame {
 	    GBL.fill = GridBagConstraints.WEST;
 	    GBL.anchor = GridBagConstraints.SOUTHEAST;
 	    mainF.add(playerControl, GBL);  
-	
-	    
 	    
 	    JPanel apControl = AccusationUI.apUI();
 	    GBL.weighty = 1.0;
@@ -31,6 +30,13 @@ public class MainFrame {
 	    GBL.fill = GridBagConstraints.WEST;
 	    GBL.anchor = GridBagConstraints.SOUTHEAST;
 	    mainF.add(AccusationUI.apUI(), GBL);
+	    
+	    JPanel seenCards = seenUI.populateSeenList();
+	    GBL.weighty = 1.0;
+	    GBL.gridx = -1;
+	    GBL.fill = GridBagConstraints.WEST;
+	    GBL.anchor = GridBagConstraints.NORTHEAST;
+	    mainF.add(seenUI.populateSeenList(), GBL);
 	
 	}
 	
