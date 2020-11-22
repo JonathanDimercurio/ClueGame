@@ -56,9 +56,8 @@ public class GBPlayerControlPanel {
 		button = new JButton(bIcon);
 		buttonActions.modButtons(button);
 		cGBC.fill = GridBagConstraints.NONE;
-//		    cGCB.weightx = 1;
 		cGBC.gridx = 3;
-		cGBC.gridwidth = 2;   //2 columns wide
+		cGBC.gridwidth = 2;
 		cGBC.gridy = 0;
 		button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -70,7 +69,6 @@ public class GBPlayerControlPanel {
 		button = new JButton(bIcon);
 		buttonActions.modButtons(button);
 		cGBC.fill = GridBagConstraints.NONE;
-//		    cGCB.weightx = 1;
 		cGBC.gridx = 6;
 		cGBC.gridwidth = 2;   //2 columns wide
 		cGBC.gridy = 0;

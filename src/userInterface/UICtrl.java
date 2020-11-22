@@ -20,17 +20,17 @@ public class UICtrl {
 	public static HumanPlayer humanPlayer;
 	private static UICtrl TheGame = new UICtrl();
 
-//    public static void main(String[] args) {
-//
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//            	
-//        		UICtrl.initUI();
-//        		MainFrame.createAndShowGUI();
-//
-//            }
-//        });	
-//    }
+    public static void main(String[] args) {
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	
+        		UICtrl.initUI();
+        		MainFrame.createAndShowGUI();
+
+            }
+        });	
+    }
 	
 
 	

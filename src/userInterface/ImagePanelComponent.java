@@ -1,6 +1,6 @@
 package userInterface;
 
-import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class ImagePanelComponent extends JPanel{
-	private BufferedImage imageOutPut;
+	private Image newimg;
 	
 	public ImagePanelComponent(String pString) {
 		checkImageInput(pString);
@@ -23,12 +23,12 @@ public class ImagePanelComponent extends JPanel{
 	       } catch (IOException ex) {
 	    	   System.out.println("Check the image file.");
 	       }
-	       this.imageOutPut = image;
+	       this.newimg = image.getScaledInstance(700, 568,  java.awt.Image.SCALE_SMOOTH);
 	}
 	
     @SuppressWarnings("exports")
-	public BufferedImage getImage() {
-    	return this.imageOutPut;
+	public Image getImage() {
+    	return this.newimg;
     }
 	
 }

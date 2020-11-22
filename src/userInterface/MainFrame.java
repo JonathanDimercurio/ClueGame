@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Color;
 
 import javax.swing.JFrame;
@@ -15,29 +16,29 @@ public class MainFrame {
 		
 		
 	    mainF.setLayout(new GridBagLayout());
+	    mainF.setBackground(Color.DARK_GRAY);
 	    GridBagConstraints GBL = new GridBagConstraints();
-    
-	    JPanel playerControl = GBPlayerControlPanel.createAndShowGUI();
-	    GBL.weighty = 1.0;
-	    GBL.gridx = -1;
-	    GBL.fill = GridBagConstraints.WEST;
-	    GBL.anchor = GridBagConstraints.SOUTHEAST;
-	    mainF.add(playerControl, GBL);  
 	    
-	    JPanel apControl = AccusationUI.apUI();
-	    GBL.weighty = 1.0;
-	    GBL.gridx = -1;
-	    GBL.fill = GridBagConstraints.WEST;
-	    GBL.anchor = GridBagConstraints.SOUTHEAST;
-	    mainF.add(AccusationUI.apUI(), GBL);
 	    
-	    JPanel seenCards = seenUI.populateSeenList();
-	    GBL.weighty = 1.0;
-	    GBL.gridx = -1;
+	    GBL.gridx = 0;
+	    GBL.gridy = 0;
 	    GBL.fill = GridBagConstraints.WEST;
-	    GBL.anchor = GridBagConstraints.NORTHEAST;
+	    GBL.anchor = GridBagConstraints.NORTHWEST;
+	    mainF.add(gridUI.createAndShowUI(), GBL);
+	    
+	    GBL.gridx = 2;
+	    GBL.gridy = 0;
+	    GBL.fill = GridBagConstraints.WEST;
+	    GBL.anchor = GridBagConstraints.WEST;
 	    mainF.add(seenUI.populateSeenList(), GBL);
 	
+	    
+	    
+	    GBL.gridx = 0;
+	    GBL.gridy = 1;
+	    GBL.insets = new Insets(-143,0,0,0);
+	    GBL.anchor = GridBagConstraints.SOUTHWEST;
+	    mainF.add(controlUI.createAndShowUI(), GBL);
 	}
 	
 	
@@ -45,12 +46,16 @@ public class MainFrame {
 	
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Clue Game");
-        frame.setPreferredSize(new Dimension(800,600)); 
+        frame.setMinimumSize(new Dimension(860,500)); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      
         addAllElements(frame);
         frame.pack();
         frame.setVisible(true);
     }
+    
+    
+    //TODO Suggestion function not implemented
+    //TODO 
 	
 }
