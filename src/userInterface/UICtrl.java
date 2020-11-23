@@ -72,3 +72,13 @@ public class UICtrl {
 
 
 }
+
+//TODO implement suggestion/accusation function
+//TODO implement roll function
+//TODO current player icon legend
+//TODO overlay grid for movement
+//TODO assign icons and place players on map
+
+
+
+

@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BorderFactory;
@@ -23,8 +21,6 @@ import clueGame.CardType;
 public class seenUI {
 	private final static int SEEN_PANEL_WIDTH = 120;
 	private final static boolean isVISABLE = false;
-	
-	
 	
 	public static Map<String, CardType> typeMap = new HashMap<String, CardType>();
 	@SuppressWarnings("exports")
@@ -45,7 +41,7 @@ public class seenUI {
 				typeMap.put(card.getCardName(), card.getCardtype());
 				jTextMap.put(card.getCardName(), new JTextArea());
 				jTextMap.get(card.getCardName()).setName(card.getCardName());
-				jTextMap.get(card.getCardName()).insert(card.getCardName(), 0);
+				jTextMap.get(card.getCardName()).insert("  " + card.getCardName(), 0);
 				jTextMap.get(card.getCardName()).setBackground(player.getColor());
 				jTextMap.get(card.getCardName()).setPreferredSize(new Dimension(SEEN_PANEL_WIDTH, 40));
 				jTextMap.get(card.getCardName()).setVisible(isVISABLE);
@@ -129,9 +125,10 @@ public class seenUI {
 			GBC.gridy = i++;
 			tempArea = new JTextArea();
 			tempArea.setName(card.getCardName());
-			tempArea.insert(card.getCardName(), 0);
+			tempArea.insert("  " + card.getCardName(), 0);
 			tempArea.setBackground(UICtrl.humanPlayer.getColor());
 			tempArea.setPreferredSize(new Dimension(SEEN_PANEL_WIDTH, 40));
+			tempArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 10));
 			UIWatchList.addElement(card);
 			tempArea.setVisible(true);
 			panelMap.get(CardType.NONE).add(tempArea, GBC);
