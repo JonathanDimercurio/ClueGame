@@ -30,7 +30,7 @@ public interface buttonActions {
 		button.setContentAreaFilled(false);
 		button.setFocusPainted(false);
 		button.setBorder(new EmptyBorder(10,10,10,10));
-
+		
 
 		return button;
 		

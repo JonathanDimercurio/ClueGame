@@ -27,7 +27,8 @@ import clueGame.GlossaryActions;
 import clueGame.Guess;
 
 public class AccusationUI {	
-	private static HashMap<String, JComboBox<String>> comboBoxs = new HashMap<String, JComboBox<String>>();
+	private static HashMap<String, JComboBox<String>> comboBoxs = 
+					new HashMap<String, JComboBox<String>>();
 	
 	private AccusationUI() {
 		apUI();
@@ -43,7 +44,7 @@ public class AccusationUI {
 		
 		AP.setLayout(gridType);
 		AP.setPreferredSize(new Dimension(100,180));
-		AP.setBackground(Color.red);
+		AP.setBackground(Color.DARK_GRAY);
 		
 		
 		AP.add(addCBox("pBox", CardType.PERSON), gridType);
@@ -54,9 +55,9 @@ public class AccusationUI {
 		cancelButton.addActionListener (new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				  JComponent comp = (JComponent) e.getSource();
-				  Window win = SwingUtilities.getWindowAncestor(comp);
-				  win.dispose();
+				controlUI.isENABLED.doClick();
+				AP.setVisible(false);
+				controlUI.mainP.revalidate();
 			}
 		});
 		
@@ -70,16 +71,8 @@ public class AccusationUI {
 			}
 		});
 		AP.add(makeAcuButton, gridType);
-		
-		
-		
-//**************************************** implement through UIActions
 		return AP;
 	}
-	
-	
-	
-	
 	
 	private static Guess generateGuess() {
 		return 	new Guess(
@@ -96,10 +89,6 @@ public class AccusationUI {
 		return comboBoxs.get(boxName);
 	}	
 	
-	
-	//This method dictates what will population the ComboBoxes,
-	//based of what CardType. A more advanced version could remove
-	//arbitrary elements from each list, perhaps based off the seen list
 	public static Vector<String> type2List(CardType findType) {
 		Vector<String> aListTest = new Vector<String>();
 		UICtrl.mainDeck.getDeck().stream()

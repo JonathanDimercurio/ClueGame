@@ -48,7 +48,7 @@ public class MainFrame {
         JFrame frame = new JFrame("Clue Game");
         frame.setMinimumSize(new Dimension(860,500)); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     
+        frame.getContentPane().setBackground(Color.DARK_GRAY);
         addAllElements(frame);
         frame.pack();
         frame.setVisible(true);

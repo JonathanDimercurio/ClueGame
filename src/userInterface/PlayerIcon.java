@@ -9,10 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class ImagePanelComponent extends JPanel{
+public class PlayerIcon extends JPanel{
 	private Image newimg;
 	
-	public ImagePanelComponent(String pString) {
+	public PlayerIcon(String pString) {
 		checkImageInput(pString);
 	}
 		
@@ -24,14 +24,11 @@ public class ImagePanelComponent extends JPanel{
 	    	   System.out.println("Check the image file.");
 	       }
 	       this.newimg = image
-	    		   .getScaledInstance(702, 572, java.awt.Image.SCALE_SMOOTH);
+	    		   .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 	}
 	
     @SuppressWarnings("exports")
 	public Image getImage() {
     	return this.newimg;
     }
-	
-    
-    
 }
