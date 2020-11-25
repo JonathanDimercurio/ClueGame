@@ -1,0 +1,3 @@
+
+ClueLayout.csv contains improper room data, please check.       Tue Nov 24 16:56:02 MST 2020
+ConfigFiles corrupt, please check for improper data.       Tue Nov 24 16:56:02 MST 2020
