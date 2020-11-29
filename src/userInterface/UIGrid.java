@@ -27,29 +27,6 @@ public class UIGrid {
 	final static int boardColumns = Board.getInstance().getNumColumns();
 	private static Map<Integer, JLabel> 	cellData 	= new HashMap<>();
 	
-//	private static Map<Integer, JButton> mapGrid = new HashMap<Integer, JButton>();
-//	private static int index = 0;
-//	private static JButton button;
-	
-	//	bgPanel, basePane.highestLayer()
-	
-//    public static void main(String[] args) {
-//
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                JFrame frame = new JFrame("Clue Game");
-//                frame.setMinimumSize(new Dimension(860,500)); 
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.add(createAndShowUI());
-//                frame.pack();
-//                frame.setVisible(true);
-//            	
-//            }
-//        });	
-//    }
-	
-	
-	
 	@SuppressWarnings("exports")
 	public static JLayeredPane createAndShowUI() {
 				
@@ -81,15 +58,7 @@ public class UIGrid {
 	}
 	
 	private static JPanel test1() {
-
-//				BoardCell.mapGameBoardData.put(this.mapIndex, 
-//					new BoardCell(gbCell, validatedCell, 
-//						getRoom(validatedCell), mapIndex++));
-		
 		JPanel testP = new JPanel(new GridBagLayout());
-		
-		
-		
 		testP.setMaximumSize(SIZE);
 		testP.setMinimumSize(SIZE);		
 		int p = boardColumns * boardRows; 

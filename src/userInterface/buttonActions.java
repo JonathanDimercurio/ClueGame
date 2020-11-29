@@ -13,7 +13,8 @@ public interface buttonActions {
 	public static void bSound1() {
 		try {
 			String soundName = "resources/39.wav";    
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File(soundName).getAbsoluteFile());
    	  		Clip clip = AudioSystem.getClip();
    	  		clip.open(audioInputStream);
    	  		clip.start();

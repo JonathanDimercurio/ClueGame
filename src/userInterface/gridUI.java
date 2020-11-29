@@ -53,22 +53,6 @@ public class gridUI {
 		return bgPane;
 	}
 	
-//	private static JPanel interactingGrid() {
-//		JPanel interP = new JPanel();
-//		interP.setMaximumSize(SIZE);
-//		interP.setMinimumSize(SIZE);		
-//		
-//		Image image = new PlayerIcon("resources\bobIcon.png").getImage();
-//		ImageIcon icon = new ImageIcon(image);
-//		JLabel player1 = new JLabel(icon);
-//		UICtrl.playerList.get(0).getCellPosition().getKey();
-//		
-//		
-//		
-//		
-//		return interP;
-//	}
-	
 	private static JPanel walkableGrid() {
 
 		JPanel walkP = new JPanel(new GridLayout(boardRows, boardColumns));
