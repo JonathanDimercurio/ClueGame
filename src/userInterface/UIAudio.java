@@ -24,8 +24,6 @@ public class UIAudio {
 	@SuppressWarnings("exports")
 	public static Clip getStartSound() {
 		Clip startClip = getSound(startSound);
-		FloatControl volume = (FloatControl) startClip.getControl(FloatControl.Type.MASTER_GAIN);
-		volume.setValue(1);
 		return startClip;
 	}
 
