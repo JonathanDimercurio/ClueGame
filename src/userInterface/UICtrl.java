@@ -45,39 +45,27 @@ public class UICtrl {
 		board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");		 
 		board.initialize();
 		UICtrl.mainDeck = new Deck(ClueFileIO.getFormattedSetupFile());
-		UICtrl.playerDeck = new Deck(DeckActions.createSeperateTypeDecks(mainDeck, CardType.PERSON).getDeck());
-		GlossaryActions.createGlossaryFromDeck(UICtrl.mainDeck);
-		constructPlayerList();
-		DeckActions.dealDeck(new Deck(GlossaryActions.allKnownCardsSet()), playerList);
+//		UICtrl.playerDeck = new Deck(DeckActions.createSeperateTypeDecks(mainDeck, CardType.PERSON).getDeck());
+//		GlossaryActions.createGlossaryFromDeck(UICtrl.mainDeck);
+//		constructPlayerList();
+//		DeckActions.dealDeck(new Deck(GlossaryActions.allKnownCardsSet()), playerList);
 	}
 	
-	private void findHumanPlayer () {
-    	UICtrl.playerList.stream().forEach(player ->{
-			if(player.getPType() == 'H') {
-				UICtrl.humanPlayer  =(HumanPlayer) player;
-			}
-		});
-	}
+//	private void findHumanPlayer () {
+//    	UICtrl.playerList.stream().forEach(player ->{
+//			if(player.getPType() == 'H') {
+//				UICtrl.humanPlayer  =(HumanPlayer) player;
+//			}
+//		});
+//	}
 
 	//Can implement player choice here
-	private void constructPlayerList() {
-		playerList.add(new HumanPlayer(playerDeck.getDeck().get(0)));
-		findHumanPlayer();
-		playerDeck.getDeck().remove(0);
-		for (Card playerCards: UICtrl.playerDeck.getDeck()) {
-			playerList.add(new ComputerPlayer(playerCards));
-		}
+//	private void constructPlayerList() {
+//		playerList.add(new HumanPlayer(playerDeck.getDeck().get(0)));
+//		findHumanPlayer();
+//		playerDeck.getDeck().remove(0);
+//		for (Card playerCards: UICtrl.playerDeck.getDeck()) {
+//			playerList.add(new ComputerPlayer(playerCards));
+//		}
 		
-	}
-
-
 }
-
-//TODO implement suggestion/accusation function
-//TODO implement roll function
-//TODO current player icon legend
-
-
-
-
-

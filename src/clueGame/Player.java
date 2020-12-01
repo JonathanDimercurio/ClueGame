@@ -43,7 +43,6 @@ public abstract class Player {
 	 * Purpose:	Using playerID, we use a switch statement to set
 	 * the starting location and color
 	 */
-	//TODO Might want to make this a choice at the start of the game for the human.
 	private void setStartLocationAndColor(String playerid) {
 		switch (playerid) {
 			case "NP":

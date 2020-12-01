@@ -33,16 +33,10 @@ public class StartMenu {
 	public static JPanel createAndShowGUI() {
 			mainP = new JPanel();
 			mainP.setBackground(Color.DARK_GRAY);
-
-			
-			StartMenu.startMenu = new JLabel(startArt);
-			
+			StartMenu.startMenu = new JLabel(startArt);			
 			StartMenu.introSplash = new JLabel(bgSplashArt);
 			StartMenu.introSplash.setVisible(true);
-			
 			mainP.add(StartMenu.introSplash);
-			
-			
 			int delay = 8000; // milliseconds
 			ActionListener task =  new ActionListener() {
 				@Override

@@ -20,15 +20,19 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class MainFrame {
-	@SuppressWarnings("exports")
-	public static JCheckBox isSTART = new JCheckBox();
-	private static Clip introClip = UIAudio.getIntroSound();
-	private static Clip startClip = UIAudio.getStartSound();
+
+	private static JCheckBox isSTART = new JCheckBox();
+	private static JCheckBox isPLAYERSELECTED = new JCheckBox();
+	
+	
+//	private static Clip introClip = UIAudio.getIntroSound();
+	
+	
 	private static JFrame frame = new JFrame("Clue Game");
 	
 	private static void addAllElements() {
     	if (!isSTART.isSelected()) {
-    		introClip.start();
+    		
     		JPanel startMenu = StartMenu.createAndShowGUI(); 
     		frame.add(startMenu);
 			int delay = 8300; // milliseconds
@@ -40,24 +44,20 @@ public class MainFrame {
 
 						@Override
 						public void keyTyped(KeyEvent e) {
-							introClip.stop();
-							startClip.start();
-							startMenu.setVisible(false);
-							isSTART.doClick();
-							frame.revalidate();
-							createAndShowGUI();
+						if(!isSTART.isSelected()) {
+								startMenu.setVisible(false);
+								isSTART.doClick();
+								frame.revalidate();
+								createAndShowGUI();
+							}
 						}
 
 						@Override
 						public void keyPressed(KeyEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
 
 						@Override
 						public void keyReleased(KeyEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
 						
 					});
@@ -68,8 +68,12 @@ public class MainFrame {
 			timer.setRepeats(false);
 			timer.start();
 			
+    	} else if(!isPLAYERSELECTED.isSelected()) {
+    		
+    	
     	} else {
 			
+    		
     		frame.setLayout(new GridBagLayout());
     		frame.setBackground(Color.DARK_GRAY);
 		    GridBagConstraints GBL = new GridBagConstraints();

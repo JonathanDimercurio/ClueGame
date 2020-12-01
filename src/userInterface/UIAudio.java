@@ -9,27 +9,16 @@ import javax.sound.sampled.FloatControl;
 
 public class UIAudio {
 	private static String introSound = new String("resources/sound/intro.wav");
-	private static String startSound = new String("resources/sound/start.wav");
+	private static String startSound = new String("resources/sound/lol.wav");
+	
+	private static Clip introSE = getSound(introSound);
+	private static Clip startSE = getSound(startSound);
 	
 	
 	
-	@SuppressWarnings("exports")
-	public static Clip getIntroSound() {
-		Clip introClip = getSound(introSound);
-		FloatControl volume = (FloatControl) introClip.getControl(FloatControl.Type.MASTER_GAIN);
-		volume.setValue(-10);
-		return introClip;
-	}
-	
-	@SuppressWarnings("exports")
-	public static Clip getStartSound() {
-		Clip startClip = getSound(startSound);
-		return startClip;
-	}
-
 	private static Clip getSound(String soundFile) {
 		try {
-			String soundName = soundFile;    
+			String soundName = new String(soundFile);
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(new File(soundName).getAbsoluteFile());
    	  		Clip clip = AudioSystem.getClip();
@@ -41,4 +30,24 @@ public class UIAudio {
      	}
 		
 	}
+	
+	public static void playIntroSound() {
+		introSE.start();
+	}
+	
+	public static void stopIntroSound() {
+		introSE.stop();
+		introSE.close();
+	}
+	
+	public static void playStartSound() {
+		startSE.start();
+	}
+	
+	public static enum Volume{
+		MUTE, LOW, MEDIUM, HIGH;
+	}
+	
+	public static Volume volume = Volume.LOW;
+	
 }
