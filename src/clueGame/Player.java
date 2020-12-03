@@ -8,6 +8,7 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,13 +16,17 @@ import userInterface.PlayerIcon;
 
 public abstract class Player {
 	
-	private List<Card> hand = new Vector<>();
-	private String name;
-	private Color color;
-	private int keyPosition;
-	private Image icon;
-	private Point position;
+	protected List<Card> hand = new Vector<>();
+	protected ArrayList<Image> icon = new ArrayList<Image>();
+	protected String name;
+	protected Color color;
+	protected int keyPosition;
+	protected Point position;
+	
+	public Player() {
 		
+	}
+	
 	public Player(Card addPlayerFromCard) {
 		this.name = new String(addPlayerFromCard.getCardName());
 		setStartLocationAndColor(addPlayerFromCard.getCardSymbol());
@@ -49,53 +54,61 @@ public abstract class Player {
 				this.color = Color.getHSBColor(220, 40, 70);
 				this.position = new Point(2,1);
 				this.keyPosition = 29;
-				this.icon = new PlayerIcon("resources/nepPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/nepPIcon.png")
+						.getImage());
 				break;
 				
 			case "NM":
 				this.color = Color.RED;
 				this.position = new Point(18,0);
 				this.keyPosition = 18;
-				this.icon = new PlayerIcon("resources/nemPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/nemPIcon.png")
+						.getImage());
 				break;
 				
 			case "AR":
 				this.color = Color.GREEN;
 				this.position = new Point(25,6);
 				this.keyPosition = 187;
-				this.icon = new PlayerIcon("resources/ariPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/ariPIcon.png")
+						.getImage());
 				break;
 				
 			case "CJ":
 				this.color = Color.GRAY;
 				this.position = new Point(12,1);
 				this.keyPosition = 39;
-				this.icon = new PlayerIcon("resources/capPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/capPIcon.png")
+						.getImage());
 				break;
 				
 			case "SC":
 				this.color = Color.ORANGE;
 				this.position = new Point(21,21);
 				this.keyPosition = 588;
-				this.icon = new PlayerIcon("resources/sanPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/sanPIcon.png")
+						.getImage());
 				break;
 				
 			case "DJ":
 				this.color = Color.PINK;
 				this.position = new Point(7,21);
 				this.keyPosition = 574;
-				this.icon = new PlayerIcon("resources/davPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/davPIcon.png")
+						.getImage());
 				break;
 				
 			case "SB":
 				this.color = Color.YELLOW;
 				this.position = new Point(25,12);
 				this.keyPosition = 349;
-				this.icon = new PlayerIcon("resources/bobPIcon.png").getImage();
+				this.icon.addAll(new PlayerIcon("resources/bobPIcon.png")
+						.getImage());
 				break;
 				
 			default:
-			new BadConfigFormatException ("Starting location is not valid. Please check.");
+			new BadConfigFormatException
+				("Starting location is not valid. Please check.");
 			break;
 		}
 	}
@@ -134,8 +147,13 @@ public abstract class Player {
 	}
 	
 	@SuppressWarnings("exports")
-	public Image getIcon() {
-		return this.icon;
+	public Image getSmallIcon() {
+		return this.icon.get(0);
 	}
-	
+
+	@SuppressWarnings("exports")
+	public Image getLargeIcon() {
+		return this.icon.get(1);
+	}
+
 }

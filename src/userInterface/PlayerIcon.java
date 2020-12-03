@@ -1,16 +1,18 @@
 package userInterface;
 
 import java.awt.Image;
+import java.awt.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class PlayerIcon extends JPanel{
-	private Image newimg;
+	private ArrayList<Image> newimg = new ArrayList<Image>();
 	
 	public PlayerIcon(String pString) {
 		checkImageInput(pString);
@@ -23,12 +25,14 @@ public class PlayerIcon extends JPanel{
 	       } catch (IOException ex) {
 	    	   System.out.println("Check the image file.");
 	       }
-	       this.newimg = image
-	    		   .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+	       newimg.add(image
+	    		   .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+	       newimg.add(image
+	    		   .getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH));
 	}
 	
     @SuppressWarnings("exports")
-	public Image getImage() {
+	public ArrayList<Image> getImage() {
     	return this.newimg;
     }
 }

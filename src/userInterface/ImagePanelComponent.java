@@ -31,7 +31,4 @@ public class ImagePanelComponent extends JPanel{
 	public Image getImage() {
     	return this.newimg;
     }
-	
-    
-    
 }

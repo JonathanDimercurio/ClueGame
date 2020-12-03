@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class controlUI {
+public class controlUI extends JPanel {
 	
 	private static Map<String, ImageIcon> imageMap = 
 			new HashMap<String, ImageIcon>();
@@ -29,8 +29,12 @@ public class controlUI {
 			new HashMap<String, ImageIcon>();
 		
 	private static String[] iconNames = 
-			new String[] {"resources/aBut01.png", "resources/nBut01.png",
-					 		"resources/sBut01.png", "resources/rBut01.png" };
+			
+			new String[] {	"resources/aBut01.png",
+							"resources/nBut01.png",
+					 		"resources/sBut01.png", 
+					 		"resources/rBut01.png" };
+	
 	
 	private static JPanel subPanel;
 	private static JPanel aPanel;
@@ -40,10 +44,15 @@ public class controlUI {
 	public static JPanel mainP;
 
 	@SuppressWarnings("exports")
-	public static JCheckBox isENABLED = new JCheckBox();
+	public static JCheckBox isENABLED = 
+				new JCheckBox();
 	
 	@SuppressWarnings("exports")
 	public static JPanel createAndShowUI() {
+		
+		
+		
+		
 		
 		Arrays.stream(iconNames).forEach(string->{
 			setImageIcons(string);
@@ -89,7 +98,7 @@ public class controlUI {
 		JPanel subPanel = new JPanel();
 		subPanel.setMinimumSize(new Dimension(690, 138));
 		subPanel.setBorder(UICommands
-				.getPBorder(UICommands.currentPlayer()));
+				.getPBorder(UITurnCtrl.getCurrentPlayer()));
 		
 		GridLayout gridType = new GridLayout(2,2);
 		gridType.setVgap(5);

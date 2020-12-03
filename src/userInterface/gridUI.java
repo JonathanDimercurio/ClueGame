@@ -37,7 +37,8 @@ public class gridUI {
 	final static int boardRows	= Board.getInstance().getNumRows();
 	final static int boardColumns = Board.getInstance().getNumColumns();
 	private static Map<Integer, JLabel>	cells = new HashMap<Integer, JLabel>();
-	private static Map<Integer, DoorDirection> doors = new HashMap<Integer, DoorDirection>();
+	private static Map<Integer, DoorDirection> doors = 
+			new HashMap<Integer, DoorDirection>();
 
 	@SuppressWarnings("exports")
 	public static JLayeredPane createAndShowUI() {
@@ -49,7 +50,7 @@ public class gridUI {
 		bgPane.add(walkableGrid());
 		bgPane.add(setBGImage());
 		bgPane.setOpaque(true);
-		bgPane.setVisible(true);	
+		bgPane.setVisible(true);
 		return bgPane;
 	}
 	
@@ -68,7 +69,8 @@ public class gridUI {
 				JLabel test1 = createColoredLabel("",new Color(0,0,0,20));
 				
 				if (tempCell.isWalkable()) {
-					test1.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,20), 2));
+					test1.setBorder(BorderFactory
+							.createLineBorder(new Color(0,0,0,20), 2));
 				}
 				if (tempCell.isDoorway()) {
 					doors.put(resolveDoor(tempCell.getDoorDirection(), 
@@ -125,9 +127,9 @@ public class gridUI {
 	}
 	
 	private static void showPlayers() {	
-		UICtrl.playerList.stream().forEach(player->{
+		UIPlayerControl.playerList.stream().forEach(player->{
 			  cells.get(player.getCellPosition().getKey())
-			  	.setIcon(new ImageIcon(player.getIcon()));
+			  	.setIcon(new ImageIcon(player.getSmallIcon()));
 			  cells.get(player.getCellPosition().getKey())
 			  	.setBackground(player.getColor());
 			  cells.get(player.getCellPosition().getKey())

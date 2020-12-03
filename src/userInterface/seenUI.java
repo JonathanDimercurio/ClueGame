@@ -22,7 +22,9 @@ public class seenUI {
 	private final static int SEEN_PANEL_WIDTH = 120;
 	private final static boolean isVISABLE = false;
 	
-	public static Map<String, CardType> typeMap = new HashMap<String, CardType>();
+	public static Map<String, CardType> typeMap = 
+			new HashMap<String, CardType>();
+	
 	@SuppressWarnings("exports")
 	public static Map<String, JTextArea> jTextMap = new HashMap<String, JTextArea>();
 	@SuppressWarnings("exports")
@@ -36,7 +38,7 @@ public class seenUI {
 	@SuppressWarnings("exports")
 	public static JPanel populateSeenList() {
 		int indexer = 1;
-		UICtrl.playerList.forEach(player->{
+		UIPlayerControl.playerList.forEach(player->{
 			player.getHand().stream().forEach(card->{
 				typeMap.put(card.getCardName(), card.getCardtype());
 				jTextMap.put(card.getCardName(), new JTextArea());
@@ -54,7 +56,7 @@ public class seenUI {
 		panelMap.get(CardType.NONE).setLayout(new GridLayout(0,1));
 		panelMap.get(CardType.NONE).setPreferredSize(new Dimension(SEEN_PANEL_WIDTH,125));
 		
-		for(Card card: UICtrl.humanPlayer.getHand()){
+		for(Card card: UIPlayerControl.getHumPlayer().getHand()){
 			
 			GridBagConstraints GBC = new GridBagConstraints();
 			GBC.fill = GridBagConstraints.HORIZONTAL;
@@ -121,12 +123,12 @@ public class seenUI {
 		GBC.gridy = i++;		
 		panelMap.get(CardType.NONE).add(new JTextArea("   Cards in Hand:"));
 		JTextArea tempArea = new JTextArea();
-		for (Card card: UICtrl.humanPlayer.getHand()) {
+		for (Card card: UIPlayerControl.getHumPlayer().getHand()) {
 			GBC.gridy = i++;
 			tempArea = new JTextArea();
 			tempArea.setName(card.getCardName());
 			tempArea.insert("  " + card.getCardName(), 0);
-			tempArea.setBackground(UICtrl.humanPlayer.getColor());
+			tempArea.setBackground(UIPlayerControl.getHumPlayer().getColor());
 			tempArea.setPreferredSize(new Dimension(SEEN_PANEL_WIDTH, 40));
 			tempArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 10));
 			UIWatchList.addElement(card);

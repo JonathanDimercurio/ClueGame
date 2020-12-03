@@ -11,22 +11,16 @@ import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.awt.Color;
 
-import javax.sound.sampled.Clip;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 public class MainFrame {
 
 	private static JCheckBox isSTART = new JCheckBox();
-	private static JCheckBox isPLAYERSELECTED = new JCheckBox();
-	
-	
-//	private static Clip introClip = UIAudio.getIntroSound();
-	
+	public static JCheckBox isPLAYERSELECTED = new JCheckBox();
 	
 	private static JFrame frame = new JFrame("Clue Game");
 	
@@ -46,9 +40,10 @@ public class MainFrame {
 						public void keyTyped(KeyEvent e) {
 						if(!isSTART.isSelected()) {
 								startMenu.setVisible(false);
+								frame.remove(startMenu);
 								isSTART.doClick();
 								frame.revalidate();
-								createAndShowGUI();
+								addAllElements();
 							}
 						}
 
@@ -69,11 +64,29 @@ public class MainFrame {
 			timer.start();
 			
     	} else if(!isPLAYERSELECTED.isSelected()) {
-    		
+    		JPanel pPanel = new playerSelectUI(); 
+    		pPanel.setVisible(true);
+    		frame.add(pPanel);
+    		isPLAYERSELECTED.addChangeListener(new ChangeListener() {
+
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					if (isPLAYERSELECTED.isSelected()) {
+						pPanel.setVisible(false);
+						frame.remove(pPanel);
+						frame.revalidate();
+						addAllElements();
+					}
+				}
+    			
+    		});
     	
     	} else {
-			
-    		
+    		frame = new JFrame();
+            frame.setMinimumSize(new Dimension(860,500)); 
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().setBackground(Color.DARK_GRAY);
+
     		frame.setLayout(new GridBagLayout());
     		frame.setBackground(Color.DARK_GRAY);
 		    GridBagConstraints GBL = new GridBagConstraints();
@@ -102,6 +115,10 @@ public class MainFrame {
 					frame.revalidate();
 					}
 				});
+		    
+	        frame.pack();
+	        frame.setVisible(true);
+
 		}
 
 	}

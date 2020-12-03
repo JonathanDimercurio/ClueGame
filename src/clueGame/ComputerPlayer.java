@@ -15,7 +15,6 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	public final char pType = 'C';
 	public GuessAI guessLogic = new GuessAI();
 	
-	
 	public ComputerPlayer(Card makeCompPlayerByCard) {
 		super(makeCompPlayerByCard);
 	}

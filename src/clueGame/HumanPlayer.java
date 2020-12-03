@@ -12,6 +12,16 @@ public class HumanPlayer extends Player implements PlayerActions {
 //	public Map<Player, Vector<Card>> seenCards = new HashMap<Player, Vector<Card>>();
 	
 
+	public HumanPlayer(Player choosenPlayer) {
+		super(CardGlossary.getGlossary()
+				.getKnownCards_NAME_HASHMAP()
+				.get(choosenPlayer.getName()));
+		
+		choosenPlayer.hand.stream().forEach(cardInHand->{
+			this.updateHand(cardInHand);
+		});
+	}
+	
 	public HumanPlayer(Card humPlayerFromCard) {
 		super(humPlayerFromCard);
 	}

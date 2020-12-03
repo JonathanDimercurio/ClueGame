@@ -1,35 +1,118 @@
 package userInterface;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.lang.reflect.Array;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-public class playerSelectUI {
+@SuppressWarnings("serial")
+public class playerSelectUI extends JPanel
+								implements ActionListener{
 	
+	private static JLabel icon;
+	private static String selection;
 	
-	
+    public playerSelectUI() {
+    	super(new BorderLayout());
+		icon = new JLabel();
+
+		JPanel discriptionPanel = new JPanel(new GridLayout(0,1));
+		
+		
+		//	Text field ~~~~~~~~
+		JTextArea discription = new JTextArea();
+		discription.setBorder(BorderFactory
+				.createMatteBorder(5,5,5,0,Color.DARK_GRAY));
+		discription.setText(
+					"\n"
+				+ "                     Beach Boardwalk Clue Game!               \n"
+				+ "   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
+				+ "\n"
+				+"  Your task is to find out who commited the murder!  "
+				+ "\n"
+				+ "  Select the charecter you'd like to play!  \n"
+				+ "\n"
+				+ "\n"
+				+ "  Remember you can only make suggestions in a room.  \n"
+				+ "  You can only make one Accusation, if wrong you lose the game!   \n" 
+				+ "\n"
+				);
+		// End Text field ~~~~~~
+		
+		
+		//	Start	commit button ~~~~~~~ 
+		JButton commit = new JButton("Choose, Then click here to begin!");
+		commit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UIPlayerControl.setHumanPlayer(selection);
+				MainFrame.isPLAYERSELECTED.doClick();
+			}
+		});
+		//	end commit button 	~~~~~~~
+		
+		
+		
+		discriptionPanel.add(discription);
+		discriptionPanel.add(commit);
+		
+		
+		//	Radio buttons ~~~~~~~~~~~~~~~~~~
+		ButtonGroup group = new ButtonGroup();
+		JPanel radioPanel = new JPanel(new GridLayout(0,1));
+		radioPanel.setBorder(BorderFactory
+				.createMatteBorder(5,5,5,5,Color.DARK_GRAY));
+		
+		UIPlayerControl.playerList.forEach(player->{
+			JRadioButton tempP = new JRadioButton(player.getName());
+			
+			tempP.setActionCommand(player.getName());
+			group.add(tempP);
+			tempP.addActionListener(this);
+			radioPanel.add(tempP);
+			
+		});
+		//	End radio buttons	~~~~~~~~~~~~
+		
+		
+		add(discriptionPanel, BorderLayout.WEST);
+		add(radioPanel, BorderLayout.CENTER);
+		add(icon, BorderLayout.EAST);
+		setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		setOpaque(true);
+		
+    }
+
 	@SuppressWarnings("exports")
-	public static JPanel createAndShowGUI() {
-		retrivePlayerInfo();
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		UIPlayerControl.playerList.stream().forEach(player->{
+			if(player.getName().contentEquals(e.getActionCommand())) {
+				playerSelectUI.icon
+					.setIcon(new ImageIcon(player.getLargeIcon()));
+				selection = new String(player.getName());
+				playerSelectUI.icon
+					.setBorder(BorderFactory
+							.createLineBorder(player.getColor(), 55));
+			}
+		});
 		
-		JPanel mainP = new JPanel();
-		mainP.setBackground(Color.DARK_GRAY);
-		
-		
-		
-		
-		JRadioButton playerSelecter = new JRadioButton();
-		
-		
-		return mainP;
-	}
-
-	private static Array[] retrivePlayerInfo() {
-//		UICtrl.playerList
-		
-		return null;
 	}
 	
 }
