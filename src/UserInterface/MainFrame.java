@@ -14,7 +14,7 @@ import clueGame.ComputerPlayer;
 
 @SuppressWarnings("serial")
 public class MainFrame extends SmartFrame{
-	protected int menuIndex = 2;
+	protected int menuIndex = 1;
 		
 	public MainFrame() {
 
