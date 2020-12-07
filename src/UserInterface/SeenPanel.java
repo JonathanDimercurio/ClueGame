@@ -1,4 +1,4 @@
-package userInterface;
+package UserInterface;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,10 +15,11 @@ import javax.swing.JTextArea;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import UIResources.UIPlayerControl;
 import clueGame.Card;
 import clueGame.CardType;
 
-public class seenUI {
+public class SeenPanel {
 	private final static int SEEN_PANEL_WIDTH = 120;
 	private final static boolean isVISABLE = false;
 	
@@ -26,13 +27,17 @@ public class seenUI {
 			new HashMap<String, CardType>();
 	
 	@SuppressWarnings("exports")
-	public static Map<String, JTextArea> jTextMap = new HashMap<String, JTextArea>();
-	@SuppressWarnings("exports")
-	public static Map<CardType, JPanel> panelMap = new HashMap<CardType, JPanel>();
+	public static Map<String, JTextArea> jTextMap = 
+	new HashMap<String, JTextArea>();
 	
-	private static DefaultListModel<Card> UIWatchList = new  DefaultListModel<Card>();
+	@SuppressWarnings("exports")
+	public static Map<CardType, JPanel> panelMap = 
+	new HashMap<CardType, JPanel>();
+	
+	private static DefaultListModel<Card> UIWatchList = 
+			new  DefaultListModel<Card>();
 
-	public seenUI() {	
+	public SeenPanel() {	
 	}
 	
 	@SuppressWarnings("exports")

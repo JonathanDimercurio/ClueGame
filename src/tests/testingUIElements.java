@@ -5,9 +5,9 @@ import java.util.Vector;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
+import UIResources.UICtrl;
+import UserInterface.AccusationUI;
 import clueGame.CardType;
-import userInterface.AccusationUI;
-import userInterface.UICtrl;
 
 public class testingUIElements {
 	private static UICtrl files;

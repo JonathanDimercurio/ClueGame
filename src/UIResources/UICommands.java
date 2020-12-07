@@ -1,4 +1,4 @@
-package userInterface;
+package UIResources;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -8,14 +8,6 @@ import clueGame.Card;
 import clueGame.Player;
 
 public interface UICommands {
-	
-//	public static Player currentPlayer() {
-//		return UIPlayerControl.playerList.get(UICtrl.pIndexer);
-//	}
-	
-//	public static void endTurn() {
-//		UICtrl.pIndexer += 1;
-//	}
 	
 	public static JButton modBoardCellBlocks(JLabel cellBackground) {
 		return null;

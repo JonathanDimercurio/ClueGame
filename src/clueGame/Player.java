@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import userInterface.PlayerIcon;
+import UserInterface.PlayerIcon;
 
 public abstract class Player {
 	
@@ -34,8 +34,10 @@ public abstract class Player {
 	
 	public Player(Deck constructFromDeck) {
 		for(Card makeMeAComputerPlayer: constructFromDeck.getDeck()) {
-		this.name = new String(makeMeAComputerPlayer.getCardName());
-		setStartLocationAndColor(makeMeAComputerPlayer.getCardSymbol());
+		this.name = new String(makeMeAComputerPlayer
+				.getCardName());
+		setStartLocationAndColor(makeMeAComputerPlayer
+				.getCardSymbol());
 		}
 	}
 
@@ -51,26 +53,29 @@ public abstract class Player {
 	private void setStartLocationAndColor(String playerid) {
 		switch (playerid) {
 			case "NP":
-				this.color = Color.getHSBColor(220, 40, 70);
+				this.color = new Color(60, 120, 220);
 				this.position = new Point(2,1);
 				this.keyPosition = 29;
-				this.icon.addAll(new PlayerIcon("resources/nepPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/nepPIcon.png")
 						.getImage());
 				break;
 				
 			case "NM":
-				this.color = Color.RED;
+				this.color = Color.ORANGE;
 				this.position = new Point(18,0);
 				this.keyPosition = 18;
-				this.icon.addAll(new PlayerIcon("resources/nemPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/nemPIcon.png")
 						.getImage());
 				break;
 				
 			case "AR":
-				this.color = Color.GREEN;
+				this.color = new Color(0, 150, 0);
 				this.position = new Point(25,6);
 				this.keyPosition = 187;
-				this.icon.addAll(new PlayerIcon("resources/ariPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/ariPIcon.png")
 						.getImage());
 				break;
 				
@@ -78,23 +83,26 @@ public abstract class Player {
 				this.color = Color.GRAY;
 				this.position = new Point(12,1);
 				this.keyPosition = 39;
-				this.icon.addAll(new PlayerIcon("resources/capPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/capPIcon.png")
 						.getImage());
 				break;
 				
 			case "SC":
-				this.color = Color.ORANGE;
+				this.color = Color.PINK;
 				this.position = new Point(21,21);
 				this.keyPosition = 588;
-				this.icon.addAll(new PlayerIcon("resources/sanPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/sanPIcon.png")
 						.getImage());
 				break;
 				
 			case "DJ":
-				this.color = Color.PINK;
+				this.color = Color.RED;
 				this.position = new Point(7,21);
 				this.keyPosition = 574;
-				this.icon.addAll(new PlayerIcon("resources/davPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/davPIcon.png")
 						.getImage());
 				break;
 				
@@ -102,7 +110,8 @@ public abstract class Player {
 				this.color = Color.YELLOW;
 				this.position = new Point(25,12);
 				this.keyPosition = 349;
-				this.icon.addAll(new PlayerIcon("resources/bobPIcon.png")
+				this.icon.addAll(new 
+						PlayerIcon("resources/bobPIcon.png")
 						.getImage());
 				break;
 				
@@ -155,5 +164,7 @@ public abstract class Player {
 	public Image getLargeIcon() {
 		return this.icon.get(1);
 	}
+
+	public abstract BoardCell getCurrentCell();
 
 }

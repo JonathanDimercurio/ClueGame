@@ -1,4 +1,4 @@
-package userInterface;
+package Buttons;
 
 import java.awt.Insets;
 import java.io.File;

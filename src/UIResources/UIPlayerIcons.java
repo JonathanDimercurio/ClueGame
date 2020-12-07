@@ -1,4 +1,4 @@
-package userInterface;
+package UIResources;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -19,8 +19,10 @@ public class UIPlayerIcons {
 												,"nemPIcon.png","plaIcon"
 												,"sanPIcon.png","nepPIcon.png"};
 	
-	private static Map<String, Image> iconMap = new HashMap<String, Image>();
-	private static UIPlayerIcons playerIcons = new UIPlayerIcons();
+	private static Map<String, Image> iconMap = 
+			new HashMap<String, Image>();
+	private static UIPlayerIcons playerIcons = 
+			new UIPlayerIcons();
 	
 	public UIPlayerIcons getPlayerIcons() {
 		return UIPlayerIcons.playerIcons;
@@ -40,11 +42,13 @@ public class UIPlayerIcons {
 	       } catch (IOException ex) {
 	    	   System.out.println("Check the image file.");
 	       }
-	       image.getScaledInstance(ICON_WIDTH, ICON_HIEGHT,  java.awt.Image.SCALE_SMOOTH);
+	       image.getScaledInstance(ICON_WIDTH, ICON_HIEGHT,  
+	    		   java.awt.Image.SCALE_SMOOTH);
 	       setIcons(checkString, image);
 	}
 
-	public void setIcons(String file, @SuppressWarnings("exports") Image image) {
+	public void setIcons(String file, 
+			@SuppressWarnings("exports") Image image) {
 		UIPlayerIcons.iconMap.put(file, image);
 	}
 	

@@ -1,4 +1,4 @@
-package userInterface;
+package UserInterface;
 
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import UIResources.UICtrl;
 import clueGame.CardType;
 import clueGame.GlossaryActions;
 import clueGame.Guess;

@@ -17,7 +17,7 @@ Space, Umbrella, U
 Person, Neptune, NP
 Person, Nemo, NM
 Person, Ariel, AR
-Person, Captain Jack Sparrow, CJ
+Person, Jack Sparrow, CJ
 Person, Sandy Cheeks, SC
 Person, Davy Jones, DJ
 Person, Sponge Bob, SB

@@ -1,4 +1,4 @@
-package userInterface;
+package UIResources;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,12 +11,10 @@ import clueGame.Player;
 
 public class UIPlayerControl {
 	public static UIPlayerControl playerCommand;
-	private static int index = 0;
+	private static int iPlayer = 0;
 	
 	public static Vector <Player> playerList = 
 			new Vector<Player>();
-	
-	
 	
 	private static Map<String, Player> playerMap = 
 			new HashMap<String, Player>();
@@ -25,8 +23,6 @@ public class UIPlayerControl {
 			new HashMap<Integer, Player>();
 	
 	private static HumanPlayer humPlayer;
-	
-	
 	
 	public UIPlayerControl(Deck pDeck){
 		UICtrl.playerDeck.getDeck()
@@ -39,18 +35,20 @@ public class UIPlayerControl {
 			playerList.add(player);
 		});
 		
-		Collections.shuffle(playerList);
-		
-		playerList.forEach(player->{
-			playerTurns.put(indexer(), player);
-		});
-		
 	}
 	
 	public static void setHumanPlayer(String playerName) {
 		humPlayer = new HumanPlayer(playerMap.get(playerName));
+		playerMap.remove(playerName);
+		playerMap.put(humPlayer.getName(), humPlayer);
+		playerList.removeAll(playerList);
+		playerList.addAll(playerMap.values());
+		Collections.shuffle(playerList);
+		playerList.forEach(player->{
+			playerTurns.put(indexer(), player);
+		});
 	}
-	
+		
 	public static HumanPlayer getHumPlayer() {
 		return humPlayer;
 	}
@@ -59,7 +57,7 @@ public class UIPlayerControl {
 		return playerTurns.get(index);
 	}
 	
-	private int indexer() {
-		return index++;
+	private static int indexer() {
+		return iPlayer++;
 	}
 }

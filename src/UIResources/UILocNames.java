@@ -1,4 +1,4 @@
-package userInterface;
+package UIResources;
 
 public enum UILocNames {
 	GBGameGrid, GBPlayerControlPanel;

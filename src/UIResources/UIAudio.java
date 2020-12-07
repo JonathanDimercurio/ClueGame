@@ -1,4 +1,4 @@
-package userInterface;
+package UIResources;
 
 import java.io.File;
 

@@ -50,6 +50,7 @@ public class HumanPlayer extends Player implements PlayerActions {
 	@Override
 	public void updateKnownList() {
 	}
+	
 	private void initSeenCardsMap() {
 	
 	}

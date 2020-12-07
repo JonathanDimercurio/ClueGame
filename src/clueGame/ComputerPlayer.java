@@ -71,6 +71,7 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	private BoardCell moveMe(Set<BoardCell> availTargets) {
 		List<BoardCell> availSpaces = new Vector<BoardCell>();
 		availSpaces.addAll(availTargets);
+		
 		for(BoardCell move: availTargets) {
 				if (simplePathFinder(move)) {
 					return move;
@@ -78,12 +79,14 @@ public class ComputerPlayer extends Player implements PlayerActions{
 					availSpaces.add(move);
 				}
 			}
+		
 		Collections.shuffle(availSpaces);
 		return availSpaces.get(0);
 	}
 	
 	private boolean simplePathFinder(BoardCell resolveThisCell) {
-		return guessLogic.checkIfSeenByString(resolveThisCell.getMyRoomType().getName());
+		return guessLogic.checkIfSeenByString(resolveThisCell
+				.getMyRoomType().getName());
 	}
 
 	public BoardCell getCurrentCell() {

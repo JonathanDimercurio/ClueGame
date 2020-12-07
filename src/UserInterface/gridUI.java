@@ -1,27 +1,21 @@
-package userInterface;
+package UserInterface;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
-
+import UIResources.ImagePanelComponent;
+import UIResources.UIPlayerControl;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
@@ -36,6 +30,7 @@ public class gridUI {
 	private final static Dimension SIZE =  new Dimension(702,572);
 	final static int boardRows	= Board.getInstance().getNumRows();
 	final static int boardColumns = Board.getInstance().getNumColumns();
+	
 	private static Map<Integer, JLabel>	cells = new HashMap<Integer, JLabel>();
 	private static Map<Integer, DoorDirection> doors = 
 			new HashMap<Integer, DoorDirection>();
@@ -123,20 +118,39 @@ public class gridUI {
 		bgPanel.setVisible(true);
 		bgPanel.setBounds(0, 0, 702, 572);
 		return bgPanel;
-	
 	}
 	
 	private static void showPlayers() {	
 		UIPlayerControl.playerList.stream().forEach(player->{
+				player.getCellPosition().setOccupied(true);
 			  cells.get(player.getCellPosition().getKey())
 			  	.setIcon(new ImageIcon(player.getSmallIcon()));
 			  cells.get(player.getCellPosition().getKey())
 			  	.setBackground(player.getColor());
 			  cells.get(player.getCellPosition().getKey())
 			  	.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+			  	
 		});
 	}
 	
+	public static void removePlayerIcon(Player currentPlayer) {
+		cells.get(currentPlayer.getCellPosition().getKey())
+			.setIcon(null);
+		 cells.get(currentPlayer.getCellPosition().getKey())
+		  	.setBackground(new Color(0,0,0,20));
+		  cells.get(currentPlayer.getCellPosition().getKey())
+		  	.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,20), 2));
+		  
+	}
+	
+	public static void addPlayerIcon(Player currentPlayer) {
+		cells.get(currentPlayer.getCellPosition().getKey())
+	 		.setIcon(new ImageIcon(currentPlayer.getSmallIcon()));
+		 cells.get(currentPlayer.getCellPosition().getKey())
+		  	.setBackground(currentPlayer.getColor());
+		  cells.get(currentPlayer.getCellPosition().getKey())
+		  	.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	}
 
 	private static int resolveDoor(DoorDirection doorDircetion, int mapIndex) {
 		switch(doorDircetion) {
@@ -153,8 +167,7 @@ public class gridUI {
 		}
 	}
 	
-	   @SuppressWarnings("unused")
-	private static JLabel createColoredLabel(String text,
+	   private static JLabel createColoredLabel(String text,
 			   Color color) {
 		   
 		   	JLabel label = new JLabel(text);
