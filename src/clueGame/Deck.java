@@ -42,4 +42,8 @@ public class Deck implements DeckActions, GlossaryActions{
 	public List<Card> getDeck() {
 		return this.thisDeck;
 	}
+	
+	public void addCard(Card newCard) {
+		this.thisDeck.add(newCard);
+	}
 }

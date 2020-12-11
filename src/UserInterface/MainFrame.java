@@ -4,17 +4,12 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
-
-import ComputerAI.ComputerAI;
-import States.States.is;
-import UIResources.UITurnCtrl;
-import clueGame.ComputerPlayer;
 
 @SuppressWarnings("serial")
 public class MainFrame extends SmartFrame{
-	protected int menuIndex = 1;
+	//TODO Testing
+	public static int menuIndex = 1;
 		
 	public MainFrame() {
 
@@ -39,8 +34,26 @@ public class MainFrame extends SmartFrame{
 				menuIndex += 1;
 				revalidate();
 				break;
+			case 3:
+				JPanel gameP = GamePanel.me;
+				gameP.addComponentListener(seeMe());
+				add(gameP);
+				menuIndex += 1;
+				revalidate();
+				break;
+			case 4:
+				JPanel lose = new LosePanel();
+				lose.addComponentListener(seeMe());
+				add(lose);
+				revalidate();
+				break;
+			case 5:	
+				add(new WinPanel());
+				revalidate();
+				break;
+				
 			default:
-				JPanel gameP = new GamePanel();
+				gameP = GamePanel.me;
 				gameP.addComponentListener(seeMe());
 				add(gameP);
 				menuIndex += 1;

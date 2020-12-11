@@ -4,10 +4,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import clueGame.ComputerPlayer;
+
+import PlayerFiles.ComputerPlayer;
+import PlayerFiles.HumanPlayer;
+import PlayerFiles.Player;
 import clueGame.Deck;
-import clueGame.HumanPlayer;
-import clueGame.Player;
 
 public class UIPlayerControl {
 	public static UIPlayerControl playerCommand;
@@ -16,7 +17,7 @@ public class UIPlayerControl {
 	public static Vector <Player> playerList = 
 			new Vector<Player>();
 	
-	private static Map<String, Player> playerMap = 
+	public static Map<String, Player> playerMap = 
 			new HashMap<String, Player>();
 	
 	private static Map<Integer, Player> playerTurns = 
@@ -47,6 +48,7 @@ public class UIPlayerControl {
 		playerList.forEach(player->{
 			playerTurns.put(indexer(), player);
 		});
+		
 	}
 		
 	public static HumanPlayer getHumPlayer() {

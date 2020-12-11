@@ -1,7 +1,6 @@
-package UserInterface;
+package UIResources;
 
 import java.awt.Image;
-import java.awt.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +30,7 @@ public class PlayerIcon extends JPanel{
 	    		   .getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH));
 	}
 	
-    @SuppressWarnings("exports")
-	public ArrayList<Image> getImage() {
+    public ArrayList<Image> getImage() {
     	return this.newimg;
     }
 }

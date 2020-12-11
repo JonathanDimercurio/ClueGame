@@ -9,9 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import PlayerFiles.Player;
 import States.PanelStates;
 import UIResources.UITurnCtrl;
-import clueGame.Player;
 
 @SuppressWarnings("serial")
 public class SmallPlayerPanel extends PanelStates{

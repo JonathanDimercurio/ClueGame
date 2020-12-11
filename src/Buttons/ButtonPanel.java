@@ -3,25 +3,25 @@ package Buttons;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
 import States.PanelStates;
-import UIResources.UICtrl;
+import UIResources.UIPlayerControl;
 import UIResources.UITurnCtrl;
+import UserInterface.ControlPanel;
 import UserInterface.SmallPlayerPanel;
 
 @SuppressWarnings("serial")
 public class ButtonPanel extends PanelStates{
 	
+	
+	
 	private JButton sButton;
 	private JButton rButton;
 	private JButton aButton;
+	private JButton nButton;
 	
 	public ButtonPanel() {
 		initButtonPanel();
@@ -32,25 +32,54 @@ public class ButtonPanel extends PanelStates{
 		sButton = new SuggestionButton();
 		rButton = new RollButton();
 		aButton = new AccusationButton();
+		nButton = new NextButton();
 		
 	}
 	
 	private void buttonController() {
+		
 		checkButtons();
 		if (UITurnCtrl.ifHumanPlayersTurn()) {
-			sButton.setEnabled(true);
-			rButton.setEnabled(true);
+			
+			
+			if(UIPlayerControl.getHumPlayer()
+					.getCellPosition()
+					.isRoomCenter() && !ControlPanel.hasGuessed) {		
+				sButton.setEnabled(true);
+			} else { 
+				sButton.setEnabled(false); 
+			}
+			
+			
+			if(!ControlPanel.hasRolled) {
+				rButton.setEnabled(true);
+			}else {
+				rButton.setEnabled(false);
+			}
+			
+			
+			if (ControlPanel.hasMoved)  {
+				nButton.setEnabled(true);
+			} else {
+				nButton.setEnabled(false);
+			}
+			
+			
 			aButton.setEnabled(true);
+			
+			
 		}
 		if (!UITurnCtrl.ifHumanPlayersTurn()) {
 			sButton.setEnabled(false);
 			rButton.setEnabled(false);
 			aButton.setEnabled(false);
+			nButton.setEnabled(true);
 		}
+		
 		add(sButton);
 		add(rButton);
-		add(aButton);
-		add(new NextButton());
+		add(aButton); 
+		add(nButton);
 	}
 		
 	private void initButtonPanel() {

@@ -66,7 +66,7 @@ public class Card{
 
 	@Override
 	public String toString() {
-		return cardName;
+		return "[" + this.getCardName() + "]";
 	}
 
 	public boolean compareTo(Card card) {

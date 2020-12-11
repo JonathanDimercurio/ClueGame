@@ -6,9 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.Arrays;
 
+import PlayerFiles.Player;
 import States.PanelStates;
 import UIResources.UIPlayerControl;
-import clueGame.Player;
 
 @SuppressWarnings("serial")
 public class PlayerTurnPanel extends PanelStates{

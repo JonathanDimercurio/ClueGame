@@ -5,8 +5,8 @@ import java.awt.Color;
 import javax.swing.JComponent;
 
 import ComputerAI.ComputerAI;
-import clueGame.ComputerPlayer;
-import clueGame.Player;
+import PlayerFiles.ComputerPlayer;
+import PlayerFiles.Player;
 
 @SuppressWarnings("serial")
 public class UITurnCtrl extends JComponent {

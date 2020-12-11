@@ -33,12 +33,14 @@ public class Board implements GameControl{
 		try{ 
 		this.theFiles.loadLayoutConfig();
 		} catch (BadConfigFormatException e) {
-			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
+			new BadConfigFormatException(
+					"ConfigFiles corrupt, please check for improper data.       ");
 		}
 		try{ 
 		this.theFiles.loadSetupConfig();
 		} catch (BadConfigFormatException e) {
-			new BadConfigFormatException("ConfigFiles corrupt, please check for improper data.       ");
+			new BadConfigFormatException(
+					"ConfigFiles corrupt, please check for improper data.       ");
 		}
 		
 		new Room(ClueFileIO.getFormattedSetupFile());
@@ -97,7 +99,10 @@ public class Board implements GameControl{
 		
 	//Start	Grid&Adj block
 	private void genMapGameBoardData(String gbCell, char validatedCell) {
-		BoardCell.mapGameBoardData.put(this.mapIndex, new BoardCell(gbCell, validatedCell, getRoom(validatedCell), mapIndex++));		
+		BoardCell.mapGameBoardData.put(
+				this.mapIndex, new BoardCell(
+						gbCell, validatedCell, getRoom(validatedCell)
+						, mapIndex++));		
 	}
 	
 	private void generateGrid() {
@@ -148,7 +153,8 @@ public class Board implements GameControl{
 	
 	private void roomFinder(BoardCell cellDoor) {
 		int indexer = doorToRoomLinker(cellDoor);
-		char roomType = BoardCell.mapGameBoardData.get((cellDoor.getKey() + indexer)).getIntial();
+		char roomType = BoardCell.mapGameBoardData.get((cellDoor
+				.getKey() + indexer)).getIntial();
 		roomCenterFinder(cellDoor, roomType);
 	}
 	
@@ -210,7 +216,8 @@ public class Board implements GameControl{
 	
 	
 	//Start Pathing Algorithm Block
-	public void calcTargets(BoardCell startCell, int pathL) { //path length, how many space to move
+	public void calcTargets(BoardCell startCell, int pathL) { 
+		//path length, how many space to move
 		targets = new HashSet<>();
 		visited = new HashSet<>();
 		visited.add(startCell);
@@ -218,10 +225,12 @@ public class Board implements GameControl{
 		targets.remove(startCell);
 	}
 	
-	//Recursive Function
+	//Recursive pathing Function
 	public void depthFirstSearch(BoardCell start, int path) {
 		for (BoardCell node: start.getAdjList()){
-			if((!visited.contains(node) && !node.isOccupied()) || node.isRoomCenter()) {
+			if((!visited.contains(node) && 
+					!node.isOccupied()) || node.isRoomCenter()) {
+				
 				visited.add(node);
 				if(node.isRoomCenter() && node.isSecretPassage()) {
 					targets.add(node);
@@ -291,7 +300,4 @@ public class Board implements GameControl{
 	public static void setSolution(Solution inputSolution) {
 		Board.theSolution = inputSolution;
 	}
-	
-
-	
 }

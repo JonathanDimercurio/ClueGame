@@ -3,7 +3,7 @@
  * 			player classes for the board game.
  * Authors:	Jonathan Dimercurio, Senya Stein
  */
-package clueGame;
+package PlayerFiles;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -12,7 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import UserInterface.PlayerIcon;
+import UIResources.PlayerIcon;
+import clueGame.BadConfigFormatException;
+import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.Card;
+import clueGame.Deck;
 
 public abstract class Player {
 	
@@ -22,6 +27,7 @@ public abstract class Player {
 	protected Color color;
 	protected int keyPosition;
 	protected Point position;
+	protected int roomCenterOffset;
 	
 	public Player() {
 		
@@ -41,6 +47,9 @@ public abstract class Player {
 		}
 	}
 
+	public abstract BoardCell getCurrentCell();
+	public abstract boolean checkForReply(Guess guess);
+	public abstract Card generateReply(Guess guess);
 	public abstract void updateHand(Card newCard);
 	public abstract Guess makeSuggestion();
 	public abstract void updateKnownList();
@@ -59,6 +68,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/nepPIcon.png")
 						.getImage());
+				roomCenterOffset = Board.getInstance().getNumColumns();
 				break;
 				
 			case "NM":
@@ -68,6 +78,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/nemPIcon.png")
 						.getImage());
+				roomCenterOffset = 1;
 				break;
 				
 			case "AR":
@@ -77,6 +88,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/ariPIcon.png")
 						.getImage());
+				roomCenterOffset = -1;
 				break;
 				
 			case "CJ":
@@ -86,6 +98,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/capPIcon.png")
 						.getImage());
+				this.roomCenterOffset = 2;
 				break;
 				
 			case "SC":
@@ -95,6 +108,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/sanPIcon.png")
 						.getImage());
+				this.roomCenterOffset = 1 - (Board.getInstance().getNumColumns());
 				break;
 				
 			case "DJ":
@@ -104,6 +118,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/davPIcon.png")
 						.getImage());
+				this.roomCenterOffset = 1 + (Board.getInstance().getNumColumns());
 				break;
 				
 			case "SB":
@@ -113,6 +128,7 @@ public abstract class Player {
 				this.icon.addAll(new 
 						PlayerIcon("resources/bobPIcon.png")
 						.getImage());
+				this.roomCenterOffset = 0;
 				break;
 				
 			default:
@@ -133,7 +149,6 @@ public abstract class Player {
 		return name;
 	}
 
-	@SuppressWarnings("exports")
 	public Color getColor() {
 		return this.color;
 	}
@@ -150,21 +165,18 @@ public abstract class Player {
 		this.keyPosition = moveMeHere.getKey();
 	}
 
-	@SuppressWarnings("exports")
 	public Point getPosition() {
 		return this.position;
 	}
 	
-	@SuppressWarnings("exports")
 	public Image getSmallIcon() {
 		return this.icon.get(0);
 	}
 
-	@SuppressWarnings("exports")
 	public Image getLargeIcon() {
 		return this.icon.get(1);
 	}
-
-	public abstract BoardCell getCurrentCell();
-
+	public int roomCenterOffset() {
+		return this.roomCenterOffset;
+	}
 }

@@ -4,12 +4,17 @@
  * 			relative to the Computer controlled players.
  * Authors:	Jonathan Dimercurio, Senya Stein
  */
-package clueGame;
+package PlayerFiles;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import ComputerAI.GuessAI;
+import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.Card;
+import clueGame.Deck;
 
 public class ComputerPlayer extends Player implements PlayerActions{
 	public final char pType = 'C';
@@ -28,8 +33,9 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	 */
 	@Override
 	public Guess makeSuggestion() {
-		Guess CPUGuess = guessLogic.generateGuess(getCurrentCell().getMyRoomType().getName());
-		return CPUGuess;	
+		Guess CPUGuess = guessLogic.generateGuess(getCurrentCell()
+				.getMyRoomType().getName());
+		return CPUGuess;
 	}
 	
 	/* resolveReplies() ~ Takes an arbitrary long list of Cards
@@ -44,23 +50,32 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	//Check Before getting replies
 	public boolean checkForReply (Guess guess) {
 		for(Card checkCard: guess.getGuess()) {	 
-			return this.getHand().stream().anyMatch(card -> checkCard.compareTo(card));
-		} return false;
+			for(Card cardInHand: this.getHand()) {
+				if(checkCard.compareTo(cardInHand)) {
+					return true;
+				}
+			}
+		} 
+		return false;
 	}
 	
 	//This is where replys come from
 	public Card generateReply(Guess guess) {
-		List<Card> replyCard = new Vector<Card>();
+		List<Card> replyList = new Vector<Card>();
 		
-		for(Card checkCard: guess.getGuess()) {
-			for(Card myCard: this.getHand()) {
-				if(myCard.compareTo(checkCard)) {
-					replyCard.add(new Card(myCard));
-		}}}
-		Collections.shuffle(replyCard);
-		return replyCard.get(0);
+		for(Card gCard: guess.getGuess()) {
+			for(Card hCard: this.getHand()) {
+				if(hCard.compareTo(gCard)){
+					replyList.add((gCard));
+					
+				}
+			}
+		}
+		Collections.shuffle(replyList);
+		return new Card(replyList.get(0));
 	}
 
+	//Begin AI move block
 	//Automatically generates a dice roll
 	public void move() {
 		int diceRolled = PlayerActions.rollDice();
@@ -73,20 +88,24 @@ public class ComputerPlayer extends Player implements PlayerActions{
 		availSpaces.addAll(availTargets);
 		
 		for(BoardCell move: availTargets) {
-				if (simplePathFinder(move)) {
+				if (!haveSeenCell(move) && move.isRoomCenter()) {
 					return move;
 				} else {
 					availSpaces.add(move);
 				}
 			}
-		
 		Collections.shuffle(availSpaces);
 		return availSpaces.get(0);
 	}
 	
-	private boolean simplePathFinder(BoardCell resolveThisCell) {
-		return guessLogic.checkIfSeenByString(resolveThisCell
-				.getMyRoomType().getName());
+	public boolean haveSeenCell(BoardCell resolveThisCell) {
+		for(Card card: getSeenSet()) {
+			if(card.getCardName().contains(resolveThisCell
+					.getMyRoomType().getName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public BoardCell getCurrentCell() {
@@ -96,6 +115,8 @@ public class ComputerPlayer extends Player implements PlayerActions{
 	public void moveMeToCell(BoardCell moveHere) {
 		super.updateCellPosition(moveHere);
 	}
+	//End AI move block
+	
 	
 	public void updateHand(Card newCard) {
 		super.addCardToHand(newCard);

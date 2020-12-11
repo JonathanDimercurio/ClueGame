@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import PlayerFiles.ComputerPlayer;
+import PlayerFiles.Player;
 import clueGame.*;
 
 public class gameSetupTests {

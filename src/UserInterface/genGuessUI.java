@@ -14,10 +14,10 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import PlayerFiles.Guess;
 import UIResources.UICtrl;
 import clueGame.CardType;
 import clueGame.GlossaryActions;
-import clueGame.Guess;
 
 public class genGuessUI {
 	private static HashMap<String, JComboBox<String>> comboBoxs = new HashMap<String, JComboBox<String>>();

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.swing.border.Border;
 
+import PlayerFiles.Player;
 import UserInterface.MainFrame;
 import clueGame.*;
 
@@ -19,16 +20,24 @@ public class UICtrl {
 	private static UICtrl TheGame = new UICtrl();
 	private static MainFrame main;
 	
+	
     public static void main(String[] args) {
 
         javax.swing.SwingUtilities
         	.invokeLater(new Runnable() {
             public void run() {
-
+            
+            	System.out.println("- - - - - - - - - - - - - - - - ");
+            	System.out.println(Solution.getSolution().toString());
+            	System.out.println("- - - - - - - - - - - - - - - - ");
+            	for(Player player: UIPlayerControl.playerList) {
+            		System.out.println(player.getHand().toString());
+            	}
+            	
         		UICtrl.initUI();
         		main = new MainFrame();
             }
-        });	
+        });
     }
 
     public static void initUI() {
@@ -54,6 +63,8 @@ public class UICtrl {
 		GlossaryActions.createGlossaryFromDeck(UICtrl.mainDeck);
 		UIPlayerControl.playerCommand = 
 				new UIPlayerControl(playerDeck);
+		
+		
 		
 		DeckActions.dealDeck(new Deck(GlossaryActions
 				.allKnownCardsSet()), UIPlayerControl.playerList);

@@ -6,42 +6,60 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
+import Listeners.TarListener;
+import PlayerFiles.Player;
 import UIResources.ImagePanelComponent;
 import UIResources.UIPlayerControl;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
-import clueGame.Player;
 
 
 
 public class gridUI {
+	
+	
 	private static Image bgImage = 
 			new ImagePanelComponent("resources/bgArt.png").getImage();
+	
+	static ImageIcon targetIcon = new ImageIcon("resources/tar11.gif");
+ 
 	
 	private final static Dimension SIZE =  new Dimension(702,572);
 	final static int boardRows	= Board.getInstance().getNumRows();
 	final static int boardColumns = Board.getInstance().getNumColumns();
 	
-	private static Map<Integer, JLabel>	cells = new HashMap<Integer, JLabel>();
+	public static ArrayList<Integer> highlightList = new ArrayList<Integer>();
+	
+	private static Map<Integer, JLabel>	cells = 
+			new HashMap<Integer, JLabel>();
+	
+	private static Map<Integer, JLabel>	highlights = 
+			new HashMap<Integer, JLabel>();	
+	
 	private static Map<Integer, DoorDirection> doors = 
-			new HashMap<Integer, DoorDirection>();
-
+			new HashMap<Integer, DoorDirection>();	
+	
 	@SuppressWarnings("exports")
 	public static JLayeredPane createAndShowUI() {
 				
 		JLayeredPane bgPane = new JLayeredPane();
 		bgPane.setMaximumSize(SIZE);
 		bgPane.setMinimumSize(SIZE);
-		bgPane.setBackground(Color.DARK_GRAY);		
+		bgPane.setBackground(Color.DARK_GRAY);
+		bgPane.add(highLightGrid());
 		bgPane.add(walkableGrid());
 		bgPane.add(setBGImage());
 		bgPane.setOpaque(true);
@@ -59,7 +77,8 @@ public class gridUI {
 		int mapIndex = 0;		
 		for(int i = 0 ; i < boardRows; i++ ){
 			for(int p = 0 ; p < boardColumns; p++) {
-				BoardCell tempCell = BoardCell.mapGameBoardData.get(mapIndex);
+				BoardCell tempCell = BoardCell
+						.mapGameBoardData.get(mapIndex);
 				
 				JLabel test1 = createColoredLabel("",new Color(0,0,0,20));
 				
@@ -77,6 +96,32 @@ public class gridUI {
 		}
 		constructDoorMarkers();	
 		showPlayers();
+		walkP.setOpaque(false);
+		walkP.setVisible(true);
+		walkP.setBounds(0, 0, 702, 572);
+		return walkP;
+	}
+	
+	private static JPanel highLightGrid() {
+
+		JPanel walkP = new JPanel(new GridLayout(boardRows, boardColumns));
+		walkP.setMaximumSize(SIZE);
+		walkP.setMinimumSize(SIZE);		
+		GridBagConstraints gridC = new GridBagConstraints(); 
+		gridC.anchor = GridBagConstraints.NORTHWEST;
+		int mapIndex = 0;		
+		for(int i = 0 ; i < boardRows; i++ ){
+			for(int p = 0 ; p < boardColumns; p++) {
+				
+				JLabel test1 = createHighlight();
+				test1.setIcon(targetIcon);
+				test1.setVisible(false);
+				highlights.put(mapIndex++, test1);
+				walkP.add(test1, gridC);
+
+			}
+		}
+
 		walkP.setOpaque(false);
 		walkP.setVisible(true);
 		walkP.setBounds(0, 0, 702, 572);
@@ -133,26 +178,66 @@ public class gridUI {
 		});
 	}
 	
-	public static void removePlayerIcon(Player currentPlayer) {
+	public static void removePlayerIcon(@SuppressWarnings("exports") 
+										Player currentPlayer) {
+		
+		if(currentPlayer.getCellPosition().isRoomCenter() ) {
+			int oS = currentPlayer.roomCenterOffset();
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+			.setIcon(null);
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+			.setBackground(new Color(0,0,0,20));
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+			.setOpaque(false);
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+		  	.setBorder(BorderFactory.createLineBorder(
+		  			new Color(0,0,0,20), 2));
+
+			
+		} else {
+
+		
 		cells.get(currentPlayer.getCellPosition().getKey())
 			.setIcon(null);
-		 cells.get(currentPlayer.getCellPosition().getKey())
+		cells.get(currentPlayer.getCellPosition().getKey())
 		  	.setBackground(new Color(0,0,0,20));
-		  cells.get(currentPlayer.getCellPosition().getKey())
-		  	.setBorder(BorderFactory.createLineBorder(new Color(0,0,0,20), 2));
-		  
+		cells.get(currentPlayer.getCellPosition().getKey())
+		 	.setOpaque(false);
+		cells.get(currentPlayer.getCellPosition().getKey())
+		  	.setBorder(BorderFactory.createLineBorder(
+		  			new Color(0,0,0,20), 2));
+		}
 	}
 	
+	@SuppressWarnings("exports")
 	public static void addPlayerIcon(Player currentPlayer) {
+		if(currentPlayer.getCellPosition().isRoomCenter() ) {
+			int oS = currentPlayer.roomCenterOffset();
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+	 		.setIcon(new ImageIcon(currentPlayer.getSmallIcon()));
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+		  	.setBackground(currentPlayer.getColor());
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+		 	.setOpaque(true);
+		cells.get(currentPlayer.getCellPosition().getKey() + oS)
+		  	.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+			
+		} else {
+		
+		
 		cells.get(currentPlayer.getCellPosition().getKey())
 	 		.setIcon(new ImageIcon(currentPlayer.getSmallIcon()));
-		 cells.get(currentPlayer.getCellPosition().getKey())
+		cells.get(currentPlayer.getCellPosition().getKey())
 		  	.setBackground(currentPlayer.getColor());
-		  cells.get(currentPlayer.getCellPosition().getKey())
+		cells.get(currentPlayer.getCellPosition().getKey())
+		 	.setOpaque(true);
+		cells.get(currentPlayer.getCellPosition().getKey())
 		  	.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		}
 	}
 
-	private static int resolveDoor(DoorDirection doorDircetion, int mapIndex) {
+	private static int resolveDoor(DoorDirection doorDircetion, 
+											int mapIndex) {
 		switch(doorDircetion) {
 			case UP:
 				return mapIndex - boardColumns;
@@ -167,7 +252,29 @@ public class gridUI {
 		}
 	}
 	
-	   private static JLabel createColoredLabel(String text,
+	public static void displayHighlight(Set<BoardCell> targets) {
+
+		targets.stream().forEach(target->{
+			highlights.get(target.getKey()).setVisible(true);;
+			highlightList.add(target.getKey());
+			cells.get(target.getKey())
+				.addMouseListener(new TarListener(target.getKey()));;
+		});
+		
+	}
+
+	public static void removeHighlights() {
+		highlightList.stream().forEach(location->{
+			for( MouseListener al : cells.get(location).getMouseListeners() ) {
+				highlights.get(location).removeMouseListener( al );
+			}
+			
+			highlights.get(location).setVisible(false);
+		});
+		
+	}
+		
+	private static JLabel createColoredLabel(String text,
 			   Color color) {
 		   
 		   	JLabel label = new JLabel(text);
@@ -175,6 +282,18 @@ public class gridUI {
 		   	label.setHorizontalAlignment(JLabel.CENTER);
 		   	label.setOpaque(true);
 		   	label.setBackground(color);
+		   	label.setForeground(Color.black);
+		   	label.setMaximumSize(new Dimension(26,26));
+		   	label.setMinimumSize(new Dimension(26,26));
+		   	label.setBounds(new Rectangle(26,26));
+		   	return label;
+	   }
+	
+	private static JLabel createHighlight() {
+		   
+		   	JLabel label = new JLabel(targetIcon);
+		   	label.setVerticalAlignment(JLabel.CENTER);
+		   	label.setHorizontalAlignment(JLabel.CENTER);
 		   	label.setForeground(Color.black);
 		   	label.setMaximumSize(new Dimension(26,26));
 		   	label.setMinimumSize(new Dimension(26,26));

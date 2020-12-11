@@ -4,13 +4,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import PlayerFiles.Player;
+
 public interface DeckActions {
 	
 	/* placeInTypeDeck ~
 	 * This simple method places the newly crafted card into
 	 * the correct deck, by CardType.
 	 */
-	public static Deck createSeperateTypeDecks(Deck multipleTypeDeck, CardType findType) {
+	public static Deck createSeperateTypeDecks(Deck multipleTypeDeck, 
+													CardType findType) {
 		Deck deckByType = new Deck();
 		for (Card tempCard: multipleTypeDeck.getDeck()) {
 			if (tempCard.getCardtype() == findType) {
@@ -33,25 +36,22 @@ public interface DeckActions {
 	 * and deals a card to every player until the deck is empty.
 	 * This will result in 3 cards in every players hand.
 	 */
-	public static void dealDeck(Deck fullDeck, List<Player> dealToPlayers) {
-		List<Card> dealingDeck = deckCloner(fullDeck);
-		int remainingCards = 0;
+	@SuppressWarnings("exports")
+	public static void dealDeck(Deck fullDeck, 
+									List<Player> dealToPlayers) {
 		
-		Card ranPERSONCard = createSeperateTypeDecks(fullDeck, CardType.PERSON).getDeck().stream().findAny().get();
-		fullDeck.getDeck().remove(ranPERSONCard);
-		Card ranROOMCard = createSeperateTypeDecks(fullDeck, CardType.ROOM).getDeck().stream().findAny().get();
-		fullDeck.getDeck().remove(ranROOMCard);
-		Card ranWEAPONCard = createSeperateTypeDecks(fullDeck, CardType.WEAPON).getDeck().stream().findAny().get();
-		fullDeck.getDeck().remove(ranWEAPONCard);
-		
-		Solution.initSolution(ranPERSONCard, ranROOMCard, ranWEAPONCard);
-				
+		List<Card> dealingDeck = deckCloner(Solution
+										.genSolution(fullDeck)); 
+						
+		int remainingCards = 0;		
 		//Deal remainder cards if any first. Update dealingDeck.
 		Collections.shuffle(dealingDeck);
 		if(dealingDeck.size() % dealToPlayers.size() != 0) {
 			remainingCards = dealingDeck.size() % dealToPlayers.size();
 			for ( int index = remainingCards ; index > 0; index--) {
-				dealToPlayers.get(index).updateHand(dealingDeck.get(index));
+				dealToPlayers.get(index)
+									.updateHand(dealingDeck
+											.get(index));
 				dealingDeck.remove(index);
 			}
 		}

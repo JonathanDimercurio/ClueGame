@@ -14,6 +14,10 @@ public class NextButton extends BLib {
 		buttonActions.modButtons(this);
 		addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+		    	ControlPanel.hasRolled = false;
+		    	ControlPanel.hasGuessed = false;
+		    	ControlPanel.hasMoved = false;
+		    	
 		    	UITurnCtrl.endTurn();
 		    	ControlPanel.menuC.setValue(9);
 		    }

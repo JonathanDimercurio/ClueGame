@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import PlayerFiles.ComputerPlayer;
+import PlayerFiles.Guess;
 import clueGame.*;
 
 public class ComputerAlTest {
@@ -33,19 +36,25 @@ public class ComputerAlTest {
 		Deck testDeck1 = new Deck(ClueFileIO.getFormattedSetupFile());
 		Deck testDeck2 = new Deck(ClueFileIO.getFormattedSetupFile());
 		GlossaryActions.createGlossaryFromDeck(testDeck1);
-		testDeck1 = DeckActions.createSeperateTypeDecks(testDeck1, CardType.PERSON);
-		List<ComputerPlayer> testingPlayerList = new Vector<ComputerPlayer>();	
+		testDeck1 = DeckActions
+				.createSeperateTypeDecks(testDeck1, CardType.PERSON);
+		List<ComputerPlayer> testingPlayerList = 
+				new Vector<ComputerPlayer>();	
 		
 		
-		ComputerPlayer testPlayer1 = new ComputerPlayer(testDeck1.getDeck().get(0));
-		ComputerPlayer testPlayer2 = new ComputerPlayer(testDeck1.getDeck().get(1));
-		ComputerPlayer testPlayer3 = new ComputerPlayer(testDeck1.getDeck().get(2));
+		ComputerPlayer testPlayer1 = 
+				new ComputerPlayer(testDeck1.getDeck().get(0));
+		ComputerPlayer testPlayer2 = 
+				new ComputerPlayer(testDeck1.getDeck().get(1));
+		ComputerPlayer testPlayer3 = 
+				new ComputerPlayer(testDeck1.getDeck().get(2));
 		
 		testingPlayerList.add(testPlayer1);
 		testingPlayerList.add(testPlayer2);
 		testingPlayerList.add(testPlayer3);
 			
-		DeckActions.dealDeck(testDeck2, testingPlayerList.stream().collect(Collectors.toList()));
+		DeckActions.dealDeck(testDeck2, testingPlayerList.stream()
+				.collect(Collectors.toList()));
 		testPlayer1.moveMeToCell((Room.roomMap.get('N').getCenterCell()));
 		
 		//Setup a Guess by testPlayer1
@@ -53,7 +62,9 @@ public class ComputerAlTest {
 		//Ensure the guessed Room is the room testPlayer1 is in
 		for(Card checkThisCard: p1Guess1.getGuess()) {
 			if(checkThisCard.getCardtype().equals(CardType.ROOM)) {
-				assertTrue(checkThisCard.getCardName().contains(testPlayer1.getCurrentCell().getMyRoomType().getRoomName()));
+				assertTrue(checkThisCard.getCardName()
+						.contains(testPlayer1.getCurrentCell()
+								.getMyRoomType().getRoomName()));
 			}
 			
 		}
@@ -64,7 +75,9 @@ public class ComputerAlTest {
 		//Ensure the guessed Room is the room testPlayer1 is in
 		for(Card checkThisCard: p1Guess2.getGuess()) {
 			if(checkThisCard.getCardtype().equals(CardType.ROOM)) {
-				assertTrue(checkThisCard.getCardName().contains(testPlayer1.getCurrentCell().getMyRoomType().getRoomName()));
+				assertTrue(checkThisCard.getCardName()
+						.contains(testPlayer1.getCurrentCell()
+								.getMyRoomType().getRoomName()));
 			}
 			
 		}
@@ -73,7 +86,9 @@ public class ComputerAlTest {
 		testPlayer1.moveMeToCell((Room.roomMap.get('N').getCenterCell()));
 		for(Card checkThisCard: p1Guess2.getGuess()) {
 			if(checkThisCard.getCardtype().equals(CardType.ROOM)) {
-				assertFalse(checkThisCard.getCardName().contains(testPlayer1.getCurrentCell().getMyRoomType().getRoomName()));
+				assertFalse(checkThisCard.getCardName()
+						.contains(testPlayer1.getCurrentCell()
+								.getMyRoomType().getRoomName()));
 			}
 			
 		}

@@ -4,8 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
+
+import PlayerFiles.Player;
 import clueGame.Card;
-import clueGame.Player;
 
 public interface UICommands {
 	

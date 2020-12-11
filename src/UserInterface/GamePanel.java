@@ -10,7 +10,9 @@ import States.PanelStates;
 @SuppressWarnings("serial")
 public class GamePanel extends PanelStates{
 	
-	public GamePanel() {
+	public static GamePanel me = new GamePanel();
+	
+	private GamePanel() {
 		super();
 		setLayout(new GridBagLayout());
 		setBackground(Color.DARK_GRAY);
@@ -38,4 +40,7 @@ public class GamePanel extends PanelStates{
 	    add(new ControlPanel(), GBL);
 	}
 	
+	public static void hideMe() {
+		me.setVisible(false);
+	}
 }

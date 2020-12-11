@@ -3,7 +3,6 @@ package Buttons;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import UIResources.UITurnCtrl;
 import UserInterface.ControlPanel;
 
 @SuppressWarnings("serial")
@@ -18,7 +17,8 @@ public class RollButton extends BLib{
 		buttonActions.modButtons(this);
 		    addActionListener(new ActionListener() {
 		    	public void actionPerformed(ActionEvent e) {
-		    		
+		    		ControlPanel.hasRolled = true;
+		    		ControlPanel.menuC.setValue(3);
 		    	}
 		    });
 	    setVisible(true);

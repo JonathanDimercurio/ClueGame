@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,16 +13,26 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Buttons.ButtonPanel;
+import PlayerFiles.PlayerActions;
 import States.PanelStates;
 import UIResources.UICtrl;
+import UIResources.UIPlayerControl;
+import clueGame.Board;
+import clueGame.Card;
 
 @SuppressWarnings("serial")
 public class ControlPanel extends PanelStates {
 	
 	@SuppressWarnings("exports")
 	public static JSlider menuC = new JSlider(1,10);
+	public static boolean hasRolled = false;
+	public static boolean hasMoved = false;
+	public static boolean hasGuessed = false;
+	
+//	private static Card humanReply;
 	
 	public ControlPanel() {
+		
 		initPanel();
 		menuControl(0);
 	}
@@ -32,9 +43,10 @@ public class ControlPanel extends PanelStates {
 		buttons.setVisible(true);
 		add(buttons);
 		switch (menu) {
+		
 			case 1:
 				//Accusation panel ***
-				JPanel accPanel = AccusationUI.apUI();
+				JPanel accPanel = new AccusationUI();
 				Arrays.stream(buttons.getComponents())
 				.forEach(comp->{
 					comp.setEnabled(false);
@@ -42,14 +54,28 @@ public class ControlPanel extends PanelStates {
 				add(accPanel);
 				setVisible(true);
 				break;
+				
 			case 2:
 				//Suggestion panel ***
-				JPanel sugPanel = AccusationUI.apUI();
+				JPanel sugPanel = new SuggestionPanel();
 				Arrays.stream(buttons.getComponents())
 				.forEach(comp->{
 					comp.setEnabled(false);
 				});
 				add(sugPanel);
+				setVisible(true);
+				break;		
+				
+			case 3:
+				//Roll Button hit
+				int roll = PlayerActions.rollDice();
+				
+				Board.getInstance().calcTargets(
+						UIPlayerControl.getHumPlayer()
+						.getCellPosition(), roll);
+				gridUI.displayHighlight(Board.getInstance().getTargets());
+				
+				add(new RollPanel(roll));
 				setVisible(true);
 				break;
 			default:
@@ -57,6 +83,7 @@ public class ControlPanel extends PanelStates {
 				JPanel playerPanel = new PlayerTurnPanel();
 				add(playerPanel);
 				setVisible(true);
+				
 				break;
 		}
 		setVisible(true);
@@ -85,6 +112,9 @@ public class ControlPanel extends PanelStates {
 				case 3:
 					menuControl(3);
 					break;
+				case 8:
+					menuControl(8);
+					break;
 				case 9:
 					ControlPanel.menuC.setValue(10);
 					break;
@@ -96,6 +126,10 @@ public class ControlPanel extends PanelStates {
 			}
 			
 		});
+	}
+	
+	public static void genHumanReply(List<Card> cards) {
+		menuC.setValue(3);
 	}
 
 }

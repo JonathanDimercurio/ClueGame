@@ -12,8 +12,10 @@ public class Room {
 	private char key;
 	private BoardCell centerCell;
 	private BoardCell labelCell;
+	public boolean isRoom;
 	
 	public Room(Room newRoom) {
+		this.isRoom= true;
 		this.name = newRoom.getName();
 		this.type = newRoom.getType();
 		this.key = newRoom.getKey();
